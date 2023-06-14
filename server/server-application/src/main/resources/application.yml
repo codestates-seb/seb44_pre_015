@@ -11,4 +11,4 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        format_sql: true #be-feat/answer 오민성
+        format_sql: true #be-feat/question
