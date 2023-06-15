@@ -19,11 +19,15 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-validation' // dto valid 확인
+	implementation 'org.mapstruct:mapstruct:1.4.2.Final'					// mapper
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'    //
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0' // lombok builder + mapstruct
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
