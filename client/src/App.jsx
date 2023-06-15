@@ -1,3 +1,10 @@
+import { Header } from "./components/common/Header"
+
 export default function App() {
-  return <div>App</div>;
+  return (
+    <>
+      <Header></Header>
+      <div>App</div>
+    </>
+  );
 }
