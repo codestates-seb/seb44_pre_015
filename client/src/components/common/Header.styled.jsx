@@ -10,7 +10,7 @@ export const HeaderContainer = tw.header`
   drop-shadow-lg
   bg-white
   space-x-0
-  py-5
+  py-3
   px-40
   z-50
   max-md:px-5
@@ -21,12 +21,12 @@ export const LogoContainer = tw.h1`
 `;
 
 export const LogoImg = tw.img`
-  w-52
+  w-48
   max-md:w-40
 `;
 
 export const Button = tw.button`
-  text-lg
+  text-sm
   text-white
   rounded-full
   px-6
