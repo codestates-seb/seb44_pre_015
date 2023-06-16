@@ -1,5 +1,4 @@
-import Logo from "../../assets/images/logo-stackoverflow.svg"
-
+import Logo from "../../assets/logo-stackoverflow.svg"
 import { HeaderContainer, LogoContainer, LogoImg, Nav, LoginBtn } from "../common/Header.styled"
 
 const Header = () => {
