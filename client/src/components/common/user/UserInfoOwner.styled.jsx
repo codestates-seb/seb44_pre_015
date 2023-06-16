@@ -5,6 +5,7 @@ export const UserInfoContainer = tw.div`
   gap-3
   items-center
 `
+
 export const UserImg = tw.div`
   w-12
   h-12
