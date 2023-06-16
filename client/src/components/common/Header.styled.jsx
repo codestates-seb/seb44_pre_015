@@ -25,22 +25,7 @@ export const LogoImg = tw.img`
   max-md:w-40
 `;
 
-export const Button = tw.button`
-  text-sm
-  text-white
-  rounded-full
-  px-6
-  py-2
-  transition duration-300 ease-in-out
-  max-md:text-xs
-`;
-
 export const Nav = tw.nav`
   flex
   gap-2
-`;
-
-export const LoginBtn = tw(Button)`
-  bg-[#FFA564]
-  hover:bg-[#FF7E22] 
 `;
