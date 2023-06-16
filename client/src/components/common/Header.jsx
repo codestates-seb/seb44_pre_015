@@ -1,13 +1,15 @@
 import Logo from "../../assets/logo-stackoverflow.svg"
 import { HeaderContainer, LogoContainer, LogoImg, Nav, LoginBtn } from "../common/Header.styled"
+import { Link } from "react-router-dom";
+
 
 const Header = () => {
   return (
     <HeaderContainer>
       <LogoContainer>
-        <a href="#">
+        <Link to="/login">
           <LogoImg src={Logo} alt="logo" />
-        </a>
+        </Link>
       </LogoContainer>
       <Nav>
         <LoginBtn>로그인</LoginBtn>
