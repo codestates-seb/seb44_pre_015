@@ -1,6 +1,6 @@
 import tw from "tailwind-styled-components";
 
-export const UserInfoContainer = tw.div`
+export const UserInfoContainer = tw.section`
   flex
   gap-3
   items-center
