@@ -11,8 +11,8 @@ import {
   IconWrap,
   GithubBtn,
 } from "./LoginBox.styled.jsx";
-import githubimg from "../../assets/image 26.png";
-import logo from "../../assets/logos_stackoverflow.png";
+import githubimg from "../../assets/githubimg.png";
+import logo from "../../assets/logo-stackoverflow.svg";
 
 const LoginBox = () => {
   return (

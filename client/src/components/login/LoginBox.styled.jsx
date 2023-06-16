@@ -2,7 +2,7 @@ import tw from "tailwind-styled-components";
 
 export const GlobalStyle = tw.div`
     bg-gray-200
-    h-screen
+    h-[40.74rem]
     flex
     justify-center
 `;
@@ -18,6 +18,8 @@ export const Loginbox = tw.div`
     flex-col
     justify-around
     mt-32
+    rounded-xl
+    pt-10
 `;
 
 export const GithubBtn = tw.button`
