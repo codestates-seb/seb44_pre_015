@@ -2,6 +2,8 @@ package com.mzdevelopers.serverapplication.question.service;
 
 import com.mzdevelopers.serverapplication.question.entity.Question;
 import com.mzdevelopers.serverapplication.question.repository.QuestionRepository;
+import com.mzdevelopers.serverapplication.tag.repository.QuestionTagRepository;
+import com.mzdevelopers.serverapplication.tag.repository.TagRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,11 +20,16 @@ class QuestionServiceImplTest {
     @Mock
     private QuestionRepository questionRepository;
 
+    @Mock
+    private QuestionTagRepository questionTagRepository;
+    @Mock
+    private TagRepository tagRepository;
+
     private QuestionServiceImpl questionService;
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        questionService = new QuestionServiceImpl(questionRepository);
+        questionService = new QuestionServiceImpl(questionRepository, questionTagRepository,tagRepository);
     }
 
     public Question makeQuestion(String title, String detail, Long memberId) {

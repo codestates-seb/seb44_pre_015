@@ -1,11 +1,14 @@
 package com.mzdevelopers.serverapplication.question.entity;
 
+import com.mzdevelopers.serverapplication.tag.entity.QuestionTag;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -37,6 +40,9 @@ public class Question extends BaseEntity{
 
     @Column(nullable = false)
     private Long memberId;
+
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
+    List<QuestionTag> questionTags = new ArrayList<>();
 
     @Builder
     public Question(String title, String detail, Long memberId){

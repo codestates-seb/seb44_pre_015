@@ -26,21 +26,16 @@ public class QuestionController {
     private final QuestionServiceImpl questionService;
     private final static String QUESTION_CREATE_URI = "http://localhost:8080/questions";
 
-    private HttpHeaders createUriHeader(URI uri) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("URI", String.valueOf(uri));
-        return headers;
-    }
-
     @PostMapping("/register")
     public ResponseEntity<?> postQuestion(@Valid @RequestBody QuestionRequestDto questionRequestDto) {
         long questionId = questionService.creatQuestion(
-                questionMapper.questionRequestDtoToQuestion(questionRequestDto)
+                questionMapper.questionRequestDtoToQuestion(questionRequestDto), questionRequestDto.getTags()
         );
-        URI uri = questionService.uriBuilder(questionId, QUESTION_CREATE_URI);
+        URI location = questionService.uriBuilder(questionId, QUESTION_CREATE_URI);
 
-        return new ResponseEntity<>(createUriHeader(uri), HttpStatus.CREATED);
+        return ResponseEntity.created(location).build();
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<QuestionResponseDto> getQuestion(@PathVariable("id") long questionId) {
@@ -54,9 +49,12 @@ public class QuestionController {
     @PatchMapping("/{id}")
     public ResponseEntity<QuestionResponseDto> patchQuestion(@PathVariable("id") long questionId,
                                                              @Valid @RequestBody QuestionPatchDto questionPatchDto) {
-        questionService.updateQuestion(questionId, questionPatchDto.getTitle(), questionPatchDto.getDetail(), questionPatchDto.getMemberId());
-        URI uri = questionService.uriBuilder(questionId, QUESTION_CREATE_URI);
-        return new ResponseEntity<>(createUriHeader(uri), HttpStatus.OK);
+        QuestionResponseDto responseDto = questionMapper.questionToQuestionResponseDto(questionService
+                .updateQuestion(questionId,
+                        questionPatchDto.getTitle(),
+                        questionPatchDto.getDetail(),
+                        questionPatchDto.getMemberId()));
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
