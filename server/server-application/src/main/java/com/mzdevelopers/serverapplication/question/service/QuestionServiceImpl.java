@@ -8,6 +8,7 @@ import com.mzdevelopers.serverapplication.tag.entity.Tag;
 import com.mzdevelopers.serverapplication.tag.repository.QuestionTagRepository;
 import com.mzdevelopers.serverapplication.tag.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -44,7 +46,9 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public Question getQuestion(long questionId) {
-        return findByQuestionId(questionId);
+        Question findQuestion = findByQuestionId(questionId);
+        System.out.println("getQuestion : " + findQuestion.getQuestionTags().get(0).toString());
+        return findQuestion;
     }
 
     @Override
@@ -75,7 +79,6 @@ public class QuestionServiceImpl implements QuestionService{
             Tag tag = tagRepository.findById(id).orElseGet(() -> null);
             tagList.add(tag);
         }
-
         return tagList;
     }
 

@@ -1,5 +1,6 @@
 package com.mzdevelopers.serverapplication.question.dto;
 
+import com.mzdevelopers.serverapplication.tag.entity.Tag;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,5 +16,6 @@ public class QuestionResponseDto {
     private int votesCount;
     private int viewCount;
     private Long memberId;
+    private List<Tag> tags;
     private List<StubAnswer> answers;
 }

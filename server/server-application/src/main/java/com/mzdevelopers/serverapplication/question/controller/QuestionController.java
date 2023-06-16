@@ -43,6 +43,7 @@ public class QuestionController {
                 .questionToQuestionResponseDto(questionService.getQuestion(questionId));
 
         responseDto.setAnswers(questionService.stubAnswerList());
+//        responseDto.setTags(questionService.findByTagId());
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
