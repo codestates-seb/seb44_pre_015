@@ -13,6 +13,7 @@ export const HeaderContainer = tw.header`
   py-5
   px-40
   z-50
+  max-md:px-5
 `;
 
 export const LogoContainer = tw.h1`
@@ -21,6 +22,7 @@ export const LogoContainer = tw.h1`
 
 export const LogoImg = tw.img`
   w-52
+  max-md:w-40
 `;
 
 export const Button = tw.button`
@@ -30,6 +32,7 @@ export const Button = tw.button`
   px-6
   py-2
   transition duration-300 ease-in-out
+  max-md:text-xs
 `;
 
 export const Nav = tw.nav`
