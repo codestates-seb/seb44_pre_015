@@ -14,3 +14,20 @@ export const OrangeBtn = tw(Button)`
   bg-[#FFA564]
   hover:bg-[#FF7E22] 
 `;
+
+export const FilterButton = tw.button`
+  text-black
+  bg-white
+  rounded-full
+  px-6
+  py-1
+  border-2
+  border-[#DCDCDC]
+  max-md:text-xs
+  ${props => props.clicked ? `
+    text-white
+    border-[#FF7E22]
+    bg-[#FFA564]
+  ` : ''}
+`;
+
