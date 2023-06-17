@@ -56,7 +56,7 @@ public class AnswerController {
     @GetMapping
     public ResponseEntity getAnswers(@Positive @RequestParam int page,
                                      @Positive @RequestParam int size) {
-        Page<Answer> pageAnswers = answerService.findMembers(page - 1, size);
+        Page<Answer> pageAnswers = answerService.findAnswers(page - 1, size);
         List<Answer> answers = pageAnswers.getContent();
         return new ResponseEntity<>(
                 new MultiResponseDto<>(mapper.answersToAnswerResponses(answers),

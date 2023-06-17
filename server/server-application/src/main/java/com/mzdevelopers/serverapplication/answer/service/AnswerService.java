@@ -6,9 +6,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Transactional
 @Service
 public class AnswerService {
     private final AnswerRepository answerRepository;
@@ -16,10 +20,14 @@ public class AnswerService {
     public AnswerService(AnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
     }
+
+
     public Answer createAnswer(Answer answer){
         return answerRepository.save(answer);
     }
 
+
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Answer updateAnswer(Answer answer){
         Answer findAnswer = findVerifiedAnswer(answer.getAnswerId());
 
@@ -30,10 +38,15 @@ public class AnswerService {
 
         return answerRepository.save(findAnswer);
     }
+
+
+    @Transactional(readOnly = true)
     public Answer findAnswer(long answerId){
         return findVerifiedAnswer(answerId);
     }
-    public Page<Answer> findMembers(int page, int size) {
+
+
+    public Page<Answer> findAnswers(int page, int size) {
         return answerRepository.findAll(PageRequest.of(page, size,
                 Sort.by("answerId").descending()));
     }
@@ -43,6 +56,8 @@ public class AnswerService {
         answerRepository.delete(findAnswer);
     }
 
+
+    @Transactional(readOnly = true)
     public Answer findVerifiedAnswer(long answerId){
         Optional<Answer> optionalAnswer =
                 answerRepository.findById(answerId);
