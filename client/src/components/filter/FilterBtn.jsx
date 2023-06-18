@@ -13,16 +13,15 @@ export default function FilterBtn() {
 
   return (
     <FilterContainer>
-      <FilterButton clicked={filter === 'latest'} onClick={() => handleClick('latest')}>
+      <FilterButton clicked={filter === 'latest' ? 'true' : undefined} onClick={() => handleClick('latest')}>
         최신순
       </FilterButton>
-      <FilterButton clicked={filter === 'like'} onClick={() => handleClick('like')}>
+      <FilterButton clicked={filter === 'like' ? 'true' : undefined} onClick={() => handleClick('like')}>
         좋아요순
       </FilterButton>
-      <FilterButton clicked={filter === 'select'} onClick={() => handleClick('select')}>
+      <FilterButton clicked={filter === 'select' ? 'true' : undefined} onClick={() => handleClick('select')}>
         채택순
       </FilterButton>
     </FilterContainer>
   )
 }
-
