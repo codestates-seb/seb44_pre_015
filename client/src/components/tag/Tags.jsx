@@ -1,4 +1,4 @@
-import { TagContainer, Tag } from "./tags.styled"
+import { TagContainer, Tag } from "./Tags.styled"
 
 export default function Tags(){
   return(

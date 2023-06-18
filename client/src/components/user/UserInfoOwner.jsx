@@ -1,4 +1,4 @@
-import { UserInfoContainer, UserImg, Img, UserInfoData, UserData, Line } from "../user/UserInfoOwner.styled"
+import { UserInfoContainer, UserImg, Img, UserInfoData, UserData, Line } from "./UserInfoOwner.styled"
 
 export default function UserInfoOwner() {
   return (
