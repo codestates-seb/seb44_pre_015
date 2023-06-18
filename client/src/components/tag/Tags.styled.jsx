@@ -5,6 +5,7 @@ export const TagContainer = tw.div`
   gap-1
   transition duration-300 ease-in-out
 `
+
 export const Tag = tw.span`
   bg-[#F7F7F7]
   text-xs

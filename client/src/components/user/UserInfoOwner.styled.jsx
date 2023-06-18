@@ -27,6 +27,7 @@ export const UserInfoData = tw.div`
   gap-1.5
   relative
 `
+
 export const UserData = tw.span`
   text-sm
   base
