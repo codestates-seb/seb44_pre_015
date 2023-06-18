@@ -1,4 +1,4 @@
-import { UserInfoContainer, UserImg, Img, UserInfoData, UserData, Line } from "./UserInfoOwner.styled"
+import { UserInfoContainer, UserImg, Img, UserInfoData, UserData } from "./UserInfoOwner.styled"
 
 export default function UserInfoOwner() {
   return (
@@ -10,7 +10,6 @@ export default function UserInfoOwner() {
       </UserImg>
       <UserInfoData>
         <UserData>JIEUN</UserData>
-        <Line/>
         <UserData>23.06.16</UserData>
       </UserInfoData>
     </UserInfoContainer>
