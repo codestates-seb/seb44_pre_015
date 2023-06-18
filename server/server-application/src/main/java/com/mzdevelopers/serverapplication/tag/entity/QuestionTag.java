@@ -2,11 +2,13 @@ package com.mzdevelopers.serverapplication.tag.entity;
 
 import com.mzdevelopers.serverapplication.question.entity.Question;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class QuestionTag {
     @Id

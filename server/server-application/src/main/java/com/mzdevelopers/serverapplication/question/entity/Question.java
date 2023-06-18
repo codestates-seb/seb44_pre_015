@@ -41,8 +41,11 @@ public class Question extends BaseEntity{
     @Column(nullable = false)
     private Long memberId;
 
-    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
-    List<QuestionTag> questionTags = new ArrayList<>();
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    List<QuestionTag> questionTags;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<QuestionVote> questionVotes;
 
     @Builder
     public Question(String title, String detail, Long memberId){
@@ -58,6 +61,18 @@ public class Question extends BaseEntity{
     public void update(String title, String detail) {
         this.title = title;
         this.detail = detail;
+    }
+
+    public void updateVoteCount(boolean voted) {
+        if (voted) {
+            votesCount++;
+        } else {
+            votesCount--;
+        }
+    }
+
+    public void increaseView() {
+        this.viewCount++;
     }
 
 }
