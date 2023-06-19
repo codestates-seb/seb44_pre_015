@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
+import Main from './pages/main/Main';
 import LoginBox from "./components/login/LoginBox";
 
 export default function App() {
@@ -9,7 +10,8 @@ export default function App() {
       <Header />
       
       <Routes>
-        <Route path="/login" element={<LoginBox />}></Route>
+        <Route path='/' element={<Main />} />
+        <Route path="/login" element={<LoginBox />} />
       </Routes>
 
       <Footer />
