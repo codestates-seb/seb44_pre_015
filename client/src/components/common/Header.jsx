@@ -1,9 +1,9 @@
-import Logo from "../../assets/logo-stackoverflow.svg"
-import { HeaderContainer, LogoContainer, LogoImg, Nav, LoginBtn } from "../common/Header.styled"
 import { Link } from "react-router-dom";
+import LoginBtn from "../button/LoginBtn";
+import Logo from "../../assets/logo-stackoverflow.svg"
+import { HeaderContainer, LogoContainer, LogoImg, Nav } from "../common/Header.styled"
 
-
-const Header = () => {
+export default function Header(){
   return (
     <HeaderContainer>
       <LogoContainer>
@@ -12,10 +12,8 @@ const Header = () => {
         </Link>
       </LogoContainer>
       <Nav>
-        <LoginBtn>로그인</LoginBtn>
+        <LoginBtn />
       </Nav>
     </HeaderContainer>
   )
 }
-
-export default Header
