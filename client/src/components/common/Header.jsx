@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import LoginBtn from "../button/LoginBtn";
+import LoginBtn from "../button/login/LoginBtn";
 import Logo from "../../assets/logo-stackoverflow.svg"
 import { HeaderContainer, LogoContainer, LogoImg, Nav } from "../common/Header.styled"
 

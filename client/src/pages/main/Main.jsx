@@ -9,6 +9,7 @@ export default function Main() {
       <SearchBox />
       <FilterBtn />
       
+      
       <MainPostCard />
       <MainPostCard />
       <MainPostCard />
