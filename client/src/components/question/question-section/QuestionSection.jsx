@@ -1,4 +1,3 @@
-import React from 'react';
 import UserInfoOwner from '../../user/UserInfoOwner';
 import EditBtn from '../../button/edit/EditBtn';
 import ReMoveBtn from '../../button/remove/ReMoveBtn';

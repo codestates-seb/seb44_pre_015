@@ -36,6 +36,11 @@ export const Title = tw.div`
   mb-2
 `;
 
+export const TopContainer = tw.div`
+  flex 
+  items-center
+`
+
 export const Horizontal = tw.hr`
   border-gray-300
   my-4
