@@ -33,21 +33,3 @@ export const AnswerBox = tw.div`
   border-solid
   p-3
 `
-
-export const Button = tw.button`
-  text-sm
-  text-white
-  rounded-full
-  px-6
-  py-2
-  transition duration-300 ease-in-out
-  max-md:text-xs
-`;
-
-export const AnswerButton = tw(Button)`
-  bg-[#FFA564]  
-  border-solid
-  border-[0.1rem]
-  border-[#FF7E22]
-  hover:bg-[#FF7E22]
-`

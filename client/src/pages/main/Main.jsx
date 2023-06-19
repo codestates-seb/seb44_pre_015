@@ -7,7 +7,7 @@ import InputSection from "../../components/question/input-section/InputSection"
 export default function Main() {
   return (
     <MainContainer>
-      <InputSection />
+      <InputSection/>
       <SearchBox />
       <FilterBtn />
       
