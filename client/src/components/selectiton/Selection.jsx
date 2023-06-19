@@ -1,4 +1,3 @@
-import tw from "tailwind-styled-components";
 import { AiOutlineCheck } from "react-icons/ai";
 import { SelectionContainer, SelectionText } from './Selection.styled';
 
