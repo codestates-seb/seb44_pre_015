@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { HeartButtonWrap } from "./HeartBtn.style";
 import { AiFillHeart } from 'react-icons/ai';
 
-export default function HeartButton() {
+export default function HeartBtn() {
   const [isClicked, setIsClicked] = useState(false);
   const [clickCount, setClickCount] = useState(0);
 
