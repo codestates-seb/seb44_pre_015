@@ -7,8 +7,8 @@ export const UserInfoContainer = tw.section`
 `
 
 export const UserImg = tw.div`
-  w-12
-  h-12
+  w-10
+  h-10
   rounded-full
   flex
   item-center
