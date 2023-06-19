@@ -1,7 +1,9 @@
 import HeartBtn from "../../button/like/HeartBtn";
 import UserInfoOwner from "../../user/UserInfoOwner";
+import SelectionBtn from '../../selection/SelectionBtn'
+import CommentBtn from '../../button/comment/CommentBtn'
 
-import { HeartUser,AllWrap,CommentTopSectionWrap, SelectionWrap, CommentMiddleSectionWrap, CommentAdd } from "./CommentSection.styled";
+import { HeartUser,AllWrap, CommentTopSectionWrap, CommentBottomSectionWrap, Comment, CommentAdd } from "./CommentSection.styled";
 
 export default function CommentSection() {
     return (
@@ -11,12 +13,15 @@ export default function CommentSection() {
           <HeartBtn />
           <UserInfoOwner />
           </HeartUser>
-          <SelectionWrap>✓Selection</SelectionWrap>
+          <SelectionBtn />
         </CommentTopSectionWrap>
-        <CommentMiddleSectionWrap>
+
+        <CommentBottomSectionWrap>
+        <Comment>
           I am using CameraX API and its ImageAnalysis to analyze each frame. Processing of frames takes some time and imageReader buffer gets filled resulting in this error - [ImageReader-...
-        </CommentMiddleSectionWrap>
-        <CommentAdd>댓글쓰기</CommentAdd>
+        </Comment>
+        <CommentBtn />
+        </CommentBottomSectionWrap>
       </AllWrap>
     );
   }

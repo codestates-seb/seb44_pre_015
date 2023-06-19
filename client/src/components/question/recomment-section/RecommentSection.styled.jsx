@@ -1,10 +1,9 @@
 import tw from 'tailwind-styled-components'
 
 export const RecommentSectionContainer = tw.div`
-  m-auto
   w-[40rem]
   max-sm:w-[30rem]
-  p-3
+  pl-9
 `
 
 export const TopSection = tw.div`

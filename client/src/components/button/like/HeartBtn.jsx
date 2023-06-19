@@ -18,9 +18,9 @@ export default function HeartBtn() {
   return (
     <div>
       <HeartButtonWrap onClick={handleClick}>
-        <AiFillHeart className={isClicked ? "text-orange-500" : "text-gray-300"} />
+        <AiFillHeart className={isClicked ? "text-orange-500" : "text-gray-300"} style={{fontSize : '13px'}}/>
       </HeartButtonWrap>
-      <p className="ml-2.5">{clickCount}</p>
+      <p className="ml-2.5 text-xs text-[#797979]">{clickCount}</p>
     </div>
   );
 }

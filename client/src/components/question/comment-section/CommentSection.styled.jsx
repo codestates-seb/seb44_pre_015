@@ -1,39 +1,28 @@
 import tw from "tailwind-styled-components";
 
 export const AllWrap = tw.div`
-  w-9/12
+  w-[40rem]
+  max-sm:w-[30rem]
   flex
   flex-col
   justify-between
-  mx-auto
 `;
 
 export const CommentTopSectionWrap = tw.div`
   flex
   justify-between
   items-center
-  pr-2
-  w-11/12
 `;
 
-export const SelectionWrap = tw.div`
-  w-24
-  h-8
-  rounded-full
-  bg-white
-  flex
-  items-center
-  justify-center
-  border
-  border-gray-300
-  text-lime-500
-  font-bold
+export const CommentBottomSectionWrap = tw.div`
+  ml-16
+`
+
+export const Comment = tw.p`
   text-sm
-`;
-
-export const CommentMiddleSectionWrap = tw.p`
-  ml-48
-  w-8/12
+  text-[#797979]
+  leading-[1rem]
+  my-3
 `;
 
 export const CommentAdd = tw.button`
@@ -47,10 +36,9 @@ export const CommentAdd = tw.button`
   ml-48
   mt-3
 `;
+
 export const HeartUser = tw.div `
   flex
-  flex-row
-  justify-around
-  w-96
-  
+  gap-3
+  items-center
 `;

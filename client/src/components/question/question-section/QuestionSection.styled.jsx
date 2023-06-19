@@ -1,7 +1,8 @@
 import tw from 'tailwind-styled-components';
 
 export const EditContainer = tw.div`
-  w-1/2
+  w-[40rem]
+  max-sm:w-[30rem]
   mx-auto
 `;
 
