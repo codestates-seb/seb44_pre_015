@@ -1,5 +1,7 @@
 package com.mzdevelopers.serverapplication.answervote.controller;
 
+import com.mzdevelopers.serverapplication.answer.entity.Answer;
+import com.mzdevelopers.serverapplication.answer.service.AnswerService;
 import com.mzdevelopers.serverapplication.answervote.dto.AnswerVoteDto;
 import com.mzdevelopers.serverapplication.answervote.entity.AnswerVote;
 import com.mzdevelopers.serverapplication.answervote.mapper.AnswerVoteMapper;
@@ -14,10 +16,15 @@ import org.springframework.web.bind.annotation.*;
 public class AnswerVoteController {
     private final AnswerVoteService answerVoteService;
 
+    private final AnswerService answerService;
+
     private final AnswerVoteMapper mapper;
 
-    public AnswerVoteController(AnswerVoteService answerVoteService, AnswerVoteMapper mapper) {
+    public AnswerVoteController(AnswerVoteService answerVoteService,
+                                AnswerService answerService,
+                                AnswerVoteMapper mapper) {
         this.answerVoteService = answerVoteService;
+        this.answerService = answerService;
         this.mapper = mapper;
     }
 
@@ -25,9 +32,11 @@ public class AnswerVoteController {
     public ResponseEntity postAnswerVote(@PathVariable("answer-id") Long answerId,
                                          @RequestBody AnswerVoteDto.Post requestBody){
         requestBody.setAnswerId(answerId);
-        AnswerVote answerVote = answerVoteService.createAnswerVote(mapper.postDtoToAnswerVote(requestBody));
+        Answer answer = answerService.findAnswer(answerId);
+        AnswerVote answerVote = answerVoteService.createAnswerVote(mapper.postDtoToAnswerVote(requestBody),answer);
 
         return new ResponseEntity(mapper.answerVoteToAnswerVoteDtoResponse(answerVote), HttpStatus.CREATED);
+//        return new ResponseEntity(answerVote, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{answer-vote-id}/answer-vote")

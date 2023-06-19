@@ -7,5 +7,13 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface AnswerVoteMapper {
     AnswerVote postDtoToAnswerVote(AnswerVoteDto.Post requestBody);
-    AnswerVoteDto.Response answerVoteToAnswerVoteDtoResponse(AnswerVote answerVote);
+    default AnswerVoteDto.Response answerVoteToAnswerVoteDtoResponse(AnswerVote answerVote){
+        AnswerVoteDto.Response answerVoteResponse = new AnswerVoteDto.Response(
+                answerVote.getAnswerVoteId(),
+                answerVote.getMemberId(),
+                answerVote.getAnswer().getAnswerId(),
+                answerVote.isAnswerVoted()
+        );
+        return answerVoteResponse;
+    }
 }

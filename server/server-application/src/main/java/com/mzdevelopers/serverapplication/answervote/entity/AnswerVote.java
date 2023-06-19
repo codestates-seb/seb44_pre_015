@@ -19,12 +19,12 @@ public class AnswerVote {
     @Column
     private boolean isAnswerVoted;
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
 
-//    @JsonIgnore
+
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "MEMBER_ID")
 //    private Member member;
