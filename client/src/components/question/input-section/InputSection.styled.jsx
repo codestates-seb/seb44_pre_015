@@ -1,7 +1,8 @@
 import tw from "tailwind-styled-components";
 
 export const InputFormContainer = tw.section`
-  w-full
+  w-[40rem]
+  max-sm:w-[30rem]
   flex
   flex-col
   gap-3

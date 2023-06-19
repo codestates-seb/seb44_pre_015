@@ -1,5 +1,5 @@
-import HeartBtn from "../../like/HeartBtn";
-import UserInfoOwner from "../../../user/UserInfoOwner";
+import HeartBtn from "../../button/like/HeartBtn";
+import UserInfoOwner from "../../user/UserInfoOwner";
 
 import { HeartUser,AllWrap,CommentTopSectionWrap, SelectionWrap, CommentMiddleSectionWrap, CommentAdd } from "./CommentSection.styled";
 
