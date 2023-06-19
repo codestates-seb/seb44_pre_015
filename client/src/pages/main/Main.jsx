@@ -6,7 +6,6 @@ import MainPostCard from '../../components/card/MainPostCard'
 export default function Main() {
   return (
     <MainContainer>
-      
       <SearchBox />
       <FilterBtn />
       
