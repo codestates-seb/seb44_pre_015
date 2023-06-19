@@ -1,4 +1,4 @@
-import { OrangeBtn } from "../../components/button/Button.styled"
+import { OrangeBtn } from "../Button.styled"
 
 export default function QuestionBtn() {
   return (
