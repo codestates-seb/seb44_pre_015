@@ -27,12 +27,12 @@ public class Answer {
     @Column(nullable = false)
     private boolean solutionStatus=false;
 
-//    @JsonIgnore
+
 //    @ManyToOne
 //    @JoinColumn(name = "QUESTION_ID")
 //    private Question question;
 //
-//    @JsonIgnore
+
 //    @ManyToOne
 //    @JoinColumn(name = "MEMBER_ID")
 //    private Member member;
