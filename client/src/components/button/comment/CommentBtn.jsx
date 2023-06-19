@@ -1,4 +1,4 @@
-import { CommentButton } from "../../components/button/CommentBtn.styled"
+import { CommentButton } from './CommentBtn.styled'
 
 export default function CommentBtn() {
   return (
