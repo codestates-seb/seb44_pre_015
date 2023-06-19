@@ -1,13 +1,6 @@
 import tw from "tailwind-styled-components";
 import { AiOutlineCheck } from "react-icons/ai";
-
-const SelectionContainer = tw.div`
-  flex
-`;
-
-const SelectionText = tw.span`
-  ${({isChecked}) => ( "text-[#03B800]" || "text-[#DCDCDC]") }
-`;
+import { SelectionContainer, SelectionText } from './Selection.styled';
 
 export default function Selection({ isChecked }) {
   return (
