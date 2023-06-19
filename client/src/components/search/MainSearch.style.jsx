@@ -6,10 +6,10 @@ export const CenteredContainer = tw.div`
 export const MainSearchContainer = tw.div`
     flex items-center justify-center
     w-[400px] 
-    bg-white border border-gray-200
+    bg-[#F7F7F7] border border-gray-200
     rounded-full
     px-3 py-3
-    
+    mt-16
 `;
 
 export const MainSearchInput = tw.input`
@@ -18,6 +18,7 @@ export const MainSearchInput = tw.input`
     w-full
     rounded-2xl
     text-m
+    
 `;
 
 export const MainSearchIconWrap = tw.div`
