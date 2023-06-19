@@ -12,9 +12,6 @@ export default function App() {
         <Route path="/login" element={<LoginBox />}></Route>
       </Routes>
 
-
-
-
       <Footer />
     </BrowserRouter>
   );
