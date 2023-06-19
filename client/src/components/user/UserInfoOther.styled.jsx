@@ -31,20 +31,8 @@ export const UserInfoData = tw.div`
 export const UserData = tw.span`
   text-sm
   base
-  text-[#797979]
+  text-black
+  font-semibold
   pr-2
   relative
-  
-  after:absolute
-  after:top-2/4
-  after:right-0
-  after:translate-y-[-50%]
-  after:translate-x-[-50%]
-  after:block
-  after:w-px
-  after:h-3
-  after:bg-[#797979]
-
-  last:pr-0
-  last:after:hidden
 `
