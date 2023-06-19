@@ -1,6 +1,6 @@
 import { MainPostCardContainer,CardTopSection, CardMiddleSection, CardBottomSection, TitleText, ContentText, Counters, CountContainer, CountText } from './MainPostCard.styled'
 import UserInfoOwner from '../user/UserInfoOwner'
-import Selection from '../selectiton/Selection'
+import Selection from '../selection/Selection'
 import { AiFillHeart, AiFillEye } from 'react-icons/ai'
 import { IoChatbubble } from 'react-icons/io5'
 import Tags from '../tag/Tags'

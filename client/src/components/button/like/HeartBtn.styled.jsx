@@ -1,7 +1,6 @@
 import tw from "tailwind-styled-components";
 
-import { Button } from "../../components/button/Button.styled";
-export const HeartButtonWrap = tw(Button)`
+export const HeartButtonWrap = tw.button`
   bg-white 
   py-2 
   px-2
