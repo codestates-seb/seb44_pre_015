@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { HeartButtonWrap } from "./HeartBtn.style";
+import { useState } from "react";
+import { HeartButtonWrap } from "./HeartBtn.styled";
 import { AiFillHeart } from 'react-icons/ai';
 
 export default function HeartBtn() {
