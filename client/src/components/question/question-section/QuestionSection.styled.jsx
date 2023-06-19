@@ -41,3 +41,7 @@ export const Horizontal = tw.hr`
   my-4
   w-auto
 `;
+
+export const Content = tw.div`
+  ml-6
+`

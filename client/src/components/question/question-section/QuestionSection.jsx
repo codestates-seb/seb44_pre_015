@@ -11,7 +11,8 @@ import {
   Horizontal,
   QuestionContainer,
   User,
-  Title
+  Title,
+  Content
 } from './QuestionSection.styled';
 
 export default function QuestionSection() {
@@ -38,10 +39,10 @@ export default function QuestionSection() {
 
       <Horizontal />
       
-      <div>
+      <Content>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, dolore impedit sequi exercitationem molestias deserunt quia ab nostrum quaerat, ratione dolorem sunt placeat quo obcaecati. Laborum vel sunt quas nihil!
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, dolore impedit sequi exercitationem molestias deserunt quia ab nostrum quaerat, ratione dolorem sunt placeat quo obcaecati. Laborum vel sunt quas nihil!
-      </div>
+      </Content>
     </EditContainer>
   );
 }
