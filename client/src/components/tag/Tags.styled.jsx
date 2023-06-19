@@ -3,7 +3,6 @@ import tw from "tailwind-styled-components";
 export const TagContainer = tw.div`
   flex
   gap-1
-  transition duration-300 ease-in-out
 `
 
 export const Tag = tw.span`
