@@ -63,10 +63,4 @@ public class CommentService {
         return findComment;
     }
 
-    private void verifyExistsQuestion(Comment comment){
-        Optional<Comment> optionalComment =commentRepository.findByAnswer(comment.getAnswer());
-        if(optionalComment.isEmpty())
-            throw new RuntimeException("Answer Not Found in Comment");
-    }
-
 }
