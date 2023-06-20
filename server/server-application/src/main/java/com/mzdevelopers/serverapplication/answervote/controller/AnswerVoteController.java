@@ -20,24 +20,17 @@ import javax.validation.Valid;
 public class AnswerVoteController {
     private final AnswerVoteService answerVoteService;
 
-    private final AnswerService answerService;
-
     private final AnswerVoteMapper mapper;
 
-    public AnswerVoteController(AnswerVoteService answerVoteService,
-                                AnswerService answerService,
-                                AnswerVoteMapper mapper) {
+    public AnswerVoteController(AnswerVoteService answerVoteService, AnswerVoteMapper mapper) {
         this.answerVoteService = answerVoteService;
-        this.answerService = answerService;
         this.mapper = mapper;
     }
 
     @PostMapping("/{answer-id}/answer-vote")
     public ResponseEntity postAnswerVote(@PathVariable("answer-id") Long answerId,
                                          @Valid @RequestBody AnswerVoteDto.Post requestBody){
-        requestBody.setAnswerId(answerId);
-        Answer answer = answerService.findAnswer(answerId);
-        AnswerVote answerVote = answerVoteService.createAnswerVote(mapper.postDtoToAnswerVote(requestBody),answer);
+        AnswerVote answerVote = answerVoteService.createAnswerVote(mapper.answerVotePostDtoToAnswerVote(requestBody));
 
         return new ResponseEntity(mapper.answerVoteToAnswerVoteDtoResponse(answerVote), HttpStatus.CREATED);
 //        return new ResponseEntity(answerVote, HttpStatus.CREATED);

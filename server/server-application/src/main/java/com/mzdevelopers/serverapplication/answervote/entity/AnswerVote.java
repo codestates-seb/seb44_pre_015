@@ -17,7 +17,7 @@ public class AnswerVote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long answerVoteId;
     @Column
-    private boolean isAnswerVoted;
+    private boolean answerVoted;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,4 +33,8 @@ public class AnswerVote {
 //    private long answerId;
     @Column
     private long memberId;
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+    }
 }

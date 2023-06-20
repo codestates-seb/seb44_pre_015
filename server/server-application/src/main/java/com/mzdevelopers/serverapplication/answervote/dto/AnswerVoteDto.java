@@ -1,5 +1,6 @@
 package com.mzdevelopers.serverapplication.answervote.dto;
 
+import com.mzdevelopers.serverapplication.answer.entity.Answer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,9 +14,14 @@ public class AnswerVoteDto {
         @Positive
         private long memberId;
         @Positive
-        @Setter
         private long answerId;
-        private boolean isAnswerVoted;
+        private boolean answerVoted;
+
+        public Answer getAnswer(){
+            Answer answer = new Answer();
+            answer.setAnswerId(answerId);
+            return answer;
+        }
     }
     @Getter
     @AllArgsConstructor
@@ -23,6 +29,6 @@ public class AnswerVoteDto {
         private long answerVoteId;
         private long memberId;
         private long answerId;
-        private boolean isAnswerVoted;
+        private boolean answerVoted;
     }
 }

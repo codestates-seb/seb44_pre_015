@@ -26,20 +26,16 @@ import java.util.List;
 @Slf4j
 public class CommentController {
     private final CommentService commentService;
-    private final AnswerService answerService;
-
     private final CommentMapper mapper;
 
-    public CommentController(CommentService commentService, AnswerService answerService, CommentMapper mapper) {
+    public CommentController(CommentService commentService, CommentMapper mapper) {
         this.commentService = commentService;
-        this.answerService = answerService;
         this.mapper = mapper;
     }
 
     @PostMapping
     public ResponseEntity postComment(@Valid @RequestBody CommentDto.Post requestBody){
-        Answer commentAnswer = answerService.findAnswer(requestBody.getAnswerId()); //comment에 있는 Answer존재유무까지 확인가능
-        Comment createComment = commentService.createComment(mapper.commentPostToComment(requestBody), commentAnswer);
+        Comment createComment = commentService.createComment(mapper.commentPostToComment(requestBody));
 
         return new ResponseEntity(mapper.commentToCommentResponse(createComment), HttpStatus.CREATED);
 //        return new ResponseEntity(createComment, HttpStatus.CREATED);

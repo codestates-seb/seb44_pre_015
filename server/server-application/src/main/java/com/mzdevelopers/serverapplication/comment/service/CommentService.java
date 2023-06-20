@@ -1,6 +1,7 @@
 package com.mzdevelopers.serverapplication.comment.service;
 
 import com.mzdevelopers.serverapplication.answer.entity.Answer;
+import com.mzdevelopers.serverapplication.answer.service.AnswerService;
 import com.mzdevelopers.serverapplication.comment.entity.Comment;
 import com.mzdevelopers.serverapplication.comment.repository.CommentRepository;
 import org.springframework.data.domain.Page;
@@ -17,14 +18,15 @@ import java.util.Optional;
 @Service
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final AnswerService answerService;
 
-    public CommentService(CommentRepository commentRepository) {
+    public CommentService(CommentRepository commentRepository, AnswerService answerService) {
         this.commentRepository = commentRepository;
+        this.answerService = answerService;
     }
 
-    public Comment createComment(Comment comment, Answer answer){
-        comment.setAnswer(answer);
-
+    public Comment createComment(Comment comment){
+        verifyComment(comment);
         return commentRepository.save(comment);
     }
 
@@ -63,4 +65,7 @@ public class CommentService {
         return findComment;
     }
 
+    private void verifyComment(Comment comment){
+        answerService.findVerifiedAnswer(comment.getAnswer().getAnswerId());
+    }
 }

@@ -11,7 +11,18 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CommentMapper {
-    Comment commentPostToComment(CommentDto.Post requestBody);
+    default Comment commentPostToComment(CommentDto.Post commentPostDto){
+        Comment comment = new Comment();
+
+        Answer answer = new Answer();
+        answer.setAnswerId(commentPostDto.getAnswerId());
+
+        comment.setCommentDetail(commentPostDto.getCommentDetail());
+        comment.setAnswer(answer);
+        comment.setMemberId(commentPostDto.getMemberId());
+
+        return comment;
+    }
     Comment commentPatchToComment(CommentDto.Patch requestBody);
 //    CommentDto.Response commentToCommentResponse(Comment comment);
     default CommentDto.Response commentToCommentResponse(Comment comment){

@@ -64,11 +64,11 @@ public class AnswerVoteControllerRestDocsTest {
         AnswerVoteDto.Post post = new AnswerVoteDto.Post(2,answerId,true);
         String postContent =gson.toJson(post);
 
-        given(mapper.postDtoToAnswerVote(Mockito.any(AnswerVoteDto.Post.class))).willReturn(new AnswerVote());
+        given(mapper.answerVotePostDtoToAnswerVote(Mockito.any(AnswerVoteDto.Post.class))).willReturn(new AnswerVote());
         long postAnswerVoteId = 1L;
         AnswerVote mockResultAnswerVote = new AnswerVote();
         mockResultAnswerVote.setAnswerVoteId(postAnswerVoteId);
-        given(answerVoteService.createAnswerVote(Mockito.any(AnswerVote.class),Mockito.any(Answer.class))).willReturn(mockResultAnswerVote);
+        given(answerVoteService.createAnswerVote(Mockito.any(AnswerVote.class))).willReturn(mockResultAnswerVote);
         AnswerVoteDto.Response postResponse = new AnswerVoteDto.Response(postAnswerVoteId,
                 2,
                 answerId,
@@ -93,7 +93,7 @@ public class AnswerVoteControllerRestDocsTest {
                                 List.of(
                                         fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                                         fieldWithPath("answerId").type(JsonFieldType.NUMBER).description("질문 식별자"),
-                                        fieldWithPath("isAnswerVoted").type(JsonFieldType.BOOLEAN).description("회원이 질문에 투표했는지 유무")
+                                        fieldWithPath("answerVoted").type(JsonFieldType.BOOLEAN).description("회원이 질문에 투표했는지 유무")
                                 )
                         ),
                         responseFields(
@@ -102,7 +102,7 @@ public class AnswerVoteControllerRestDocsTest {
                                         fieldWithPath("answerVoteId").type(JsonFieldType.NUMBER).description("답변투표 식별자"),
                                         fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("투표의 회원 식별자"),
                                         fieldWithPath("answerId").type(JsonFieldType.NUMBER).description("투표의 질문 식별자"),
-                                        fieldWithPath("isAnswerVoted").type(JsonFieldType.BOOLEAN).description("회원이 질문에 투표했는지 유무")
+                                        fieldWithPath("answerVoted").type(JsonFieldType.BOOLEAN).description("회원이 질문에 투표했는지 유무")
                                 )
                         )
                 ))

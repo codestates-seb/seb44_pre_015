@@ -14,13 +14,16 @@ import java.util.Optional;
 public class AnswerVoteService {
     private final AnswerVoteRepository answerVoteRepository;
 
+    private final AnswerService answerService;
 
-    public AnswerVoteService(AnswerVoteRepository answerVoteRepository) {
+
+    public AnswerVoteService(AnswerVoteRepository answerVoteRepository, AnswerService answerService) {
         this.answerVoteRepository = answerVoteRepository;
+        this.answerService = answerService;
     }
 
-    public AnswerVote createAnswerVote(AnswerVote answerVote, Answer answer) {
-        answerVote.setAnswer(answer);
+    public AnswerVote createAnswerVote(AnswerVote answerVote) {
+        verifyAnswerVote(answerVote);
         return answerVoteRepository.save(answerVote);
     }
 
@@ -33,5 +36,9 @@ public class AnswerVoteService {
         Optional<AnswerVote> optionalAnswerVote = answerVoteRepository.findById(answerVoteId);
         AnswerVote findAnswerVote = optionalAnswerVote.orElseThrow(() ->new RuntimeException("NOT FOUND"));
         return findAnswerVote;
+    }
+
+    private void verifyAnswerVote(AnswerVote answerVote){
+        answerService.findVerifiedAnswer(answerVote.getAnswer().getAnswerId());
     }
 }

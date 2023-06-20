@@ -68,7 +68,7 @@ public class CommentControllerRestDocsTest {
         long postCommentId = 1L;
         Comment mockResultComment =  new Comment();
         mockResultComment.setCommentId(postCommentId);
-        given(commentService.createComment(Mockito.any(Comment.class),Mockito.any(Answer.class))).willReturn(mockResultComment);
+        given(commentService.createComment(Mockito.any(Comment.class))).willReturn(mockResultComment);
         CommentDto.Response postResponse = new CommentDto.Response(postCommentId,
                 "첫번째 답변의 댓글",
                 1,
