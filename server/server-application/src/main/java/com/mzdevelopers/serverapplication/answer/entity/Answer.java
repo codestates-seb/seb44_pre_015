@@ -1,6 +1,7 @@
 package com.mzdevelopers.serverapplication.answer.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mzdevelopers.serverapplication.answervote.entity.AnswerVote;
 import com.mzdevelopers.serverapplication.comment.entity.Comment;
 import com.mzdevelopers.serverapplication.question.entity.Question;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class Answer {
     private String detail;
 
     @Column(nullable = false)
-    private int votesCount=0;
+    private int votesCount;
 
     @Column(nullable = false)
     private boolean solutionStatus=false;
@@ -39,12 +40,17 @@ public class Answer {
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
 
-
-//    @ManyToOne
-//    @JoinColumn(name = "MEMBER_ID")
-//    private Member member;
-//
-
     @Column(nullable = false) //스텁데이터
     private long memberId;
+
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
+    private List<AnswerVote> answerVotes;
+
+    public void updateVoteCount(boolean voted) {
+        if (voted) {
+            votesCount++;
+        } else {
+            votesCount--;
+        }
+    }
 }

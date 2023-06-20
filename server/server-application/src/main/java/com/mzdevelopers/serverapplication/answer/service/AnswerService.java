@@ -2,8 +2,14 @@ package com.mzdevelopers.serverapplication.answer.service;
 
 import com.mzdevelopers.serverapplication.answer.entity.Answer;
 import com.mzdevelopers.serverapplication.answer.repository.AnswerRepository;
+import com.mzdevelopers.serverapplication.answervote.entity.AnswerVote;
+import com.mzdevelopers.serverapplication.answervote.repository.AnswerVoteRepository;
 import com.mzdevelopers.serverapplication.question.entity.Question;
+import com.mzdevelopers.serverapplication.question.entity.QuestionVote;
 import com.mzdevelopers.serverapplication.question.repository.QuestionRepository;
+import com.mzdevelopers.serverapplication.question.stub.MemberStub;
+import com.mzdevelopers.serverapplication.question.stub.MemberStubRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -16,14 +22,14 @@ import java.util.Optional;
 
 @Transactional
 @Service
+@RequiredArgsConstructor
 public class AnswerService {
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
+    private final AnswerVoteRepository answerVoteRepository;
+    private final MemberStubRepository memberStubRepository;
 
-    public AnswerService(AnswerRepository answerRepository, QuestionRepository questionRepository) {
-        this.answerRepository = answerRepository;
-        this.questionRepository = questionRepository;
-    }
+
 
     public Answer createAnswer(Answer answer){
         Question findQuestion = questionRepository.findByQuestionId(answer.getQuestion().getQuestionId());
@@ -73,4 +79,33 @@ public class AnswerService {
         return optionalAnswer.orElseThrow();
     }
 
+
+    public int votesCount(long answerId, long memberId) {
+        Answer findAnswer = findByAnswerId(answerId);
+        MemberStub memberStub = save();
+        Optional<AnswerVote> optionalAnswerVote = answerVoteRepository.findByAnswerAndMemberStub(findAnswer, memberStub);
+        if (optionalAnswerVote.isEmpty()) {
+            AnswerVote answerVote = AnswerVote.builder().answer(findAnswer).memberStub(memberStub).build();
+            findAnswer.updateVoteCount(true);
+            answerVoteRepository.save(answerVote);
+        } else {
+            AnswerVote findAnswerVote = optionalAnswerVote.get();
+            findAnswerVote.updateVote();
+            answerVoteRepository.save(findAnswerVote);
+            findAnswer.updateVoteCount(findAnswerVote.isAnswerVoted());
+        }
+        Answer updatedAnswer = answerRepository.save(findAnswer);
+        return updatedAnswer.getVotesCount();
+    }
+
+    public Answer findByAnswerId(Long answerId) {
+        Optional<Answer> findAnswer = answerRepository.findById(answerId);
+        return findAnswer.orElseThrow(() -> new IllegalArgumentException("No Search Question: " + answerId));
+    }
+
+    public MemberStub save(){
+        MemberStub memberStub = MemberStub.builder().name("member").build();
+        memberStubRepository.save(memberStub);
+        return memberStubRepository.findById(1L).orElseGet(null);
+    }
 }

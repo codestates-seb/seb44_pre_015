@@ -2,6 +2,9 @@ package com.mzdevelopers.serverapplication.answervote.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mzdevelopers.serverapplication.answer.entity.Answer;
+import com.mzdevelopers.serverapplication.question.entity.Question;
+import com.mzdevelopers.serverapplication.question.stub.MemberStub;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,10 +34,18 @@ public class AnswerVote {
 
 //    @Column
 //    private long answerId;
-    @Column
-    private long memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id", referencedColumnName = "memberId")
+    private MemberStub memberStub;
 
-    public void setAnswer(Answer answer) {
+    @Builder
+    public AnswerVote(Answer answer, MemberStub memberStub) {
         this.answer = answer;
+        this.memberStub = memberStub;
+        this.answerVoted = true;
+    }
+
+    public void updateVote() {
+        this.answerVoted = !answerVoted;
     }
 }
