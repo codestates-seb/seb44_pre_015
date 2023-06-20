@@ -7,7 +7,5 @@ export const OrangeCircle = tw.div `
     border-solid
     bg-orange-500
     rounded-full
-    mt-1
-    
 `;
 
