@@ -12,7 +12,7 @@ import {
   GithubBtn,
 } from "./LoginBox.styled.jsx";
 import githubimg from "../../assets/githubimg.png";
-import logo from "../../assets/logo-stackoverflow.svg";
+import logo from "../../assets/logo-stackoverflow.sv`g";
 
 const LoginBox = () => {
   return (
