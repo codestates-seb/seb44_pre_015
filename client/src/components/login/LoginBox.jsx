@@ -9,10 +9,12 @@ import {
   Logintext,
   Wrap,
   IconWrap,
-  GithubBtn,
+  GoogleBtn,
+  NaverBtn
 } from "./LoginBox.styled.jsx";
-import githubimg from "../../assets/githubimg.png";
-import logo from "../../assets/logo-stackoverflow.sv`g";
+import googleimg from "../../assets/googleimg.svg";
+import Naverimg from "../../assets/naverimg.svg";
+import logo from "../../assets/logo-stackoverflow.svg";
 
 const LoginBox = () => {
   return (
@@ -47,16 +49,26 @@ const LoginBox = () => {
             Earn reputation and badges
           </Logintext>
         </Wrap>
-        <GithubBtn>
+        <GoogleBtn>
           <img
-            src={githubimg}
+            src={googleimg}
             style={{ display: "inline" }}
-            className="githubimg"
-            width="38px"
-            alt="깃헙 로그인"
+            className="googleimg"
+            width="28px"
+            alt="구글 로그인"
           />{" "}
-          Sign up with Github
-        </GithubBtn>
+          Sign up with Google
+        </GoogleBtn>
+        <NaverBtn>
+          <img
+            src={Naverimg}
+            style={{ display: "inline" }}
+            className="naverimg"
+            width="19px"
+            alt="네이버 로그인"
+          />{" "}
+          Sign up with Naver
+        </NaverBtn>
       </Loginbox>
     </GlobalStyle>
   );

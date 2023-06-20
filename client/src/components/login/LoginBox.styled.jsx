@@ -22,15 +22,30 @@ export const Loginbox = tw.div`
     pt-10
 `;
 
-export const GithubBtn = tw.button`
-    bg-black
+export const GoogleBtn = tw.button`
+    bg-white
     w-96
     h-10
-    rounded-xl
+    rounded-lg
     text-center
-    text-lg
+    text-sm
+    text-slate-300
+    border
+    font-semibold
+    
+`;
+
+export const NaverBtn = tw.button `
+    bg-lime-500
+    w-96
+    h-10
+    rounded-lg
+    text-center
+    text-sm
     text-white
     mb-8
+    border
+    font-semibold
 `;
 
 export const HeadText = tw.p`
@@ -55,3 +70,4 @@ export const IconWrap = tw.div`
     text-xl
     mr-4
 `;
+
