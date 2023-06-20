@@ -3,7 +3,8 @@ import LoginBtn from "../button/login/LoginBtn";
 import Logo from "../../assets/logo-stackoverflow.svg"
 import { HeaderContainer, LogoContainer, LogoImg, Nav } from "../common/Header.styled"
 
-export default function Header(){
+export default function Header() {
+
   return (
     <HeaderContainer>
       <LogoContainer>

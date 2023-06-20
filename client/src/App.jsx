@@ -7,6 +7,21 @@ import Detail from './pages/detail/Detail'
 import Question from './pages/question/Question'
 
 export default function App() {
+
+  const getAPIData = () => {
+    fetch('/questions/recent?page=0&size=10', {
+      headers: {
+        Accept: "application / json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  };
+
+  getAPIData()
+
+  
   return (
     <BrowserRouter>
       <Header />
