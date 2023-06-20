@@ -4,6 +4,8 @@ export const QuestionWrap = tw.div`
     flex
     items-center
     gap-1
+    w-[40rem]
+    max-sm:w-[29rem]
 `;
 
 export const QuestionHeadWrap = tw.div`

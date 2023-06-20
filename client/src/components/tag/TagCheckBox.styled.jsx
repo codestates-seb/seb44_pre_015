@@ -1,17 +1,16 @@
 import tw from "tailwind-styled-components";
 
 export const TagCheckContainer = tw.div`
-  w-full
+  w-[40rem]
+  max-sm:w-[29rem]
   flex
   flex-wrap
   gap-2
-
   max-md:gap-1
 `
 
 export const TagCheck = tw.input` 
   hidden
-
   [&:checked+label]:text-black
   [&:checked+label]:border-[#FFA564]
   [&:checked+label:after]:bg-[#FFA564]
@@ -20,6 +19,7 @@ export const TagCheck = tw.input`
 export const TagLabel = tw.label`
   cursor-pointer
   w-[23.94%]
+  max-sm:w-[30%]
   flex
   justify-between
   items-center

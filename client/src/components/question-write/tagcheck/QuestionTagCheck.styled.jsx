@@ -3,7 +3,8 @@ import tw from "tailwind-styled-components";
 export const QuestionTitWrap = tw.div`
   flex
   flex-col
-  w-full
+  w-[40rem]
+  max-sm:w-[29rem]
 `;
 
 export const QuestionTit = tw.h3`
