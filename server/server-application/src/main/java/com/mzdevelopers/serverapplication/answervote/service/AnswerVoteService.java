@@ -5,9 +5,11 @@ import com.mzdevelopers.serverapplication.answer.service.AnswerService;
 import com.mzdevelopers.serverapplication.answervote.entity.AnswerVote;
 import com.mzdevelopers.serverapplication.answervote.repository.AnswerVoteRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Transactional
 @Service
 public class AnswerVoteService {
     private final AnswerVoteRepository answerVoteRepository;

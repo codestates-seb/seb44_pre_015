@@ -8,11 +8,15 @@ import com.mzdevelopers.serverapplication.answervote.mapper.AnswerVoteMapper;
 import com.mzdevelopers.serverapplication.answervote.service.AnswerVoteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/answers")
+@Validated
 public class AnswerVoteController {
     private final AnswerVoteService answerVoteService;
 
@@ -30,7 +34,7 @@ public class AnswerVoteController {
 
     @PostMapping("/{answer-id}/answer-vote")
     public ResponseEntity postAnswerVote(@PathVariable("answer-id") Long answerId,
-                                         @RequestBody AnswerVoteDto.Post requestBody){
+                                         @Valid @RequestBody AnswerVoteDto.Post requestBody){
         requestBody.setAnswerId(answerId);
         Answer answer = answerService.findAnswer(answerId);
         AnswerVote answerVote = answerVoteService.createAnswerVote(mapper.postDtoToAnswerVote(requestBody),answer);
