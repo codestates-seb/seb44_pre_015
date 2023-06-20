@@ -156,7 +156,7 @@ class QuestionControllerTest {
         ReflectionTestUtils.setField(tag2, "tagDescription", "tag2");
         List<TagDto> tags = Arrays.asList(tag1, tag2);
 
-        given(questionService.getQuestion(questionId, memberId)).willReturn(question);
+        given(questionService.getQuestion(questionId, memberId)).willReturn(new QuestionResponseDto());
         QuestionResponseDto responseDto = new QuestionResponseDto();
         BeanUtils.copyProperties(question, responseDto);
         given(questionMapper.questionToQuestionResponseDto(question)).willReturn(responseDto);

@@ -1,5 +1,6 @@
 package com.mzdevelopers.serverapplication.question.dto;
 
+import com.mzdevelopers.serverapplication.answer.entity.Answer;
 import com.mzdevelopers.serverapplication.question.stub.StubAnswer;
 import com.mzdevelopers.serverapplication.tag.dto.TagDto;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class QuestionResponseDto {
     private int viewCount;
     private Long memberId;
     private List<TagDto> tags;
-    private List<StubAnswer> answers;
+    private List<Answer> answers;
     private String createdAt;
     private String updatedAt;
 }

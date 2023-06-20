@@ -6,6 +6,7 @@ import com.mzdevelopers.serverapplication.tag.entity.QuestionTag;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -82,5 +83,10 @@ public class Question extends BaseEntity{
 
     public void setQuestionId(Long questionId) {
         this.questionId = questionId;
+    }
+
+    public List<Answer> getAnswers() {
+        Hibernate.initialize(answers);
+        return answers;
     }
 }

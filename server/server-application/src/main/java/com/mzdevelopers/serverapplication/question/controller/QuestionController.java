@@ -20,6 +20,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/questions")
 @RequiredArgsConstructor
 public class QuestionController {
@@ -43,13 +44,8 @@ public class QuestionController {
     @GetMapping("/{questionId}/{memberId}")
     public ResponseEntity<QuestionResponseDto> getQuestion(@PathVariable("questionId") long questionId,
                                                            @PathVariable long memberId) {
-        Question findQuestion = questionService.getQuestion(questionId, memberId);
-        QuestionResponseDto responseDto = questionMapper
-                .questionToQuestionResponseDto(findQuestion);
-
-        responseDto.setAnswers(questionService.stubAnswerList());
-        responseDto.setTags(questionService.findByQuestionTag(findQuestion));
-        return ResponseEntity.ok(responseDto);
+        QuestionResponseDto findQuestion = questionService.getQuestion(questionId, memberId);
+        return ResponseEntity.ok(findQuestion);
     }
 
     // 질문 수정
@@ -83,6 +79,7 @@ public class QuestionController {
     }
 
     // api 별 질문 리스트 반환
+    @CrossOrigin
     @GetMapping("/{api}")
     public ResponseEntity<?> getQuestionsByAPI(@PathVariable("api") String api,
                                                @RequestParam(defaultValue = "0") int page,
@@ -90,11 +87,8 @@ public class QuestionController {
         List<Question> questions = questionService.questionsListByAPI(page, size, api);
         List<QuestionResponseDto> responseDtoList = new ArrayList<>();
         for (Question question : questions) {
-            QuestionResponseDto dto = questionMapper.questionToQuestionResponseDto(question);
-            dto.setAnswers(questionService.stubAnswerList());
-            dto.setTags(questionService.findByQuestionTag(question));
+            QuestionResponseDto dto = questionService.getQuestion(question.getQuestionId(), question.getMemberId());
             responseDtoList.add(dto);
-
         }
         return ResponseEntity.ok(responseDtoList);
     }

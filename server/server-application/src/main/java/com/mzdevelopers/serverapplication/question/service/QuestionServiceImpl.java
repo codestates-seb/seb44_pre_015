@@ -1,5 +1,7 @@
 package com.mzdevelopers.serverapplication.question.service;
 
+import com.mzdevelopers.serverapplication.question.dto.QuestionResponseDto;
+import com.mzdevelopers.serverapplication.question.mapper.QuestionMapper;
 import com.mzdevelopers.serverapplication.question.stub.MemberStub;
 import com.mzdevelopers.serverapplication.question.stub.StubAnswer;
 import com.mzdevelopers.serverapplication.question.entity.Question;
@@ -34,6 +36,7 @@ public class QuestionServiceImpl implements QuestionService{
     private final TagRepository tagRepository;
     private final QuestionVoteRepository questionVoteRepository;
     private final MemberStubRepository memberStubRepository;
+    private final QuestionMapper questionMapper;
 
     @Override
     public long createQuestion(Question question, List<Long> tags) {
@@ -53,14 +56,17 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public Question getQuestion(long questionId, long memberId) {
+    public QuestionResponseDto getQuestion(long questionId, long memberId) {
         Question findQuestion = findByQuestionId(questionId);
+        QuestionResponseDto responseDto = questionMapper.questionToQuestionResponseDto(findQuestion);
         save(); // stub -> delete
         if(isRegisteredMember(memberId)){
             findQuestion.increaseView();
             questionRepository.save(findQuestion);
         }
-        return findQuestion;
+        responseDto.setAnswers(findQuestion.getAnswers());
+        responseDto.setTags(findByQuestionTag(findQuestion));
+        return responseDto;
     }
 
     @Override
