@@ -4,6 +4,8 @@ export const QuestionWrap = tw.div`
     flex
     ml-2
     mt-2
+    items-center
+    gap-1
 `;
 
 export const QuestionHeadWrap = tw.div`
