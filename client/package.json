@@ -32,6 +32,5 @@
     "tailwind-styled-components": "^2.2.0",
     "tailwindcss": "^3.3.2",
     "vite": "^4.3.9"
-  },
-  "proxy": "https://1517-59-11-30-105.ngrok-free.app"
+  }
 }

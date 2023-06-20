@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from 'react';
+import axios from 'axios';
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Login from './pages/login/Login'
@@ -8,15 +10,16 @@ import Question from './pages/question/Question'
 
 export default function App() {
 
-  const getAPIData = () => {
-    fetch('/questions/recent?page=0&size=10', {
-      headers: {
-        Accept: "application / json",
-      },
+
+  const getAPIData = async () => {
+    const response = await fetch('/questions/recent?page=0&size=10', {
+      headers : {
+        "Content-Type": "application/json",
+        'Accept: application/json',
+      }
     })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+    const data = await response.json();
+    console.log(data);
   };
 
   getAPIData()
