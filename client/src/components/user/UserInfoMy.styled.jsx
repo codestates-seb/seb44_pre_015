@@ -2,7 +2,7 @@ import tw from "tailwind-styled-components";
 
 export const UserInfoMyContainer = tw.section`
   flex
-  gap-5
+  gap-10
   items-center
 `
 
@@ -21,6 +21,7 @@ export const UserInfo = tw.strong`
  flex 
  items-center
  gap-1
+ text-lg
 `
 
 export const SmTit = tw.span`
@@ -31,17 +32,6 @@ export const SmTit = tw.span`
 export const NameEdit = tw.div`
   flex
   gap-1
-`
-
-export const NameInputWrapper = tw.div`
-  inline-block
-`
-
-export const NameInput = tw.input`
-  w-fit
-  outline-none
-  font-bold
-  w-[fill-available]
 `
 
 export const NameEditBtn = tw.button`
