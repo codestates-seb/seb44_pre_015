@@ -24,7 +24,7 @@ export const UserImgSm = tw(CircleImg)`
   h-10
 `
 
-export const UserImgMd = tw(CircleImg)`
-  w-28
-  h-28
+export const UserImgLg = tw(CircleImg)`
+  w-48
+  h-48
 `

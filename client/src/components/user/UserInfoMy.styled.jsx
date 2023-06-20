@@ -9,7 +9,7 @@ export const UserInfoMyContainer = tw.section`
 export const UserInfoBox = tw.div`
   flex
   flex-col
-  gap-3
+  gap-7
 `
 
 export const InfoData = tw.div`
