@@ -1,7 +1,7 @@
 import tw from "tailwind-styled-components";
 
 export const TagCheckContainer = tw.div`
-  w-7/12
+  w-full
   flex
   flex-wrap
   gap-2

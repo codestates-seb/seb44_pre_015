@@ -4,7 +4,6 @@ export const QuestionTitWrap = tw.div`
   flex
   flex-col
   w-full
-  ml-48
 `;
 
 export const QuestionTit = tw.h2`
