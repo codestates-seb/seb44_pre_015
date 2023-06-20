@@ -1,4 +1,4 @@
-import TagCheckBox from "../../../tag/TagCheckBox"
+import TagCheckBox from "../../tag/TagCheckBox"
 import { QuestionTitWrap, QuestionTit, QuestionText } from "./QuestionTagCheck.styled"
 
 export default function QuestionTagCheck() {

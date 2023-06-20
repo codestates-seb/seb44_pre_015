@@ -1,6 +1,5 @@
 import tw from "tailwind-styled-components";
 
-
 export const OrangeCircle = tw.div `
     w-2
     h-2

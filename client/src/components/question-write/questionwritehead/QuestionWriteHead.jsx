@@ -1,4 +1,4 @@
-import OrangeCircle from "./OrangeCicle"
+import OrangeCircle from "./OrangeCircle"
 import { QuestionHead, QuestionHeadWrap, QuestionWrap, QuestionHeadtext } from "./QuestionWriteHead.styled"
 
 export default function QuestionWriteHead () {
