@@ -1,0 +1,155 @@
+= Stackoverflow.com  // (1)
+:sectnums:
+:toc: left
+:toclevels: 4
+:toc-title: Table of Contents
+:source-highlighter: prettify
+
+Kim Jun Young <디스코드로 문의 바랍니다.>   // (2)
+
+v1.0.0, 2023.06.20    // (3)
+
+// (4)
+***
+== QuestionController
+=== 질문 등록
+.curl-request
+include::{snippets}/post-Question/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-Question/http-request.adoc[]
+
+.request-fields
+include::{snippets}/post-Question/request-fields.adoc[]
+
+.http-response
+include::{snippets}/post-Question/http-response.adoc[]
+
+.response-headers
+include::{snippets}/post-Question/response-headers.adoc[]
+
+=== 질문 정보 수정
+.curl-request
+include::{snippets}/patch-Question/curl-request.adoc[]
+
+.http-request
+include::{snippets}/patch-Question/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/patch-Question/path-parameters.adoc[]
+
+.request-fields
+include::{snippets}/patch-Question/request-fields.adoc[]
+
+.http-response
+include::{snippets}/patch-Question/http-response.adoc[]
+
+.response-fields
+include::{snippets}/patch-Question/response-fields.adoc[]
+
+=== 질문 정보 가져오기
+.curl-request
+include::{snippets}/get-Question/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-Question/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/get-Question/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/get-Question/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-Question/response-fields.adoc[]
+
+=== 질문 삭제
+.curl-request
+include::{snippets}/delete-Question/curl-request.adoc[]
+
+.http-request
+include::{snippets}/delete-Question/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/delete-Question/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/delete-Question/http-response.adoc[]
+
+=== 질문 리스트 가져오기 By API
+.curl-request
+include::{snippets}/get-QuestionsByAPI/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-QuestionsByAPI/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/get-QuestionsByAPI/path-parameters.adoc[]
+
+API = {recent, votes, solutions} 이 세 가지중 하나를 고르셔야합니다.
+
+.http-response
+include::{snippets}/get-QuestionsByAPI/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-QuestionsByAPI/response-fields.adoc[]
+
+=== 질문 좋아요 등록 및 해제
+
+.curl-request
+
+include::{snippets}/votesCount/curl-request.adoc[]
+
+.http-request
+
+include::{snippets}/votesCount/http-request.adoc[]
+
+.path-parameters
+
+include::{snippets}/votesCount/path-parameters.adoc[]
+
+
+.http-response
+
+include::{snippets}/votesCount/http-response.adoc[]
+
+.response-fields
+
+include::{snippets}/votesCount/response-fields.adoc[]
+
+== AnswerController
+=== 답변 등록
+.curl-request
+include::{snippets}/post-answer/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-answer/http-request.adoc[]
+
+.request-fields
+include::{snippets}/post-answer/request-fields.adoc[]
+
+.http-response
+include::{snippets}/post-answer/http-response.adoc[]
+
+.response-fields
+include::{snippets}/post-answer/response-fields.adoc[]
+
+=== 답변 정보 수정
+.curl-request
+include::{snippets}/patch-answer/curl-request.adoc[]
+
+.http-request
+include::{snippets}/patch-answer/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/patch-answer/path-parameters.adoc[]
+
+.request-fields
+include::{snippets}/patch-answer/request-fields.adoc[]
+
+.http-response
+include::{snippets}/patch-answer/http-response.adoc[]
+
+.response-fields
+include::{snippets}/patch-answer/response-fields.adoc[]
+

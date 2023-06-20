@@ -6,6 +6,7 @@ import com.mzdevelopers.serverapplication.answer.mapper.AnswerMapper;
 import com.mzdevelopers.serverapplication.answer.service.AnswerService;
 import com.mzdevelopers.serverapplication.answer.pagedto.MultiResponseDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +23,12 @@ import java.util.List;
 @Validated
 @Slf4j
 public class AnswerController {
+    @Autowired
     private final AnswerService answerService;
 
     private final AnswerMapper mapper;
 
+    @Autowired
     public AnswerController(AnswerService answerService, AnswerMapper mapper) {
         this.answerService = answerService;
         this.mapper = mapper;
