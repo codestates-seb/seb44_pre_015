@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import LoginBtn from "../button/login/LoginBtn";
 import Logo from "../../assets/logo-stackoverflow.svg";
