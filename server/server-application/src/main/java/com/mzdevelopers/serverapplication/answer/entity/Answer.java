@@ -1,12 +1,15 @@
 package com.mzdevelopers.serverapplication.answer.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mzdevelopers.serverapplication.comment.entity.Comment;
+import com.mzdevelopers.serverapplication.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -27,6 +30,9 @@ public class Answer {
     @Column(nullable = false)
     private boolean solutionStatus=false;
 
+    @OneToMany(mappedBy = "answer")
+    private List<Comment> comments;
+
 
 //    @ManyToOne
 //    @JoinColumn(name = "QUESTION_ID")
@@ -45,8 +51,9 @@ public class Answer {
 //        return member.getMemberId();
 //    }
 
-    @Column(nullable = false) //스텁데이터
-    private long questionId;
+    @ManyToOne
+    @JoinColumn(name = "question_Id") //스텁데이터
+    private Question question;
 
     @Column(nullable = false) //스텁데이터
     private long memberId;

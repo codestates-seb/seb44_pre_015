@@ -23,6 +23,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "ANSWER_ID")
+    @JsonIgnore
     private Answer answer;
 
     @Column(nullable = false)

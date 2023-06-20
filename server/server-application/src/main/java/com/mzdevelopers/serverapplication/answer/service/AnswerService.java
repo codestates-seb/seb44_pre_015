@@ -42,7 +42,8 @@ public class AnswerService {
 
     @Transactional(readOnly = true)
     public Answer findAnswer(long answerId){
-        return findVerifiedAnswer(answerId);
+
+        return answerRepository.findByAnswerId(answerId);
     }
 
 
@@ -60,10 +61,8 @@ public class AnswerService {
     @Transactional(readOnly = true)
     public Answer findVerifiedAnswer(long answerId){
         Optional<Answer> optionalAnswer =
-                answerRepository.findById(answerId);
-        Answer findAnswer =
-                optionalAnswer.orElseThrow();
-        return findAnswer;
+                Optional.ofNullable(answerRepository.findByAnswerId(answerId));
+        return optionalAnswer.orElseThrow();
     }
 
 }

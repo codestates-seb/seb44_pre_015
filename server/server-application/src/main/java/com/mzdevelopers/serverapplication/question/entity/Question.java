@@ -1,5 +1,6 @@
 package com.mzdevelopers.serverapplication.question.entity;
 
+import com.mzdevelopers.serverapplication.answer.entity.Answer;
 import com.mzdevelopers.serverapplication.tag.entity.QuestionTag;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,10 +43,12 @@ public class Question extends BaseEntity{
     private Long memberId;
 
     @OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    List<QuestionTag> questionTags;
+    private List<QuestionTag> questionTags;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<QuestionVote> questionVotes;
+
+
 
     @Builder
     public Question(String title, String detail, Long memberId){

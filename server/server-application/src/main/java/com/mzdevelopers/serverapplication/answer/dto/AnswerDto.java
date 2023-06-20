@@ -1,11 +1,13 @@
 package com.mzdevelopers.serverapplication.answer.dto;
 
+import com.mzdevelopers.serverapplication.comment.entity.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 public class AnswerDto {
     @Getter
@@ -43,5 +45,6 @@ public class AnswerDto {
         private long questionId;
 
         private long memberId;
+        private List<Comment> comments;
     }
 }

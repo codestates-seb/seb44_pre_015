@@ -1,6 +1,7 @@
 package com.mzdevelopers.serverapplication.comment.service;
 
 import com.mzdevelopers.serverapplication.answer.entity.Answer;
+import com.mzdevelopers.serverapplication.answer.repository.AnswerRepository;
 import com.mzdevelopers.serverapplication.answer.service.AnswerService;
 import com.mzdevelopers.serverapplication.comment.entity.Comment;
 import com.mzdevelopers.serverapplication.comment.repository.CommentRepository;
@@ -18,16 +19,22 @@ import java.util.Optional;
 @Service
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final AnswerRepository answerRepository;
     private final AnswerService answerService;
 
-    public CommentService(CommentRepository commentRepository, AnswerService answerService) {
+    public CommentService(CommentRepository commentRepository, AnswerRepository answerRepository, AnswerService answerService) {
         this.commentRepository = commentRepository;
+        this.answerRepository = answerRepository;
         this.answerService = answerService;
     }
 
     public Comment createComment(Comment comment){
         verifyComment(comment);
-        return commentRepository.save(comment);
+        Answer findAnswer = answerRepository.findByAnswerId(comment.getAnswer().getAnswerId());
+        Comment savecomment = commentRepository.save(comment);
+        findAnswer.getComments().add(savecomment);
+        answerRepository.save(findAnswer);
+        return savecomment;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
@@ -69,3 +76,4 @@ public class CommentService {
         answerService.findVerifiedAnswer(comment.getAnswer().getAnswerId());
     }
 }
+
