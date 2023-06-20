@@ -1,5 +1,5 @@
-import { QuestionWrap, QuestionHead, QuestionHeadWrap, OrangeCircle,QuestionHeadtext } from "../QuestionWriteHead.styled";
-
+import OrangeCircle from "./OrangeCicle"
+import { QuestionHead, QuestionHeadWrap, QuestionWrap, QuestionHeadtext } from "./QuestionWriteHead.styled"
 
 export default function QuestionWriteHead () {
     return(
@@ -10,6 +10,6 @@ export default function QuestionWriteHead () {
             <QuestionHeadtext>는 필수이며 없는 경우 선택 사항입니다.</QuestionHeadtext>
             </QuestionWrap>
         </QuestionHeadWrap>
-        
+
     )
 }
