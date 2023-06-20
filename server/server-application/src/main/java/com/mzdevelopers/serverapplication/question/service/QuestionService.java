@@ -24,11 +24,11 @@ public interface QuestionService {
 
     public Question updateQuestion(long questionId, String title, String detail, long memberId);
 
-    public void deleteQuestion(long questionId);
+    public void deleteQuestion(long questionId, long memberId);
 
     public int votesCount(long questionId, long memberId);
 
-    public List<Question> QuestionsListByAPI(int page, int size, String api);
+    public List<Question> questionsListByAPI(int page, int size, String api);
 
 //    public
 

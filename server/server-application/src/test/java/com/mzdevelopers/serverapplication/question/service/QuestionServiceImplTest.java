@@ -199,7 +199,8 @@ class QuestionServiceImplTest {
     void deleteQuestion() {
         // given
         Long questionId = 1L;
-        Question question = makeQuestion("title", "detail", 1L);
+        long memberId = 1L;
+        Question question = makeQuestion("title", "detail", memberId);
 
         // when
         when(questionRepository.findById(questionId)).thenReturn(Optional.of(question));
@@ -207,7 +208,7 @@ class QuestionServiceImplTest {
         doNothing().when(questionRepository).delete(findQuestion);
 
         // then
-        assertDoesNotThrow(() -> questionService.deleteQuestion(questionId));
+        assertDoesNotThrow(() -> questionService.deleteQuestion(questionId, memberId));
         List<QuestionTag> deletedQuestionTags = questionTagRepository.findByQuestionQuestionId(questionId);
         assertTrue(deletedQuestionTags.isEmpty());
     }

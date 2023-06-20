@@ -3,6 +3,7 @@ package com.mzdevelopers.serverapplication.question.controller;
 import com.mzdevelopers.serverapplication.question.dto.QuestionPatchDto;
 import com.mzdevelopers.serverapplication.question.dto.QuestionRequestDto;
 import com.mzdevelopers.serverapplication.question.dto.QuestionResponseDto;
+import com.mzdevelopers.serverapplication.question.dto.QuestionVoteCountDto;
 import com.mzdevelopers.serverapplication.question.entity.Question;
 import com.mzdevelopers.serverapplication.question.mapper.QuestionMapper;
 import com.mzdevelopers.serverapplication.question.service.QuestionServiceImpl;
@@ -52,30 +53,33 @@ public class QuestionController {
     }
 
     // 질문 수정
-    @PatchMapping("/{id}")
-    public ResponseEntity<QuestionResponseDto> patchQuestion(@PathVariable("id") long questionId,
+    @PatchMapping("/{questionId}/{memberId}")
+    public ResponseEntity<QuestionResponseDto> patchQuestion(@PathVariable("questionId") long questionId,
+                                                             @PathVariable("memberId") long memberId,
                                                              @Valid @RequestBody QuestionPatchDto questionPatchDto) {
         QuestionResponseDto responseDto = questionMapper.questionToQuestionResponseDto(questionService
                 .updateQuestion(questionId,
                         questionPatchDto.getTitle(),
                         questionPatchDto.getDetail(),
-                        questionPatchDto.getMemberId()));
+                        memberId));
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
+    // 질문 삭제
+    @DeleteMapping("/{questionId}/{memberId}")
+    public ResponseEntity<?> deleteQuestion(@PathVariable("questionId") Long questionId,
+                                            @PathVariable Long memberId) {
+        questionService.deleteQuestion(questionId, memberId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 좋아요 누르기
     @GetMapping("/votes/{questionId}/{memberId}")
     public ResponseEntity<?> votesCount(@PathVariable("questionId") Long questionId,
                                         @PathVariable Long memberId) {
-        int totalVoteCount = questionService.votesCount(questionId, memberId);
-        return new ResponseEntity<>(totalVoteCount, HttpStatus.OK);
-    }
-
-    // 질문 삭제
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteQuestion(@PathVariable("id") long questionId) {
-        questionService.deleteQuestion(questionId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        QuestionVoteCountDto response = new QuestionVoteCountDto();
+        response.setTotalVoteCount(questionService.votesCount(questionId, memberId));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     // api 별 질문 리스트 반환
@@ -83,7 +87,7 @@ public class QuestionController {
     public ResponseEntity<?> getQuestionsByAPI(@PathVariable("api") String api,
                                                @RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "10") int size) {
-        List<Question> questions = questionService.QuestionsListByAPI(page, size, api);
+        List<Question> questions = questionService.questionsListByAPI(page, size, api);
         List<QuestionResponseDto> responseDtoList = new ArrayList<>();
         for (Question question : questions) {
             QuestionResponseDto dto = questionMapper.questionToQuestionResponseDto(question);

@@ -8,6 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class StubAnswer {
-    private String title;
-    private String detail;
+    private long answerId;
+    private String answerTitle;
+    private String answerDetail;
 }

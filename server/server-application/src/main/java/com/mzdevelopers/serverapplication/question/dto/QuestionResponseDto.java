@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 @ToString
 public class QuestionResponseDto {
+    private long questionId;
     private String title;
     private String detail;
     private boolean solutionStatus;
@@ -22,6 +23,6 @@ public class QuestionResponseDto {
     private Long memberId;
     private List<TagDto> tags;
     private List<StubAnswer> answers;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String createdAt;
+    private String updatedAt;
 }

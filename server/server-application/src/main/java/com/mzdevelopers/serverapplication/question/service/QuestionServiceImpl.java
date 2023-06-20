@@ -75,9 +75,12 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public void deleteQuestion(long questionId) {
+    public void deleteQuestion(long questionId, long memberId) {
         Question findQuestion = findByQuestionId(questionId);
-        questionRepository.delete(findQuestion);
+        if(findQuestion.getMemberId() == memberId)
+            questionRepository.delete(findQuestion);
+        else
+            throw new IllegalArgumentException("삭제할 권한이 없습니다: " + memberId);
     }
 
 
@@ -104,7 +107,7 @@ public class QuestionServiceImpl implements QuestionService{
     // ------------------------------------------------------------- 종아요 증가 or 감소
 
     @Override
-    public List<Question> QuestionsListByAPI(int page, int size, String api) {
+    public List<Question> questionsListByAPI(int page, int size, String api) {
         Pageable pageable = createPageable(page, size, "createdAt");
         if (api.equals("votes")) {
             pageable = createPageable(page, size, "votesCount");
@@ -164,8 +167,9 @@ public class QuestionServiceImpl implements QuestionService{
     // stub data zone
     public List<StubAnswer> stubAnswerList() {
         StubAnswer stubAnswer = new StubAnswer();
-        stubAnswer.setTitle("title");
-        stubAnswer.setDetail("detail");
+        stubAnswer.setAnswerTitle("title");
+        stubAnswer.setAnswerDetail("detail");
+        stubAnswer.setAnswerId(1L);
         return List.of(stubAnswer);
     }
 
