@@ -1,4 +1,4 @@
-export default QuestionTagCheck(){
+export default function QuestionTagCheck(){
   return(
     <>
     </>
