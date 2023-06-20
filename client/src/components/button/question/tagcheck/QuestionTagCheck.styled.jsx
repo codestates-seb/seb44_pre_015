@@ -6,7 +6,7 @@ export const QuestionTitWrap = tw.div`
   w-full
 `;
 
-export const QuestionTit = tw.h2`
+export const QuestionTit = tw.h3`
   text-lg
   font-bold
 `
