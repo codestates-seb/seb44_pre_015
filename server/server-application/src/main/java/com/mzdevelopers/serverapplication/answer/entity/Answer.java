@@ -34,26 +34,16 @@ public class Answer {
     private List<Comment> comments;
 
 
-//    @ManyToOne
-//    @JoinColumn(name = "QUESTION_ID")
-//    private Question question;
-//
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "QUESTION_ID")
+    private Question question;
+
 
 //    @ManyToOne
 //    @JoinColumn(name = "MEMBER_ID")
 //    private Member member;
 //
-//    public long getQuesetionId(){
-//        return question.getQuestionId();
-//    }
-//
-//    public long getMemberId(){
-//        return member.getMemberId();
-//    }
-
-    @ManyToOne
-    @JoinColumn(name = "question_Id") //스텁데이터
-    private Question question;
 
     @Column(nullable = false) //스텁데이터
     private long memberId;

@@ -32,6 +32,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
+import com.mzdevelopers.serverapplication.comment.entity.Comment;
 
 import java.net.URI;
 import java.util.Iterator;
@@ -86,6 +87,8 @@ public class AnswerControllerRestDocsTest {
         //given
         post = new AnswerDto.Post(1,2,"물어보지마세요");
         postContent = gson.toJson(post);
+        Comment testComment = new Comment();
+        List<Comment> comments = List.of(testComment);
 
         given(mapper.answerPostToAnswer(Mockito.any(AnswerDto.Post.class))).willReturn(new Answer());
         long postAnswerId = 1L;
@@ -96,8 +99,9 @@ public class AnswerControllerRestDocsTest {
                 "물어보지마세요",
                 0,
                 false,
-                1,
-                2);
+                1L,
+                2L,
+                comments);
         given(mapper.answerToAnswerResponse(Mockito.any(Answer.class))).willReturn(postResponse);
         //when
         postActions =

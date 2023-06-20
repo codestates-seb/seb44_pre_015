@@ -2,6 +2,8 @@ package com.mzdevelopers.serverapplication.answer.service;
 
 import com.mzdevelopers.serverapplication.answer.entity.Answer;
 import com.mzdevelopers.serverapplication.answer.repository.AnswerRepository;
+import com.mzdevelopers.serverapplication.question.entity.Question;
+import com.mzdevelopers.serverapplication.question.repository.QuestionRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -16,14 +18,20 @@ import java.util.Optional;
 @Service
 public class AnswerService {
     private final AnswerRepository answerRepository;
+    private final QuestionRepository questionRepository;
 
-    public AnswerService(AnswerRepository answerRepository) {
+    public AnswerService(AnswerRepository answerRepository, QuestionRepository questionRepository) {
         this.answerRepository = answerRepository;
+        this.questionRepository = questionRepository;
     }
 
-
     public Answer createAnswer(Answer answer){
-        return answerRepository.save(answer);
+        Question findQuestion = questionRepository.findByQuestionId(answer.getQuestion().getQuestionId());
+
+        Answer saveAnswer = answerRepository.save(answer);
+        findQuestion.getAnswers().add(saveAnswer);
+        questionRepository.save(findQuestion);
+        return saveAnswer;
     }
 
 

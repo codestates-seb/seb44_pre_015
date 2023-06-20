@@ -1,5 +1,6 @@
 package com.mzdevelopers.serverapplication.question.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mzdevelopers.serverapplication.answer.entity.Answer;
 import com.mzdevelopers.serverapplication.tag.entity.QuestionTag;
 import lombok.Builder;
@@ -48,7 +49,8 @@ public class Question extends BaseEntity{
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<QuestionVote> questionVotes;
 
-
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers;
 
     @Builder
     public Question(String title, String detail, Long memberId){
@@ -78,4 +80,7 @@ public class Question extends BaseEntity{
         this.viewCount++;
     }
 
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
+    }
 }
