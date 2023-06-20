@@ -4,25 +4,24 @@ import tw from 'tailwind-styled-components';
 export const QWrapper = tw.div`
 flex
 flex-col
-items-center
-justify-center
 `
 export const TContainer = tw.div`
   w-1/2
   flex
   items-center
-  mt-6
 `
 
 export const QTitle = tw.h3`
   ml-2
   font-bold
+  text-lg
 `
 
 export const Qinput = tw.input`
+  w-[40rem]
+  max-sm:w-[29rem]
+  bg-[#F7F7F7]
   mt-3
-  bg-[#E7E7E7]
-  w-1/2
   py-3
   px-4
   text-sm

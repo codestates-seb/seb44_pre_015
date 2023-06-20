@@ -13,7 +13,7 @@ export const TitleText = tw.h1`
 
 export const QAInput = tw.textarea`
   w-[40rem]
-  max-sm:w-[30rem]
+  max-sm:w-[29rem]
   bg-[#F7F7F7]
   text-sm
   p-5
