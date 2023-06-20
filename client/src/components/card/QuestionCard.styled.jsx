@@ -33,3 +33,7 @@ export const SelectWrapper = tw.div`
   text-xs
   mt-2
 `
+
+export const TitleContainer = tw.div`
+  m-6
+`
