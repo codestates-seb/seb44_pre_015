@@ -1,11 +1,10 @@
-import { QuestionWrap, QuestionHead, QuestionHeadWrap, OrangeCircle,QuestionHeadtext } from "../QuestionWriteHead.styled";
+import { OrangeCircle } from "./OrangeCircle.styled.jsx";
 
 
-export default function QuestionWriteHead () {
+export default function OrangeCircle() {
     return(
-        <QuestionHeadWrap>
+        
             <OrangeCircle />
-        </QuestionHeadWrap>
         
     )
 }
