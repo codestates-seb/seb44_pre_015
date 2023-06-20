@@ -1,11 +1,5 @@
 import tw from "tailwind-styled-components";
 
-export const QuestionWrap = tw.div`
-    flex
-    ml-2
-    mt-2
-`;
-
 export const QuestionHeadWrap = tw.div`
     flex
     flex-col
@@ -13,10 +7,7 @@ export const QuestionHeadWrap = tw.div`
     ml-48
 `;
 
-export const QuestionHead = tw.p`
-    text-xl  
-    font-bold
-`;
+
 
 export const OrangeCircle = tw.div `
     w-2
@@ -28,7 +19,3 @@ export const OrangeCircle = tw.div `
     
 `;
 
-export const QuestionHeadtext = tw.p`
-    text-xs
-    text-slate-500
-`;
