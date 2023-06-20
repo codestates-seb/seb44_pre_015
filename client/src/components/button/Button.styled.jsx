@@ -15,6 +15,15 @@ export const OrangeBtn = tw(Button)`
   hover:bg-[#FF7E22] 
 `;
 
+export const LogoutButton = tw(Button)`
+  text-black
+  bg-[#FFFFFF]
+  hover:bg-[#DCDCDC] 
+  border-2
+  border-[#DCDCDC]
+
+`
+
 export const FilterButton = tw.button`
   text-black
   bg-white
