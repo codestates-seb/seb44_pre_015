@@ -500,7 +500,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /questions/register HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Content-Length: 64
+Content-Length: 68
 Host: localhost:8080
 
 {
@@ -546,6 +546,9 @@ Host: localhost:8080
 <div class="title">http-response</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Location: http://localhost:8080/questions/1</code></pre>
 </div>
 </div>
@@ -589,7 +592,7 @@ Location: http://localhost:8080/questions/1</code></pre>
 <pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /questions/1/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Content-Length: 48
+Content-Length: 51
 Host: localhost:8080
 
 {
@@ -652,15 +655,18 @@ Host: localhost:8080
 <div class="title">http-response</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 806
+Content-Length: 689
 
 {
   "questionId" : 1,
   "title" : "title2",
   "detail" : "detail2",
   "solutionStatus" : false,
-  "answerCount" : 0,
+  "answerCount" : 1,
   "votesCount" : 0,
   "viewCount" : 0,
   "memberId" : 1,
@@ -673,27 +679,18 @@ Content-Length: 806
   } ],
   "answers" : [ {
     "answerId" : 1,
-    "answerTitle" : "0",
-    "answerDetail" : "0"
-  }, {
-    "answerId" : 2,
-    "answerTitle" : "1",
-    "answerDetail" : "1"
-  }, {
-    "answerId" : 3,
-    "answerTitle" : "2",
-    "answerDetail" : "2"
-  }, {
-    "answerId" : 4,
-    "answerTitle" : "3",
-    "answerDetail" : "3"
-  }, {
-    "answerId" : 5,
-    "answerTitle" : "4",
-    "answerDetail" : "4"
+    "detail" : "answer",
+    "votesCount" : 1,
+    "solutionStatus" : false,
+    "comments" : [ {
+      "commentId" : 1,
+      "commentDetail" : "comment",
+      "memberId" : 1
+    } ],
+    "memberId" : 0
   } ],
-  "createdAt" : "2023-06-20T16:06:00.177094",
-  "updatedAt" : "2023-06-20T16:06:00.177103"
+  "createdAt" : "2023-06-21T11:36:09.594703200",
+  "updatedAt" : "2023-06-21T11:36:09.594703200"
 }</code></pre>
 </div>
 </div>
@@ -768,19 +765,59 @@ Content-Length: 806
 <td class="tableblock halign-left valign-top"><p class="tableblock">태그 설명</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 배열</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].answerId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">답변 식별자(고유 번호)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].answerTitle</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">답변 제목</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].answerDetail</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].detail</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">답변 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].votesCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 좋아요 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].solutionStatus</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 완료 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].comments</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글 배열</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].comments[].commentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글 식별자(고유 번호)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].comments[].commentDetail</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].comments[].memberId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 고유 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].memberId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 고유 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].answerVotes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 좋아요 배열</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdAt</code></p></td>
@@ -841,8 +878,11 @@ Host: localhost:8080</code></pre>
 <div class="title">http-response</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 804
+Content-Length: 687
 
 {
   "questionId" : 1,
@@ -862,27 +902,18 @@ Content-Length: 804
   } ],
   "answers" : [ {
     "answerId" : 1,
-    "answerTitle" : "0",
-    "answerDetail" : "0"
-  }, {
-    "answerId" : 2,
-    "answerTitle" : "1",
-    "answerDetail" : "1"
-  }, {
-    "answerId" : 3,
-    "answerTitle" : "2",
-    "answerDetail" : "2"
-  }, {
-    "answerId" : 4,
-    "answerTitle" : "3",
-    "answerDetail" : "3"
-  }, {
-    "answerId" : 5,
-    "answerTitle" : "4",
-    "answerDetail" : "4"
+    "detail" : "answer",
+    "votesCount" : 1,
+    "solutionStatus" : false,
+    "comments" : [ {
+      "commentId" : 1,
+      "commentDetail" : "comment",
+      "memberId" : 1
+    } ],
+    "memberId" : 0
   } ],
-  "createdAt" : "2023-06-20T16:06:00.191197",
-  "updatedAt" : "2023-06-20T16:06:00.191213"
+  "createdAt" : "2023-06-21T11:36:09.632708800",
+  "updatedAt" : "2023-06-21T11:36:09.632708800"
 }</code></pre>
 </div>
 </div>
@@ -957,19 +988,49 @@ Content-Length: 804
 <td class="tableblock halign-left valign-top"><p class="tableblock">태그 설명</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 목록</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].answerId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">답변 식별자(고유 번호)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].answerTitle</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">답변 제목</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].answerDetail</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].detail</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">답변 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].votesCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 추천 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].solutionStatus</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 해결 상태</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].memberId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 작성자 식별자(고유 번호)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].comments[].commentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 식별자(고유 번호)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].comments[].commentDetail</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answers[].comments[].memberId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 작성자 식별자(고유 번호)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdAt</code></p></td>
@@ -1029,241 +1090,38 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="title">http-response</div>
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK</code></pre>
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_질문_리스트_가져오기_by_api">1.5. 질문 리스트 가져오기 By API</h3>
-<div class="listingblock">
+<div class="paragraph">
 <div class="title">curl-request</div>
-<div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/questions/recent?page=0&amp;size=10' -i -X GET \
-    -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Accept: application/json'</code></pre>
+<p>Unresolved directive in index.adoc - include::C:\Users\Administrator\Desktop\preproject\seb44_pre_015\server\server-application\build\generated-snippets/get-QuestionsByAPI/curl-request.adoc[]</p>
 </div>
-</div>
-<div class="listingblock">
+<div class="paragraph">
 <div class="title">http-request</div>
-<div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /questions/recent?page=0&amp;size=10 HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Accept: application/json
-Host: localhost:8080</code></pre>
+<p>Unresolved directive in index.adoc - include::C:\Users\Administrator\Desktop\preproject\seb44_pre_015\server\server-application\build\generated-snippets/get-QuestionsByAPI/http-request.adoc[]</p>
 </div>
+<div class="paragraph">
+<div class="title">path-parameters</div>
+<p>Unresolved directive in index.adoc - include::C:\Users\Administrator\Desktop\preproject\seb44_pre_015\server\server-application\build\generated-snippets/get-QuestionsByAPI/path-parameters.adoc[]</p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. /questions/{api}</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>api</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">API 식별자</p></td>
-</tr>
-</tbody>
-</table>
 <div class="paragraph">
 <p>API = {recent, votes, solutions} 이 세 가지중 하나를 고르셔야합니다.</p>
 </div>
-<div class="listingblock">
+<div class="paragraph">
 <div class="title">http-response</div>
-<div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json
-Content-Length: 1614
-
-[ {
-  "questionId" : 1,
-  "title" : "title",
-  "detail" : "detail",
-  "solutionStatus" : false,
-  "answerCount" : 0,
-  "votesCount" : 0,
-  "viewCount" : 0,
-  "memberId" : 1,
-  "tags" : [ {
-    "tagName" : "tag1",
-    "tagDescription" : "tag1"
-  }, {
-    "tagName" : "tag2",
-    "tagDescription" : "tag2"
-  } ],
-  "answers" : [ {
-    "answerId" : 1,
-    "answerTitle" : "0",
-    "answerDetail" : "0"
-  }, {
-    "answerId" : 2,
-    "answerTitle" : "1",
-    "answerDetail" : "1"
-  }, {
-    "answerId" : 3,
-    "answerTitle" : "2",
-    "answerDetail" : "2"
-  }, {
-    "answerId" : 4,
-    "answerTitle" : "3",
-    "answerDetail" : "3"
-  }, {
-    "answerId" : 5,
-    "answerTitle" : "4",
-    "answerDetail" : "4"
-  } ],
-  "createdAt" : "2023-06-20T16:06:00.157845",
-  "updatedAt" : "2023-06-20T16:06:00.157897"
-}, {
-  "questionId" : 2,
-  "title" : "title",
-  "detail" : "detail",
-  "solutionStatus" : false,
-  "answerCount" : 0,
-  "votesCount" : 0,
-  "viewCount" : 0,
-  "memberId" : 2,
-  "tags" : [ {
-    "tagName" : "tag1",
-    "tagDescription" : "tag1"
-  }, {
-    "tagName" : "tag2",
-    "tagDescription" : "tag2"
-  } ],
-  "answers" : [ {
-    "answerId" : 1,
-    "answerTitle" : "0",
-    "answerDetail" : "0"
-  }, {
-    "answerId" : 2,
-    "answerTitle" : "1",
-    "answerDetail" : "1"
-  }, {
-    "answerId" : 3,
-    "answerTitle" : "2",
-    "answerDetail" : "2"
-  }, {
-    "answerId" : 4,
-    "answerTitle" : "3",
-    "answerDetail" : "3"
-  }, {
-    "answerId" : 5,
-    "answerTitle" : "4",
-    "answerDetail" : "4"
-  } ],
-  "createdAt" : "2023-06-20T16:06:00.157952",
-  "updatedAt" : "2023-06-20T16:06:00.157959"
-} ]</code></pre>
+<p>Unresolved directive in index.adoc - include::C:\Users\Administrator\Desktop\preproject\seb44_pre_015\server\server-application\build\generated-snippets/get-QuestionsByAPI/http-response.adoc[]</p>
 </div>
+<div class="paragraph">
+<div class="title">response-fields</div>
+<p>Unresolved directive in index.adoc - include::C:\Users\Administrator\Desktop\preproject\seb44_pre_015\server\server-application\build\generated-snippets/get-QuestionsByAPI/response-fields.adoc[]</p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. response-fields</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].questionId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">질문 식별자(고유 번호)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].title</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].detail</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].solutionStatus</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">질문 완료 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].answerCount</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">답변 수</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].votesCount</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">좋아요 수</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].viewCount</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">조회 수</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].memberId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">회원 식별자(고유 번호)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].tags</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">태그 목록</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].tags[].tagName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">태그 이름</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].tags[].tagDescription</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">태그 설명</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].answers</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">답변 목록</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].answers[].answerId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">답변 식별자(고유 번호)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].answers[].answerTitle</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">답변 제목</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].answers[].answerDetail</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">답변 내용</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].createdAt</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">생성 일자</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].updatedAt</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">수정 일자</p></td>
-</tr>
-</tbody>
-</table>
 </div>
 <div class="sect2">
 <h3 id="_질문_좋아요_등록_및_해제">1.6. 질문 좋아요 등록 및 해제</h3>
@@ -1285,7 +1143,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. /questions/votes/{questionId}/{memberId}</caption>
+<caption class="title">Table 9. /questions/votes/{questionId}/{memberId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1311,8 +1169,11 @@ Host: localhost:8080</code></pre>
 <div class="title">http-response</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 27
+Content-Length: 29
 
 {
   "totalVoteCount" : 10
@@ -1320,7 +1181,7 @@ Content-Length: 27
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. response-fields</caption>
+<caption class="title">Table 10. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1368,7 +1229,7 @@ Content-Length: 27
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /answers HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Content-Length: 78
+Content-Length: 82
 Host: localhost:8080
 
 {
@@ -1379,7 +1240,7 @@ Host: localhost:8080
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. request-fields</caption>
+<caption class="title">Table 11. request-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1418,7 +1279,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 144
+Content-Length: 255
 
 {
   "answerId" : 1,
@@ -1426,12 +1287,17 @@ Content-Length: 144
   "votesCount" : 0,
   "solutionStatus" : false,
   "questionId" : 1,
-  "memberId" : 2
+  "memberId" : 2,
+  "comments" : [ {
+    "commentId" : 1,
+    "commentDetail" : "comment",
+    "memberId" : 1
+  } ]
 }</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 14. response-fields</caption>
+<caption class="title">Table 12. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1475,6 +1341,26 @@ Content-Length: 144
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">답변의 회원 식별자</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글(재답변) 리스트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments[].commentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글(재답변) 리스트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments[].commentDetail</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글(재답변) 본문</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments[].memberId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글(재답변) 회원 식별자</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1499,7 +1385,7 @@ Content-Length: 144
 <pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /answers/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Content-Length: 101
+Content-Length: 105
 Host: localhost:8080
 
 {
@@ -1510,7 +1396,7 @@ Host: localhost:8080
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 15. /answers/{answer-id}</caption>
+<caption class="title">Table 13. /answers/{answer-id}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1529,7 +1415,7 @@ Host: localhost:8080
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 16. request-fields</caption>
+<caption class="title">Table 14. request-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1568,7 +1454,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 159
+Content-Length: 270
 
 {
   "answerId" : 1,
@@ -1576,12 +1462,17 @@ Content-Length: 159
   "votesCount" : 0,
   "solutionStatus" : true,
   "questionId" : 1,
-  "memberId" : 2
+  "memberId" : 2,
+  "comments" : [ {
+    "commentId" : 1,
+    "commentDetail" : "comment",
+    "memberId" : 1
+  } ]
 }</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 17. response-fields</caption>
+<caption class="title">Table 15. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1625,6 +1516,26 @@ Content-Length: 159
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">답변의 회원 식별자</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글(재답변) 리스트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments[].commentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글(재답변) 리스트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments[].commentDetail</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글(재답변) 본문</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments[].memberId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글(재답변) 회원 식별자</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1634,7 +1545,7 @@ Content-Length: 159
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-06-20 16:05:55 +0900
+Last updated 2023-06-21 11:32:15 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
