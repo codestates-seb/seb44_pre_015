@@ -87,7 +87,7 @@ public class QuestionController {
         List<Question> questions = questionService.questionsListByAPI(page, size, api);
         List<QuestionResponseDto> responseDtoList = new ArrayList<>();
         for (Question question : questions) {
-            QuestionResponseDto dto = questionService.getQuestion(question.getQuestionId(), question.getMemberId());
+            QuestionResponseDto dto = questionService.getQuestion(question.getQuestionId(), question.getMember().getId());
             responseDtoList.add(dto);
         }
         return ResponseEntity.ok(responseDtoList);

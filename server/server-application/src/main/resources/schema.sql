@@ -1,6 +1,10 @@
-CREATE TABLE IF NOT EXISTS member_stub (
+CREATE TABLE IF NOT EXISTS member (
                                            member_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-                                           member_name VARCHAR(255) NOT NULL
+                                           provider VARCHAR(255) NOT NULL
+                                           name VARCHAR(255) NOT NULL
+                                           email VARCHAR(255) NOT NULL
+                                           answer_vote_count BIGINT NOT NULL
+                                           );
     );
 
 CREATE TABLE IF NOT EXISTS question (
@@ -14,7 +18,7 @@ CREATE TABLE IF NOT EXISTS question (
     member_id BIGINT NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (member_id) REFERENCES member_stub (member_id)
+    FOREIGN KEY (member_id) REFERENCES member(member_id)
     );
 CREATE TABLE IF NOT EXISTS question_vote (
                                              question_vote_id SERIAL PRIMARY KEY,
@@ -22,7 +26,7 @@ CREATE TABLE IF NOT EXISTS question_vote (
                                              member_id BIGINT NOT NULL,
                                              is_question_voted BOOLEAN NOT NULL,
                                              FOREIGN KEY (question_id) REFERENCES question(question_id),
-    FOREIGN KEY (member_id) REFERENCES member_stub(member_id)
+    FOREIGN KEY (member_id) REFERENCES member(member_id)
     );
 
 

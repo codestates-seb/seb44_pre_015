@@ -31,4 +31,5 @@ public class GoogleMemberInfo implements OAuth2MemberInfo {
     public String getEmail(){
         return (String) attributes.get("email");
     }
+
 }

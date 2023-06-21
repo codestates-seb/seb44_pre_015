@@ -117,6 +117,7 @@ public class CommentControllerRestDocsTest {
     @Test
     public void patchCommentTest() throws Exception{
         long patchCommentId=1L;
+        long memberId=1L;
         //given
         CommentDto.Patch patch = new CommentDto.Patch(patchCommentId,"첫번째 답변의 수정한 댓글");
         String patchContent = gson.toJson(patch);
@@ -125,17 +126,18 @@ public class CommentControllerRestDocsTest {
 
         Comment mockResultComment =  new Comment();
         mockResultComment.setCommentId(1L);
-        given(commentService.updateComment(Mockito.any(Comment.class))).willReturn(mockResultComment);
+        given(commentService.updateComment(Mockito.any(Comment.class), Mockito.anyLong())).willReturn(mockResultComment);
         CommentDto.Response patchResponse = new CommentDto.Response(patchCommentId,
                 "첫번째 답변의 수정한 댓글",
                 1,
                 1);
         given(mapper.commentToCommentResponse(Mockito.any(Comment.class))).willReturn(patchResponse);
 
+
         //when
         ResultActions patchActions =
                 mockMvc.perform(
-                        patch("/comments/{comment-id}",patchCommentId)
+                        patch("/comments/{comment-id}/{member-id}", patchCommentId, memberId)
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(patchContent)
@@ -248,10 +250,13 @@ public class CommentControllerRestDocsTest {
 
     @Test
     public void deleteCommentTest() throws Exception{
-        doNothing().when(commentService).deleteComment(Mockito.anyLong());
+
+        doNothing().when(commentService).deleteComment(Mockito.anyLong(), Mockito.anyLong());
         long commentId=1L;
+        long memberId=1L;
+
         mockMvc.perform(
-                        delete("/comments/{comment-id}",commentId)
+                        delete("/comments/{comment-id}/{member-id}", commentId, memberId)
                 )
                 .andExpect(status().isNoContent())
                 .andDo(document(

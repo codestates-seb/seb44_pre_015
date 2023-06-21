@@ -11,6 +11,7 @@ import com.mzdevelopers.serverapplication.answervote.dto.AnswerVoteDto;
 import com.mzdevelopers.serverapplication.answervote.entity.AnswerVote;
 import com.mzdevelopers.serverapplication.answervote.mapper.AnswerVoteMapper;
 import com.mzdevelopers.serverapplication.answervote.service.AnswerVoteService;
+import com.mzdevelopers.serverapplication.member.entity.Member;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -91,7 +92,7 @@ public class AnswerControllerRestDocsTest {
         Comment testComment = new Comment();
         testComment.setCommentDetail("comment");
         testComment.setCommentId(1L);
-        testComment.setMemberId(1L);
+        testComment.setMember(new Member());
         comments = List.of(testComment);
 
         given(mapper.answerPostToAnswer(Mockito.any(AnswerDto.Post.class))).willReturn(new Answer());
@@ -315,10 +316,12 @@ public class AnswerControllerRestDocsTest {
 
     @Test
     public void deleteAnswerTest() throws Exception{
-        doNothing().when(answerService).deleteAnswer(Mockito.anyLong());
+        doNothing().when(answerService).deleteAnswer(Mockito.anyLong(), Mockito.anyLong());
         long answerId=1L;
+        long memberId=1L;
+
         mockMvc.perform(
-                delete("/answers/{answer-id}",answerId)
+                delete("/answers/{answer-id}/{member-id}", answerId, memberId)
         )
                 .andExpect(status().isNoContent())
                 .andDo(document(

@@ -27,10 +27,7 @@ public class Oauth2MemberService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         OAuth2MemberInfo memberInfo = null;
 
-        String providerId = userRequest.getClientRegistration().getRegistrationId();
-
         memberInfo = new GoogleMemberInfo(oAuth2User.getAttributes());
-
 
         String provider = memberInfo.getProvider();
         String name = memberInfo.getName();
@@ -44,17 +41,17 @@ public class Oauth2MemberService extends DefaultOAuth2UserService {
 
         Optional<Member> findMember = memberRepository.findByEmail(email);
 
-        Member member = null;
-
         if(findMember.isEmpty()){
 
-            member = Member.builder()
+            Member member = Member.builder()
                     .name(name)
                     .email(email)
                     .provider(provider)
+                    .answer_vote_count(0)
                     .build();
 
             memberRepository.save(member);
+            System.out.println("!!! 신규 회원 등록 완료 !!!");
         }
         else {
             System.out.println("!!! 이미 회원가입 되어있는 이메일입니다. !!!");
@@ -63,14 +60,4 @@ public class Oauth2MemberService extends DefaultOAuth2UserService {
         return oAuth2User;
     }
 
-    public Optional<Member> findMemberByEmail(String email){
-
-        return memberRepository.findByEmail(email);
-    }
-
-    // 모든 회원 출력
-    public List<Member> findMembers(){
-
-        return memberRepository.findAll();
-    }
 }

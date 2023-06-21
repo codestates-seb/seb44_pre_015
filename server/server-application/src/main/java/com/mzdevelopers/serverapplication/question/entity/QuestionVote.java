@@ -1,6 +1,6 @@
 package com.mzdevelopers.serverapplication.question.entity;
 
-import com.mzdevelopers.serverapplication.question.stub.MemberStub;
+import com.mzdevelopers.serverapplication.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,15 +22,15 @@ public class QuestionVote {
 
     @ManyToOne
     @JoinColumn(name = "member_id", referencedColumnName = "memberId")
-    private MemberStub memberStub;
+    private Member member;
 
     private boolean isQuestionVoted;
 
 
     @Builder
-    public QuestionVote(Question question, MemberStub memberStub) {
+    public QuestionVote(Question question, Member member) {
         this.question = question;
-        this.memberStub = memberStub;
+        this.member = member;
         this.isQuestionVoted = true;
     }
 

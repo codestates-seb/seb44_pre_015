@@ -3,7 +3,7 @@ package com.mzdevelopers.serverapplication.answervote.mapper;
 import com.mzdevelopers.serverapplication.answer.entity.Answer;
 import com.mzdevelopers.serverapplication.answervote.dto.AnswerVoteDto;
 import com.mzdevelopers.serverapplication.answervote.entity.AnswerVote;
-import com.mzdevelopers.serverapplication.question.stub.MemberStub;
+import com.mzdevelopers.serverapplication.member.entity.Member;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
@@ -13,10 +13,10 @@ public interface AnswerVoteMapper {
         Answer answer = new Answer();
         answer.setAnswerId(answerVotePostDto.getAnswerId());
 
-        MemberStub memberStub = new MemberStub();
-        memberStub.setMemberId(answerVotePostDto.getMemberId());
+        Member member = new Member();
+        member.setId(answerVotePostDto.getMemberId());
 
-        answerVote.setMemberStub(memberStub);
+        answerVote.setMember(member);
         answerVote.setAnswerVoted(answerVotePostDto.isAnswerVoted());
 
         answerVote.setAnswer(answer);
@@ -26,7 +26,7 @@ public interface AnswerVoteMapper {
     default AnswerVoteDto.Response answerVoteToAnswerVoteDtoResponse(AnswerVote answerVote){
         AnswerVoteDto.Response answerVoteResponse = new AnswerVoteDto.Response(
                 answerVote.getAnswerVoteId(),
-                answerVote.getMemberStub().getMemberId(),
+                answerVote.getMember().getId(),
                 answerVote.getAnswer().getAnswerId(),
                 answerVote.isAnswerVoted()
         );

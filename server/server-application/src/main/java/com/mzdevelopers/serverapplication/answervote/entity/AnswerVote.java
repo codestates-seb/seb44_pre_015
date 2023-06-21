@@ -1,9 +1,7 @@
 package com.mzdevelopers.serverapplication.answervote.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mzdevelopers.serverapplication.answer.entity.Answer;
-import com.mzdevelopers.serverapplication.question.entity.Question;
-import com.mzdevelopers.serverapplication.question.stub.MemberStub;
+import com.mzdevelopers.serverapplication.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,20 +26,14 @@ public class AnswerVote {
     private Answer answer;
 
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "MEMBER_ID")
-//    private Member member;
-
-//    @Column
-//    private long answerId;
     @ManyToOne
     @JoinColumn(name = "member_id", referencedColumnName = "memberId")
-    private MemberStub memberStub;
+    private Member member;
 
     @Builder
-    public AnswerVote(Answer answer, MemberStub memberStub) {
+    public AnswerVote(Answer answer, Member member) {
         this.answer = answer;
-        this.memberStub = memberStub;
+        this.member = member;
         this.answerVoted = true;
     }
 

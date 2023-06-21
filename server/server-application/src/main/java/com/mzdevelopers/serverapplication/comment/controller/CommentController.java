@@ -41,36 +41,38 @@ public class CommentController {
 //        return new ResponseEntity(createComment, HttpStatus.CREATED);
     }
 
-    @PatchMapping("/{comment-id}")
+    @PatchMapping("/{comment-id}/{member-id}")
     public ResponseEntity patchComment(@PathVariable("comment-id")@Positive long commentId,
+                                      @PathVariable("member-id")@Positive long memberId,
                                       @Valid@RequestBody CommentDto.Patch requestBody){
         requestBody.setCommentId(commentId);
-        Comment comment = commentService.updateComment(mapper.commentPatchToComment(requestBody));
+        Comment comment = commentService.updateComment(mapper.commentPatchToComment(requestBody), memberId);
         return new ResponseEntity<>(mapper.commentToCommentResponse(comment), HttpStatus.OK);
     }
 
-    @GetMapping("/{comment-id}")
-    public ResponseEntity getComment(
-            @PathVariable("comment-id") @Positive long commentId) {
-        Comment comment = commentService.findComment(commentId);
-        return new ResponseEntity<>(mapper.commentToCommentResponse(comment), HttpStatus.OK);
-    }
+//    @GetMapping("/{comment-id}")
+//    public ResponseEntity getComment(
+//            @PathVariable("comment-id") @Positive long commentId) {
+//        Comment comment = commentService.findComment(commentId);
+//        return new ResponseEntity<>(mapper.commentToCommentResponse(comment), HttpStatus.OK);
+//    }
+//
+//    @GetMapping
+//    public ResponseEntity getComments(@Positive @RequestParam int page,
+//                                     @Positive @RequestParam int size) {
+//        Page<Comment> pageComments = commentService.findComments(page - 1, size);
+//        List<Comment> comments = pageComments.getContent();
+//        return new ResponseEntity<>(
+//                new MultiResponseDto<>(mapper.commentsToCommentResponses(comments),
+//                        pageComments),
+//                HttpStatus.OK);
+//    }
 
-    @GetMapping
-    public ResponseEntity getComments(@Positive @RequestParam int page,
-                                     @Positive @RequestParam int size) {
-        Page<Comment> pageComments = commentService.findComments(page - 1, size);
-        List<Comment> comments = pageComments.getContent();
-        return new ResponseEntity<>(
-                new MultiResponseDto<>(mapper.commentsToCommentResponses(comments),
-                        pageComments),
-                HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{comment-id}")
+    @DeleteMapping("/{comment-id}/{member-id}")
     public ResponseEntity deleteComment(
-            @PathVariable("comment-id") @Positive long commentId) {
-        commentService.deleteComment(commentId);
+            @PathVariable("comment-id") @Positive long commentId,
+            @PathVariable("member-id") long memberId) {
+        commentService.deleteComment(commentId, memberId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

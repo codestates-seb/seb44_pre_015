@@ -4,6 +4,7 @@ import com.mzdevelopers.serverapplication.answer.dto.AnswerDto;
 import com.mzdevelopers.serverapplication.answer.entity.Answer;
 import com.mzdevelopers.serverapplication.comment.dto.CommentDto;
 import com.mzdevelopers.serverapplication.comment.entity.Comment;
+import com.mzdevelopers.serverapplication.member.entity.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -17,20 +18,26 @@ public interface CommentMapper {
         Answer answer = new Answer();
         answer.setAnswerId(commentPostDto.getAnswerId());
 
+        Member member = new Member();
+        member.setId(commentPostDto.getMemberId());
+
+        comment.setMember(member);
         comment.setCommentDetail(commentPostDto.getCommentDetail());
         comment.setAnswer(answer);
-        comment.setMemberId(commentPostDto.getMemberId());
+
 
         return comment;
     }
     Comment commentPatchToComment(CommentDto.Patch requestBody);
 //    CommentDto.Response commentToCommentResponse(Comment comment);
+
+
     default CommentDto.Response commentToCommentResponse(Comment comment){
         CommentDto.Response commentResponse = new CommentDto.Response(
                 comment.getCommentId(),
                 comment.getCommentDetail(),
                 comment.getAnswer().getAnswerId(),
-                comment.getMemberId()
+                comment.getMember().getId()
         );
         return commentResponse;
     }

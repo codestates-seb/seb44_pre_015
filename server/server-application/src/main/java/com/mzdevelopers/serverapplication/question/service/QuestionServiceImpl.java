@@ -1,14 +1,14 @@
 package com.mzdevelopers.serverapplication.question.service;
 
+import com.mzdevelopers.serverapplication.member.entity.Member;
+import com.mzdevelopers.serverapplication.member.repository.MemberRepository;
 import com.mzdevelopers.serverapplication.question.dto.QuestionResponseDto;
 import com.mzdevelopers.serverapplication.question.mapper.QuestionMapper;
-import com.mzdevelopers.serverapplication.question.stub.MemberStub;
 import com.mzdevelopers.serverapplication.question.stub.StubAnswer;
 import com.mzdevelopers.serverapplication.question.entity.Question;
 import com.mzdevelopers.serverapplication.question.entity.QuestionVote;
 import com.mzdevelopers.serverapplication.question.repository.QuestionRepository;
 import com.mzdevelopers.serverapplication.question.repository.QuestionVoteRepository;
-import com.mzdevelopers.serverapplication.question.stub.MemberStubRepository;
 import com.mzdevelopers.serverapplication.tag.dto.TagDto;
 import com.mzdevelopers.serverapplication.tag.entity.QuestionTag;
 import com.mzdevelopers.serverapplication.tag.entity.Tag;
@@ -35,11 +35,14 @@ public class QuestionServiceImpl implements QuestionService{
     private final QuestionTagRepository questionTagRepository;
     private final TagRepository tagRepository;
     private final QuestionVoteRepository questionVoteRepository;
-    private final MemberStubRepository memberStubRepository;
+    private final MemberRepository memberRepository;
     private final QuestionMapper questionMapper;
 
     @Override
     public long createQuestion(Question question, List<Long> tags) {
+
+        Member findMember = memberRepository.findById(question.getMember().getId()).orElseThrow(()->new RuntimeException("사용자를 찾을 수 없습니다."));
+        question.setMember(findMember);
         Question savedQuestion = questionRepository.save(question);
 
         if (!tags.isEmpty()) {
@@ -59,7 +62,6 @@ public class QuestionServiceImpl implements QuestionService{
     public QuestionResponseDto getQuestion(long questionId, long memberId) {
         Question findQuestion = findByQuestionId(questionId);
         QuestionResponseDto responseDto = questionMapper.questionToQuestionResponseDto(findQuestion);
-        save(); // stub -> delete
         if(isRegisteredMember(memberId)){
             findQuestion.increaseView();
             questionRepository.save(findQuestion);
@@ -72,7 +74,7 @@ public class QuestionServiceImpl implements QuestionService{
     @Override
     public Question updateQuestion(long questionId, String title, String detail, long memberId) {
         Question findQuestion = findByQuestionId(questionId);
-        if (findQuestion.getMemberId() == memberId) {
+        if (findQuestion.getMember().getId() == memberId) {
             findQuestion.update(title, detail);
             return questionRepository.save(findQuestion);
         } else {
@@ -83,7 +85,7 @@ public class QuestionServiceImpl implements QuestionService{
     @Override
     public void deleteQuestion(long questionId, long memberId) {
         Question findQuestion = findByQuestionId(questionId);
-        if(findQuestion.getMemberId() == memberId)
+        if(findQuestion.getMember().getId() == memberId)
             questionRepository.delete(findQuestion);
         else
             throw new IllegalArgumentException("삭제할 권한이 없습니다: " + memberId);
@@ -94,10 +96,11 @@ public class QuestionServiceImpl implements QuestionService{
     @Override
     public int votesCount(long questionId, long memberId) {
         Question findQuestion = findByQuestionId(questionId);
-        MemberStub memberStub = save();
-        Optional<QuestionVote> optionalQuestionVote = questionVoteRepository.findByQuestionAndMemberStub(findQuestion, memberStub);
+        Member findMember = findByMemberId(memberId);
+        Optional<QuestionVote> optionalQuestionVote = questionVoteRepository.findByQuestionAndMember(findQuestion, findMember);
+
         if (optionalQuestionVote.isEmpty()) {
-            QuestionVote questionVote = QuestionVote.builder().question(findQuestion).memberStub(memberStub).build();
+            QuestionVote questionVote = QuestionVote.builder().question(findQuestion).member(findMember).build();
             findQuestion.updateVoteCount(true);
             questionVoteRepository.save(questionVote);
         } else {
@@ -131,11 +134,16 @@ public class QuestionServiceImpl implements QuestionService{
     //--------------------------------------------------------------- vote, view, answer
 
     public boolean isRegisteredMember(long memberId) {
-        return memberStubRepository.findById(memberId).isPresent();
+        return memberRepository.findById(memberId).isPresent();
     }
     public Question findByQuestionId(Long questionId) {
         Optional<Question> findQuestion = questionRepository.findById(questionId);
         return findQuestion.orElseThrow(() -> new IllegalArgumentException("No Search Question: " + questionId));
+    }
+
+    public Member findByMemberId(Long memberId){
+        Optional<Member> findMember = memberRepository.findById(memberId);
+        return findMember.orElseThrow(() -> new IllegalArgumentException("No Search Member: " + memberId));
     }
 
     public List<Tag> findByTagId(List<Long> tagIds) {
@@ -167,23 +175,6 @@ public class QuestionServiceImpl implements QuestionService{
                 .toUri();
     }
     // --------------------------------------------------------------- 부기능
-
-
-    // stub data zone
-    public List<StubAnswer> stubAnswerList() {
-        StubAnswer stubAnswer = new StubAnswer();
-        stubAnswer.setAnswerTitle("title");
-        stubAnswer.setAnswerDetail("detail");
-        stubAnswer.setAnswerId(1L);
-        return List.of(stubAnswer);
-    }
-
-    public MemberStub save(){
-        MemberStub memberStub = MemberStub.builder().name("member").build();
-        memberStubRepository.save(memberStub);
-        return memberStubRepository.findById(1L).orElseGet(null);
-    }
-
 
 
 }

@@ -2,6 +2,7 @@ package com.mzdevelopers.serverapplication.question.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mzdevelopers.serverapplication.answer.entity.Answer;
+import com.mzdevelopers.serverapplication.member.entity.Member;
 import com.mzdevelopers.serverapplication.tag.entity.QuestionTag;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,8 +42,10 @@ public class Question extends BaseEntity{
     @Column(nullable = false)
     private int viewCount;
 
-    @Column(nullable = false)
-    private Long memberId;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
     @OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<QuestionTag> questionTags;
@@ -54,10 +57,10 @@ public class Question extends BaseEntity{
     private List<Answer> answers;
 
     @Builder
-    public Question(String title, String detail, Long memberId){
+    public Question(String title, String detail, Member member){
         this.title = title;
         this.detail = detail;
-        this.memberId = memberId;
+        this.member = member;
         this.solutionStatus = false;
         this.answerCount = 0;
         this.votesCount = 0;
@@ -88,5 +91,9 @@ public class Question extends BaseEntity{
     public List<Answer> getAnswers() {
         Hibernate.initialize(answers);
         return answers;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
 }

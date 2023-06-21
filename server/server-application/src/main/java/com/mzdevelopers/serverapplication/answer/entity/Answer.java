@@ -3,6 +3,7 @@ package com.mzdevelopers.serverapplication.answer.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mzdevelopers.serverapplication.answervote.entity.AnswerVote;
 import com.mzdevelopers.serverapplication.comment.entity.Comment;
+import com.mzdevelopers.serverapplication.member.entity.Member;
 import com.mzdevelopers.serverapplication.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,8 +41,10 @@ public class Answer {
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
 
-    @Column(nullable = false) //스텁데이터
-    private long memberId;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
     @OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
     @JsonIgnore

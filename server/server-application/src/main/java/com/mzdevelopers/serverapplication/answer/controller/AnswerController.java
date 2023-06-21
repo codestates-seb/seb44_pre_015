@@ -51,30 +51,31 @@ public class AnswerController {
         return new ResponseEntity<>(mapper.answerToAnswerResponse(answer), HttpStatus.OK);
     }
 
-    @GetMapping("/{answer-id}")
-    public ResponseEntity getAnswer(
-            @PathVariable("answer-id") @Positive long answerId) {
-        Answer answer = answerService.findAnswer(answerId);
-        AnswerDto.Response response = mapper.answerToAnswerResponse(answer);
+//    @GetMapping("/{answer-id}")
+//    public ResponseEntity getAnswer(
+//            @PathVariable("answer-id") @Positive long answerId) {
+//        Answer answer = answerService.findAnswer(answerId);
+//        AnswerDto.Response response = mapper.answerToAnswerResponse(answer);
+//
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+//    @GetMapping
+//    public ResponseEntity getAnswers(@Positive @RequestParam int page,
+//                                     @Positive @RequestParam int size) {
+//        Page<Answer> pageAnswers = answerService.findAnswers(page - 1, size);
+//        List<Answer> answers = pageAnswers.getContent();
+//        return new ResponseEntity<>(
+//                new MultiResponseDto<>(mapper.answersToAnswerResponses(answers),
+//                        pageAnswers),
+//                HttpStatus.OK);
+//    }
 
-    @GetMapping
-    public ResponseEntity getAnswers(@Positive @RequestParam int page,
-                                     @Positive @RequestParam int size) {
-        Page<Answer> pageAnswers = answerService.findAnswers(page - 1, size);
-        List<Answer> answers = pageAnswers.getContent();
-        return new ResponseEntity<>(
-                new MultiResponseDto<>(mapper.answersToAnswerResponses(answers),
-                        pageAnswers),
-                HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{answer-id}")
+    @DeleteMapping("/{answer-id}/{member-id}")
     public ResponseEntity deleteAnswer(
-            @PathVariable("answer-id") @Positive long answerId) {
-        answerService.deleteAnswer(answerId);
+            @PathVariable("answer-id") @Positive long answerId,
+            @PathVariable("member-id") long memberId) {
+        answerService.deleteAnswer(answerId, memberId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

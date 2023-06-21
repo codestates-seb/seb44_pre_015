@@ -1,15 +1,15 @@
 package com.mzdevelopers.serverapplication.question.service;
 
+import com.mzdevelopers.serverapplication.member.entity.Member;
+import com.mzdevelopers.serverapplication.member.repository.MemberRepository;
 import com.mzdevelopers.serverapplication.question.entity.Question;
 import com.mzdevelopers.serverapplication.question.mapper.QuestionMapper;
 import com.mzdevelopers.serverapplication.question.repository.QuestionRepository;
 import com.mzdevelopers.serverapplication.question.repository.QuestionVoteRepository;
-import com.mzdevelopers.serverapplication.question.stub.MemberStubRepository;
 import com.mzdevelopers.serverapplication.tag.entity.QuestionTag;
 import com.mzdevelopers.serverapplication.tag.entity.Tag;
 import com.mzdevelopers.serverapplication.tag.repository.QuestionTagRepository;
 import com.mzdevelopers.serverapplication.tag.repository.TagRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ class QuestionServiceImplTest {
     @Mock
     private TagRepository tagRepository;
     @Mock
-    private MemberStubRepository memberStubRepository;
+    private MemberRepository memberRepository;
     @Mock
     private QuestionVoteRepository questionVoteRepository;
     @Mock
@@ -48,12 +48,14 @@ class QuestionServiceImplTest {
                 questionTagRepository,
                 tagRepository,
                 questionVoteRepository,
-                memberStubRepository,
+                memberRepository,
                 questionMapper);
     }
 
     public Question makeQuestion(String title, String detail, Long memberId) {
-        return Question.builder().title(title).detail(detail).memberId(memberId).build();
+        Member member = new Member();
+        member.setId(1L);
+        return Question.builder().title(title).detail(detail).member(member).build();
     }
 
     @Test
