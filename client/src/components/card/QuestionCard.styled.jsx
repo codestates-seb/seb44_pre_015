@@ -1,7 +1,7 @@
 import tw from 'tailwind-styled-components';
 
 export const CardWrapper = tw.div`
-  w-1/3
+  w-[13rem]
   border
   border-solid
   border-[#DCDCDC]
@@ -11,7 +11,6 @@ export const CardWrapper = tw.div`
   hover:border-ff7e22
   duration-300
   max-sm:w-[30rem]
-  m-4
 `
 
 export const CardTitle = tw.h3`
@@ -32,8 +31,4 @@ export const SelectWrapper = tw.div`
   justify-end
   text-xs
   mt-2
-`
-
-export const TitleContainer = tw.div`
-  m-6
 `
