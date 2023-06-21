@@ -1,4 +1,4 @@
-package com.mzdevelopers.serverapplication.member.config;
+package com.mzdevelopers.serverapplication.securityConfig;
 
 import com.mzdevelopers.serverapplication.member.service.Oauth2MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
