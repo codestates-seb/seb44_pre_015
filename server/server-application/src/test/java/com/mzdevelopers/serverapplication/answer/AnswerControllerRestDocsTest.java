@@ -81,6 +81,7 @@ public class AnswerControllerRestDocsTest {
 
     private String postContent;
     private ResultActions postActions;
+    private List<Comment> comments;
 
     @BeforeEach
     public void init() throws Exception {
@@ -88,7 +89,10 @@ public class AnswerControllerRestDocsTest {
         post = new AnswerDto.Post(1,2,"물어보지마세요");
         postContent = gson.toJson(post);
         Comment testComment = new Comment();
-        List<Comment> comments = List.of(testComment);
+        testComment.setCommentDetail("comment");
+        testComment.setCommentId(1L);
+        testComment.setMemberId(1L);
+        comments = List.of(testComment);
 
         given(mapper.answerPostToAnswer(Mockito.any(AnswerDto.Post.class))).willReturn(new Answer());
         long postAnswerId = 1L;
@@ -138,7 +142,11 @@ public class AnswerControllerRestDocsTest {
                                         fieldWithPath("votesCount").type(JsonFieldType.NUMBER).description("답변 추천수"),
                                         fieldWithPath("solutionStatus").type(JsonFieldType.BOOLEAN).description("답변 채택 유무"),
                                         fieldWithPath("questionId").type(JsonFieldType.NUMBER).description("답변의 질문 식별자"),
-                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("답변의 회원 식별자")
+                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("답변의 회원 식별자"),
+                                        fieldWithPath("comments").type(JsonFieldType.ARRAY).description("댓글(재답변) 리스트"),
+                                        fieldWithPath("comments[].commentId").type(JsonFieldType.NUMBER).description("댓글(재답변) 리스트"),
+                                        fieldWithPath("comments[].commentDetail").type(JsonFieldType.STRING).description("댓글(재답변) 본문"),
+                                        fieldWithPath("comments[].memberId").type(JsonFieldType.NUMBER).description("댓글(재답변) 회원 식별자")
                                 )
                         )
                 ));
@@ -161,7 +169,8 @@ public class AnswerControllerRestDocsTest {
                 0,
                 true,
                 1,
-                2);
+                2,
+                comments);
         given(mapper.answerToAnswerResponse(Mockito.any(Answer.class))).willReturn(patchResponse);
 
         //when
@@ -198,7 +207,11 @@ public class AnswerControllerRestDocsTest {
                                         fieldWithPath("votesCount").type(JsonFieldType.NUMBER).description("답변 추천수"),
                                         fieldWithPath("solutionStatus").type(JsonFieldType.BOOLEAN).description("답변 채택 유무"),
                                         fieldWithPath("questionId").type(JsonFieldType.NUMBER).description("답변의 질문 식별자"),
-                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("답변의 회원 식별자")
+                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("답변의 회원 식별자"),
+                                        fieldWithPath("comments").type(JsonFieldType.ARRAY).description("댓글(재답변) 리스트"),
+                                        fieldWithPath("comments[].commentId").type(JsonFieldType.NUMBER).description("댓글(재답변) 리스트"),
+                                        fieldWithPath("comments[].commentDetail").type(JsonFieldType.STRING).description("댓글(재답변) 본문"),
+                                        fieldWithPath("comments[].memberId").type(JsonFieldType.NUMBER).description("댓글(재답변) 회원 식별자")
                                 )
                         )
                 ));
@@ -213,7 +226,8 @@ public class AnswerControllerRestDocsTest {
                 0,
                 false,
                 1,
-                2);
+                2,
+                comments);
         given(mapper.answerToAnswerResponse(Mockito.any(Answer.class))).willReturn(postResponse);
         mockMvc.perform(
                 get("/answers/{answer-id}",getAnswerId)
@@ -235,7 +249,11 @@ public class AnswerControllerRestDocsTest {
                                         fieldWithPath("votesCount").type(JsonFieldType.NUMBER).description("답변 추천수"),
                                         fieldWithPath("solutionStatus").type(JsonFieldType.BOOLEAN).description("답변 채택 유무"),
                                         fieldWithPath("questionId").type(JsonFieldType.NUMBER).description("답변의 질문 식별자"),
-                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("답변의 회원 식별자")
+                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("답변의 회원 식별자"),
+                                        fieldWithPath("comments").type(JsonFieldType.ARRAY).description("댓글(재답변) 리스트"),
+                                        fieldWithPath("comments[].commentId").type(JsonFieldType.NUMBER).description("댓글(재답변) 리스트"),
+                                        fieldWithPath("comments[].commentDetail").type(JsonFieldType.STRING).description("댓글(재답변) 본문"),
+                                        fieldWithPath("comments[].memberId").type(JsonFieldType.NUMBER).description("댓글(재답변) 회원 식별자")
                                 )
                         )
                 ));
@@ -245,9 +263,9 @@ public class AnswerControllerRestDocsTest {
     public void getAnswersTest() throws Exception{
         List<AnswerDto.Response> responses = List.of(
                 new AnswerDto.Response(1, "first answer", 0,
-                        false,1,1),
+                        false,1,1,comments),
                 new AnswerDto.Response(2, "second answer", 0,
-                        false,1,2)
+                        false,1,2,comments)
         );
 
         given(answerService.findAnswers(Mockito.anyInt(), Mockito.anyInt())).willReturn(new PageImpl<>(List.of()));
@@ -276,6 +294,12 @@ public class AnswerControllerRestDocsTest {
                                         fieldWithPath("data[].solutionStatus").type(JsonFieldType.BOOLEAN).description("답변 채택 유무"),
                                         fieldWithPath("data[].questionId").type(JsonFieldType.NUMBER).description("답변의 질문 식별자"),
                                         fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("답변의 회원 식별자"),
+
+                                        fieldWithPath("data[].comments").type(JsonFieldType.ARRAY).description("댓글(재답변) 리스트"),
+                                        fieldWithPath("data[].comments[].commentId").type(JsonFieldType.NUMBER).description("댓글(재답변) 리스트"),
+                                        fieldWithPath("data[].comments[].commentDetail").type(JsonFieldType.STRING).description("댓글(재답변) 본문"),
+                                        fieldWithPath("data[].comments[].memberId").type(JsonFieldType.NUMBER).description("댓글(재답변) 회원 식별자"),
+
                                         fieldWithPath("pageInfo").type(JsonFieldType.OBJECT).description("페이지 정보 결과"),
                                         fieldWithPath("pageInfo.page").type(JsonFieldType.NUMBER).description("현재 페이지"),
                                         fieldWithPath("pageInfo.size").type(JsonFieldType.NUMBER).description("페이지 내에 결과량"),
@@ -307,73 +331,5 @@ public class AnswerControllerRestDocsTest {
                 ));
     }
 
-//    @Test
-//    public void postAnswerVoteTest() throws Exception{
-//        long answerId = 1L;
-//        AnswerVoteDto.Post postAnswerVote = new AnswerVoteDto.Post(2,answerId,true);
-//        String postAnswerVoteContent =gson.toJson(postAnswerVote);
-//
-//        given(answerVoteMapper.postDtoToAnswerVote(Mockito.any(AnswerVoteDto.Post.class))).willReturn(new AnswerVote());
-//        long postAnswerVoteId = 1L;
-//        AnswerVote mockResultAnswerVote = new AnswerVote();
-//        mockResultAnswerVote.setAnswerVoteId(postAnswerVoteId);
-//        given(answerVoteService.createAnswerVote(Mockito.any(AnswerVote.class),Mockito.any(Answer.class))).willReturn(mockResultAnswerVote);
-//        AnswerVoteDto.Response postResponse = new AnswerVoteDto.Response(postAnswerVoteId,
-//                2,
-//                answerId,
-//                true);
-//        given(answerVoteMapper.answerVoteToAnswerVoteDtoResponse(Mockito.any(AnswerVote.class))).willReturn(postResponse);
-//
-//        ResultActions postActions =
-//                mockMvc.perform(
-//                        post("/answers/{answer-id}/answer-vote",answerId)
-//                                .accept(MediaType.APPLICATION_JSON)
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .content(postAnswerVoteContent)
-//                );
-//
-//        postActions
-//                .andExpect(status().isCreated())
-//                .andDo(document(
-//                        "post-answerVote",
-//                        getRequestPreProcessor(),
-//                        getResponsePreProcessor(),
-//                        requestFields(
-//                                List.of(
-//                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
-//                                        fieldWithPath("answerId").type(JsonFieldType.NUMBER).description("질문 식별자"),
-//                                        fieldWithPath("isAnswerVoted").type(JsonFieldType.BOOLEAN).description("회원이 질문에 투표했는지 유무")
-//                                )
-//                        ),
-//                        responseFields(
-//                                List.of(
-////                                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터"),
-//                                        fieldWithPath("answerVoteId").type(JsonFieldType.NUMBER).description("답변투표 식별자"),
-//                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("투표의 회원 식별자"),
-//                                        fieldWithPath("answerId").type(JsonFieldType.NUMBER).description("투표의 질문 식별자"),
-//                                        fieldWithPath("isAnswerVoted").type(JsonFieldType.BOOLEAN).description("회원이 질문에 투표했는지 유무")
-//                                )
-//                        )
-//                ))
-//        ;
-//    }
-//
-//    @Test
-//    public void deleteAnswerVoteTest() throws Exception{
-//        doNothing().when(answerVoteService).deleteAnswerVote(Mockito.anyLong());
-//        long answerId=1L;
-//        mockMvc.perform(
-//                        delete("/answers/{answer-id}/answer-vote",answerId)
-//                )
-//                .andExpect(status().isNoContent())
-//                .andDo(document(
-//                        "delete-answerVote",
-//                        getRequestPreProcessor(),
-//                        getResponsePreProcessor(),
-//                        pathParameters(
-//                                parameterWithName("answer-id").description("답변 식별자")
-//                        )
-//                ));
-//    }
 
 }

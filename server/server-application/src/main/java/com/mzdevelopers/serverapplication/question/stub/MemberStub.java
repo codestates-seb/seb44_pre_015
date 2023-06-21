@@ -20,4 +20,12 @@ public class MemberStub {
     public MemberStub(String name) {
         this.name = name;
     }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
+
+    public Long getMemberId() {
+        return memberId;
+    }
 }
