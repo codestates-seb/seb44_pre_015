@@ -9,6 +9,12 @@ export const TagCheckContainer = tw.div`
   max-md:gap-1
 `
 
+export const TagCheckBoxed = tw.div`
+  w-[23.94%]
+  max-md:flex-auto
+  max-md:w-full
+`
+
 export const TagCheck = tw.input` 
   hidden
   [&:checked+label]:text-black
@@ -17,9 +23,8 @@ export const TagCheck = tw.input`
 `
 
 export const TagLabel = tw.label`
+  w-full
   cursor-pointer
-  w-[23.94%]
-  max-sm:w-[30%]
   flex
   justify-between
   items-center
@@ -37,7 +42,4 @@ export const TagLabel = tw.label`
   after:h-3
   after:rounded-full
   after:bg-[#DCDCDC]  
-
-  max-md:flex-auto
-  max-md:w-full
 `

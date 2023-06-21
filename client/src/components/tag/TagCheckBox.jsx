@@ -1,10 +1,46 @@
-import { TagCheckContainer, TagCheck, TagLabel } from "./TagCheckBox.styled"
+import { TagCheckContainer, TagCheck, TagCheckBoxed, TagLabel } from "./TagCheckBox.styled"
 
-export default function TagCheckBox() {
+export default function TagCheckBox({ handlerTag, tag, setTag }) {
+  const tagList =
+    [
+      {
+        tagName: 'java',
+        tagDescription: 'Java programming language'
+      }, {
+        tagName: 'spring-boot',
+        tagDescription: 'Spring Boot framework'
+      }, {
+        tagName: 'python',
+        tagDescription: 'Python programming language'
+      },
+      {
+        tagName: 'JavaScript',
+        tagDescription: 'JavaScript programming language'
+      },
+      {
+        tagName: 'React',
+        tagDescription: 'React programming language'
+      },
+      {
+        tagName: 'etc',
+        tagDescription: 'etc'
+      }
+    ]
+
   return (
     <TagCheckContainer>
 
-      <TagCheck type="checkbox" id="Javascript" value=""></TagCheck>
+      {
+        tagList.map((el, idx) => (
+          <TagCheckBoxed key={idx}>
+            <TagCheck type="checkbox" id={`${el.tagName}-${idx}`} value=""></TagCheck>
+            <TagLabel htmlFor={`${el.tagName}-${idx}`}><span>{el.tagName}</span></TagLabel>
+          </TagCheckBoxed>
+
+        ))
+      }
+
+      {/* <TagCheck type="checkbox" id="Javascript" value=""></TagCheck>
       <TagLabel htmlFor="Javascript"><span>Javascript</span></TagLabel>
 
       <TagCheck type="checkbox" id="React" value=""></TagCheck>
@@ -20,7 +56,7 @@ export default function TagCheckBox() {
       <TagLabel htmlFor="C#"><span>C#</span></TagLabel>
 
       <TagCheck type="checkbox" id="etc" value=""></TagCheck>
-      <TagLabel htmlFor="etc"><span>etc</span></TagLabel>
+      <TagLabel htmlFor="etc"><span>etc</span></TagLabel> */}
 
     </TagCheckContainer>
   )
