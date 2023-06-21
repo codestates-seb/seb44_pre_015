@@ -27,6 +27,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -131,6 +132,7 @@ class QuestionControllerTest {
 
 
     @Test
+    @WithMockUser
     void getQuestion() throws Exception {
         // given
         long questionId = 1L, memberId = 1L;
@@ -142,18 +144,23 @@ class QuestionControllerTest {
         ReflectionTestUtils.setField(question, "questionId", questionId);
         ReflectionTestUtils.setField(question, "createdAt",  LocalDateTime.now());
         ReflectionTestUtils.setField(question, "updatedAt", LocalDateTime.now());
+        Member answerMember = new Member();
+        answerMember.setId(1L);
+        Member commentMember = new Member();
+        commentMember.setId(1L);
         List<Answer> answerList = new ArrayList<>();
         List<Comment> commentList = new ArrayList<>();
         Comment comment = new Comment();
         comment.setCommentId(1L);
         comment.setCommentDetail("comment");
-        comment.setMember(new Member());
+        comment.setMember(commentMember);
         commentList.add(comment);
         Answer answer = new Answer();
         answer.setAnswerId(1L);
         answer.setDetail("answer");
         answer.setVotesCount(1);
         answer.setComments(commentList);
+        answer.setMember(answerMember);
         answerList.add(answer);
         ReflectionTestUtils.setField(question, "answers", answerList);
 
@@ -166,11 +173,14 @@ class QuestionControllerTest {
         List<TagDto> tags = Arrays.asList(tag1, tag2);
 
         QuestionResponseDto responseDto = new QuestionResponseDto();
+        given(questionService.getQuestion(questionId, memberId)).willReturn(responseDto);
         BeanUtils.copyProperties(question, responseDto);
         responseDto.setTags(tags);
         responseDto.setCreatedAt(question.getCreatedAt().toString());
         responseDto.setUpdatedAt(question.getUpdatedAt().toString());
-        given(questionService.getQuestion(any(), any())).willReturn(responseDto);
+
+
+
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -181,7 +191,6 @@ class QuestionControllerTest {
 
         // then
         actions
-//                .andExpect(status().isOk())
 //                .andExpect(jsonPath("title").value(question.getTitle()))
 //                .andExpect(jsonPath("detail").value(question.getDetail()))
 //                .andExpect(jsonPath("solutionStatus").value(false))
@@ -218,10 +227,10 @@ class QuestionControllerTest {
                                 fieldWithPath("answers[].detail").type(JsonFieldType.STRING).description("답변 내용"),
                                 fieldWithPath("answers[].votesCount").type(JsonFieldType.NUMBER).description("답변 추천 수"),
                                 fieldWithPath("answers[].solutionStatus").type(JsonFieldType.BOOLEAN).description("답변 해결 상태"),
-                                fieldWithPath("answers[].memberId").type(JsonFieldType.NUMBER).description("답변 작성자 식별자(고유 번호)"),
+                                fieldWithPath("answers[].member.memberId").type(JsonFieldType.NUMBER).description("답변 작성자 식별자(고유 번호)"),
                                 fieldWithPath("answers[].comments[].commentId").type(JsonFieldType.NUMBER).description("대댓글 식별자(고유 번호)"),
                                 fieldWithPath("answers[].comments[].commentDetail").type(JsonFieldType.STRING).description("대댓글 내용"),
-                                fieldWithPath("answers[].comments[].memberId").type(JsonFieldType.NUMBER).description("대댓글 작성자 식별자(고유 번호)"),
+                                fieldWithPath("answers[].comments[].member.memberId").type(JsonFieldType.NUMBER).description("대댓글 작성자 식별자(고유 번호)"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("생성 일자"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("수정 일자")
                         )
