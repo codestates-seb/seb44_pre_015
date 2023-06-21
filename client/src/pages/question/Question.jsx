@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { QuestionContainer } from './Question.styled';
 import QuestionWriteHead from '../../components/question-write/questionwritehead/QuestionWriteHead';
@@ -11,7 +11,23 @@ import { useNavigate } from 'react-router-dom';
 export default function Question() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [tags, setTags] = useState([]);
+  const [checkCount, setCheckCount] = useState(0)
   const navigate = useNavigate();
+
+  const handlerTag = (name, description) => {
+    let newTag = [...tags, { tagName: name, tagDescription: description }]
+    let filterTag = tags.filter((el) => el.tagName !== name)
+    let tagSelected = tags.some(el => el.tagName === name)
+
+    if (tagSelected) {
+      setTags(filterTag)
+      setCheckCount(checkCount - 1)
+    } else {
+      setTags(newTag)
+      setCheckCount(checkCount + 1)
+    }
+  }
 
   const titleChange = (e) => {
     setTitle(e.target.value);
@@ -26,7 +42,7 @@ export default function Question() {
       title: title,
       detail: content,
       memberId: 1,
-      tags: [1, 2, 3]
+      tags: tags
     };
 
     const headers = {
@@ -69,7 +85,7 @@ export default function Question() {
       <QuestionWriteHead />
       <QuestionTitle value={title} onChange={titleChange} />
       <QuestionInput value={content} onChange={contentChange} />
-      <QuestionTagCheck />
+      <QuestionTagCheck handlerTag={handlerTag} tags={tags} checkCount={checkCount}/>
       <AskBtn onClick={questionSubmit} />
     </QuestionContainer>
   );
