@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useEffect } from 'react';
 import axios from 'axios';
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
@@ -10,21 +9,18 @@ import Question from './pages/question/Question'
 
 export default function App() {
 
-
-  const getAPIData = async () => {
-    const response = await fetch('/questions/recent?page=0&size=10', {
-      headers : {
+  const getApi = async () => {
+    await axios('https://39c3-59-11-30-105.ngrok-free.app/questions/recent?page=0&size=10',{
+      headers: {
         "Content-Type": "application/json",
-        'Accept: application/json',
-      }
-    })
-    const data = await response.json();
-    console.log(data);
-  };
+        "ngrok-skip-browser-warning": "69420",
+      },
+    }
+    ).then(res => console.log(res.data));
+  }
 
-  getAPIData()
+  getApi()
 
-  
   return (
     <BrowserRouter>
       <Header />
