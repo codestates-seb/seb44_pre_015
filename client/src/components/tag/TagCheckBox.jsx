@@ -1,35 +1,9 @@
+import { tagList } from "./tagList"
 import { TagCheckContainer, TagCheck, TagCheckBoxed, TagLabel } from "./TagCheckBox.styled"
 
 export default function TagCheckBox({ handlerTag, tags, checkCount }) {
-  const tagList =
-    [
-      {
-        tagName: 'java',
-        tagDescription: 'Java programming language'
-      }, {
-        tagName: 'spring-boot',
-        tagDescription: 'Spring Boot framework'
-      }, {
-        tagName: 'python',
-        tagDescription: 'Python programming language'
-      },
-      {
-        tagName: 'JavaScript',
-        tagDescription: 'JavaScript programming language'
-      },
-      {
-        tagName: 'React',
-        tagDescription: 'React programming language'
-      },
-      {
-        tagName: 'etc',
-        tagDescription: 'etc'
-      }
-    ]
-
   return (
     <TagCheckContainer>
-
       {
         tagList.map((el) => (
           <TagCheckBoxed key={el.tagName}>
@@ -47,7 +21,6 @@ export default function TagCheckBox({ handlerTag, tags, checkCount }) {
           </TagCheckBoxed>
         ))
       }
-
     </TagCheckContainer>
   )
 }
