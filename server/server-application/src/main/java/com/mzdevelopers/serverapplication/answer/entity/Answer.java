@@ -44,6 +44,7 @@ public class Answer {
     private long memberId;
 
     @OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<AnswerVote> answerVotes;
 
     public void updateVoteCount(boolean voted) {

@@ -1,6 +1,7 @@
 package com.mzdevelopers.serverapplication.question.service;
 
 import com.mzdevelopers.serverapplication.question.entity.Question;
+import com.mzdevelopers.serverapplication.question.mapper.QuestionMapper;
 import com.mzdevelopers.serverapplication.question.repository.QuestionRepository;
 import com.mzdevelopers.serverapplication.question.repository.QuestionVoteRepository;
 import com.mzdevelopers.serverapplication.question.stub.MemberStubRepository;
@@ -37,6 +38,8 @@ class QuestionServiceImplTest {
     private MemberStubRepository memberStubRepository;
     @Mock
     private QuestionVoteRepository questionVoteRepository;
+    @Mock
+    private QuestionMapper questionMapper;
     private QuestionServiceImpl questionService;
     @BeforeEach
     public void setUp() {
@@ -45,7 +48,8 @@ class QuestionServiceImplTest {
                 questionTagRepository,
                 tagRepository,
                 questionVoteRepository,
-                memberStubRepository);
+                memberStubRepository,
+                questionMapper);
     }
 
     public Question makeQuestion(String title, String detail, Long memberId) {

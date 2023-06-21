@@ -1,6 +1,8 @@
 package com.mzdevelopers.serverapplication.question.controller;
 
 import com.google.gson.Gson;
+import com.mzdevelopers.serverapplication.answer.entity.Answer;
+import com.mzdevelopers.serverapplication.comment.entity.Comment;
 import com.mzdevelopers.serverapplication.question.dto.QuestionPatchDto;
 import com.mzdevelopers.serverapplication.question.dto.QuestionRequestDto;
 import com.mzdevelopers.serverapplication.question.dto.QuestionResponseDto;
@@ -41,6 +43,7 @@ import static com.mzdevelopers.serverapplication.util.ApiDocumentUtils.getReques
 import static com.mzdevelopers.serverapplication.util.ApiDocumentUtils.getResponsePreProcessor;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
@@ -137,16 +140,20 @@ class QuestionControllerTest {
         ReflectionTestUtils.setField(question, "questionId", questionId);
         ReflectionTestUtils.setField(question, "createdAt",  LocalDateTime.now());
         ReflectionTestUtils.setField(question, "updatedAt", LocalDateTime.now());
-
-        List<StubAnswer> stubAnswerList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            StubAnswer stubAnswer = new StubAnswer();
-            stubAnswer.setAnswerDetail(String.valueOf(i));
-            stubAnswer.setAnswerTitle(String.valueOf(i));
-            stubAnswer.setAnswerId(i+1);
-            stubAnswerList.add(stubAnswer);
-        }
-
+        List<Answer> answerList = new ArrayList<>();
+        List<Comment> commentList = new ArrayList<>();
+        Comment comment = new Comment();
+        comment.setCommentId(1L);
+        comment.setCommentDetail("comment");
+        comment.setMemberId(1L);
+        commentList.add(comment);
+        Answer answer = new Answer();
+        answer.setAnswerId(1L);
+        answer.setDetail("answer");
+        answer.setVotesCount(1);
+        answer.setComments(commentList);
+        answerList.add(answer);
+        ReflectionTestUtils.setField(question, "answers", answerList);
 
         TagDto tag1 = new TagDto();
         ReflectionTestUtils.setField(tag1, "tagName", "tag1");
@@ -156,17 +163,12 @@ class QuestionControllerTest {
         ReflectionTestUtils.setField(tag2, "tagDescription", "tag2");
         List<TagDto> tags = Arrays.asList(tag1, tag2);
 
-        given(questionService.getQuestion(questionId, memberId)).willReturn(new QuestionResponseDto());
         QuestionResponseDto responseDto = new QuestionResponseDto();
         BeanUtils.copyProperties(question, responseDto);
-        given(questionMapper.questionToQuestionResponseDto(question)).willReturn(responseDto);
-        given(questionService.stubAnswerList()).willReturn(stubAnswerList);
-        given(questionService.findByQuestionTag(Mockito.any(Question.class))).willReturn(tags);
-
         responseDto.setTags(tags);
-        responseDto.setAnswers(stubAnswerList);
         responseDto.setCreatedAt(question.getCreatedAt().toString());
         responseDto.setUpdatedAt(question.getUpdatedAt().toString());
+        given(questionService.getQuestion(questionId, memberId)).willReturn(responseDto);
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -209,14 +211,21 @@ class QuestionControllerTest {
                                 fieldWithPath("tags[]").type(JsonFieldType.ARRAY).optional().description("태그 배열"),
                                 fieldWithPath("tags[].tagName").type(JsonFieldType.STRING).optional().description("태그 이름"),
                                 fieldWithPath("tags[].tagDescription").type(JsonFieldType.STRING).optional().description("태그 설명"),
+                                fieldWithPath("answers").type(JsonFieldType.ARRAY).description("답변 목록"),
                                 fieldWithPath("answers[].answerId").type(JsonFieldType.NUMBER).description("답변 식별자(고유 번호)"),
-                                fieldWithPath("answers[].answerTitle").type(JsonFieldType.STRING).description("답변 제목"),
-                                fieldWithPath("answers[].answerDetail").type(JsonFieldType.STRING).description("답변 내용"),
+                                fieldWithPath("answers[].detail").type(JsonFieldType.STRING).description("답변 내용"),
+                                fieldWithPath("answers[].votesCount").type(JsonFieldType.NUMBER).description("답변 추천 수"),
+                                fieldWithPath("answers[].solutionStatus").type(JsonFieldType.BOOLEAN).description("답변 해결 상태"),
+                                fieldWithPath("answers[].memberId").type(JsonFieldType.NUMBER).description("답변 작성자 식별자(고유 번호)"),
+                                fieldWithPath("answers[].comments[].commentId").type(JsonFieldType.NUMBER).description("대댓글 식별자(고유 번호)"),
+                                fieldWithPath("answers[].comments[].commentDetail").type(JsonFieldType.STRING).description("대댓글 내용"),
+                                fieldWithPath("answers[].comments[].memberId").type(JsonFieldType.NUMBER).description("대댓글 작성자 식별자(고유 번호)"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("생성 일자"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("수정 일자")
                         )
                 ));
     }
+
 
     @Test
     void patchQuestion() throws Exception {
@@ -235,6 +244,7 @@ class QuestionControllerTest {
         ReflectionTestUtils.setField(updatedQuestion, "questionId", questionId);
         ReflectionTestUtils.setField(updatedQuestion, "createdAt", LocalDateTime.now());
         ReflectionTestUtils.setField(updatedQuestion, "updatedAt", LocalDateTime.now());
+        ReflectionTestUtils.setField(updatedQuestion, "answerCount", 1);
 
         QuestionResponseDto responseDto = new QuestionResponseDto();
         BeanUtils.copyProperties(updatedQuestion, responseDto);
@@ -243,16 +253,22 @@ class QuestionControllerTest {
         given(questionMapper.questionToQuestionResponseDto(updatedQuestion))
                 .willReturn(responseDto);
 
-        List<StubAnswer> stubAnswerList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            StubAnswer stubAnswer = new StubAnswer();
-            stubAnswer.setAnswerDetail(String.valueOf(i));
-            stubAnswer.setAnswerTitle(String.valueOf(i));
-            stubAnswer.setAnswerId(i+1);
-            stubAnswerList.add(stubAnswer);
-        }
-
-        responseDto.setAnswers(stubAnswerList);
+        List<Answer> answerList = new ArrayList<>();
+        List<Comment> commentList = new ArrayList<>();
+        Comment comment = new Comment();
+        comment.setCommentId(1L);
+        comment.setCommentDetail("comment");
+        comment.setMemberId(1L);
+        commentList.add(comment);
+        Answer answer = new Answer();
+        answer.setAnswerId(1L);
+        answer.setDetail("answer");
+        answer.setVotesCount(1);
+        answer.setComments(commentList);
+        answerList.add(answer);
+        ReflectionTestUtils.setField(updatedQuestion, "answers", answerList);
+        responseDto.setAnswers(answerList);
+        responseDto.setAnswerCount(1);
 
         TagDto tag1 = new TagDto();
         ReflectionTestUtils.setField(tag1, "tagName", "tag1");
@@ -276,17 +292,27 @@ class QuestionControllerTest {
         // then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("title").value(updateTitle))
-                .andExpect(jsonPath("detail").value(updateDetail))
-                .andExpect(jsonPath("solutionStatus").value(false))
-                .andExpect(jsonPath("answerCount").value(0))
-                .andExpect(jsonPath("votesCount").value(0))
-                .andExpect(jsonPath("viewCount").value(0))
-                .andExpect(jsonPath("memberId").value(memberId))
-                .andExpect(jsonPath("tags").isArray())
-                .andExpect(jsonPath("answers").isArray())
-                .andExpect(jsonPath("createdAt").exists())
-                .andExpect(jsonPath("updatedAt").exists())
+                .andExpect(jsonPath("$.title").value(updateTitle))
+                .andExpect(jsonPath("$.detail").value(updateDetail))
+                .andExpect(jsonPath("$.solutionStatus").value(false))
+                .andExpect(jsonPath("$.answerCount").value(1))
+                .andExpect(jsonPath("$.votesCount").value(0))
+                .andExpect(jsonPath("$.viewCount").value(0))
+                .andExpect(jsonPath("$.memberId").value(memberId))
+                .andExpect(jsonPath("$.tags").isArray())
+                .andExpect(jsonPath("$.answers").isArray())
+                .andExpect(jsonPath("$.createdAt").exists())
+                .andExpect(jsonPath("$.updatedAt").exists())
+                .andExpect(jsonPath("$.answers[0].detail").value("answer"))
+                .andExpect(jsonPath("$.answers[0].votesCount").value(1))
+                .andExpect(jsonPath("$.answers[0].solutionStatus").value(false))
+                .andExpect(jsonPath("$.answers[0].comments[0].commentId").value(1))
+                .andExpect(jsonPath("$.answers[0].comments[0].commentDetail").value("comment"))
+                .andExpect(jsonPath("$.answers[0].comments[0].memberId").value(1))
+                .andExpect(jsonPath("$.answers[0].memberId").value(0))
+                .andExpect(jsonPath("$.answers[0].answerVotes").doesNotExist())
+                .andExpect(jsonPath("$.answers[0].answerTitle").doesNotExist())
+                .andExpect(jsonPath("$.answers[0].answerDetail").doesNotExist())
                 .andDo(document(
                         "patch-Question",
                         getRequestPreProcessor(),
@@ -311,14 +337,23 @@ class QuestionControllerTest {
                                 fieldWithPath("tags[]").type(JsonFieldType.ARRAY).optional().description("태그 배열"),
                                 fieldWithPath("tags[].tagName").type(JsonFieldType.STRING).optional().description("태그 이름"),
                                 fieldWithPath("tags[].tagDescription").type(JsonFieldType.STRING).optional().description("태그 설명"),
+                                fieldWithPath("answers[]").type(JsonFieldType.ARRAY).optional().description("답변 배열"),
                                 fieldWithPath("answers[].answerId").type(JsonFieldType.NUMBER).description("답변 식별자(고유 번호)"),
-                                fieldWithPath("answers[].answerTitle").type(JsonFieldType.STRING).description("답변 제목"),
-                                fieldWithPath("answers[].answerDetail").type(JsonFieldType.STRING).description("답변 내용"),
+                                fieldWithPath("answers[].detail").type(JsonFieldType.STRING).description("답변 내용"),
+                                fieldWithPath("answers[].votesCount").type(JsonFieldType.NUMBER).description("답변 좋아요 수"),
+                                fieldWithPath("answers[].solutionStatus").type(JsonFieldType.BOOLEAN).description("답변 완료 여부"),
+                                fieldWithPath("answers[].comments").type(JsonFieldType.ARRAY).optional().description("댓글 배열"),
+                                fieldWithPath("answers[].comments[].commentId").type(JsonFieldType.NUMBER).description("댓글 식별자(고유 번호)"),
+                                fieldWithPath("answers[].comments[].commentDetail").type(JsonFieldType.STRING).description("댓글 내용"),
+                                fieldWithPath("answers[].comments[].memberId").type(JsonFieldType.NUMBER).description("회원 고유 번호"),
+                                fieldWithPath("answers[].memberId").type(JsonFieldType.NUMBER).description("회원 고유 번호"),
+                                fieldWithPath("answers[].answerVotes").type(JsonFieldType.ARRAY).optional().description("답변 좋아요 배열"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("생성 일자"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("수정 일자")
                         )
                 ));
     }
+
 
     @Test
     void deleteQuestion() throws Exception {
@@ -386,45 +421,15 @@ class QuestionControllerTest {
         String api = "recent";
         int page = 0, size = 10;
 
-        List<StubAnswer> stubAnswerList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            StubAnswer stubAnswer = new StubAnswer();
-            stubAnswer.setAnswerDetail(String.valueOf(i));
-            stubAnswer.setAnswerTitle(String.valueOf(i));
-            stubAnswer.setAnswerId(i+1);
-            stubAnswerList.add(stubAnswer);
-        }
-
-        TagDto tag1 = new TagDto();
-        ReflectionTestUtils.setField(tag1, "tagName", "tag1");
-        ReflectionTestUtils.setField(tag1, "tagDescription", "tag1");
-        TagDto tag2 = new TagDto();
-        ReflectionTestUtils.setField(tag2, "tagName", "tag2");
-        ReflectionTestUtils.setField(tag2, "tagDescription", "tag2");
+        TagDto tag1 = createTagDto("tag1", "tag1");
+        TagDto tag2 = createTagDto("tag2", "tag2");
         List<TagDto> tags = Arrays.asList(tag1, tag2);
 
-        List<Question> questions = new ArrayList<>();
-        for (int i = 1; i < 3; i++) {
-            Question question = Question.builder().title("title").detail("detail").memberId((long) i).build();
-            ReflectionTestUtils.setField(question, "questionId", (long) i);
-            questions.add(question);
-        }
-
-        List<QuestionResponseDto> responseDtoList = new ArrayList<>();
-        for (Question question : questions) {
-            QuestionResponseDto dto = new QuestionResponseDto();
-            BeanUtils.copyProperties(question, dto);
-            dto.setTags(tags);
-            dto.setAnswers(stubAnswerList);
-            ReflectionTestUtils.setField(dto, "createdAt", LocalDateTime.now().toString());
-            ReflectionTestUtils.setField(dto, "updatedAt", LocalDateTime.now().toString());
-            responseDtoList.add(dto);
-        }
+        List<Question> questions = createQuestionsWithAnswersAndComments(2);
+        List<QuestionResponseDto> responseDtoList = createQuestionResponseDtos(questions, tags);
 
         given(questionService.questionsListByAPI(page, size, api)).willReturn(questions);
-        given(questionMapper.questionToQuestionResponseDto(Mockito.any(Question.class))).willReturn(responseDtoList.get(0), responseDtoList.get(1));
-        given(questionService.stubAnswerList()).willReturn(stubAnswerList);
-        given(questionService.findByQuestionTag(Mockito.any(Question.class))).willReturn(tags);
+        given(questionService.getQuestion(anyLong(), anyLong())).willReturn(responseDtoList.get(0), responseDtoList.get(1));
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -443,48 +448,113 @@ class QuestionControllerTest {
                 .andExpect(jsonPath("$[0].detail").value("detail"))
                 .andExpect(jsonPath("$[0].createdAt").exists())
                 .andExpect(jsonPath("$[0].updatedAt").exists())
-                .andExpect(jsonPath("$[0].answers").isArray())
-                .andExpect(jsonPath("$[0].tags").isArray())
+                .andExpect(jsonPath("$[0].answers[0].answerId").exists())
+                .andExpect(jsonPath("$[0].answers[0].detail").value("answer"))
+                .andExpect(jsonPath("$[0].answers[0].votesCount").exists())
+                .andExpect(jsonPath("$[0].answers[0].solutionStatus").exists())
+                .andExpect(jsonPath("$[0].answers[0].comments[0].commentId").exists())
+                .andExpect(jsonPath("$[0].answers[0].comments[0].commentDetail").exists())
+                .andExpect(jsonPath("$[0].answers[0].comments[0].memberId").exists())
+                .andExpect(jsonPath("$[0].answers[0].memberId").exists())
+                .andExpect(jsonPath("$[0].tags[0].tagName").value("tag1"))
+                .andExpect(jsonPath("$[0].tags[0].tagDescription").value("tag1"))
+                .andExpect(jsonPath("$[0].tags[1].tagName").value("tag2"))
+                .andExpect(jsonPath("$[0].tags[1].tagDescription").value("tag2"))
                 .andExpect(jsonPath("$[1].questionId").value(2))
                 .andExpect(jsonPath("$[1].title").value("title"))
                 .andExpect(jsonPath("$[1].detail").value("detail"))
                 .andExpect(jsonPath("$[1].createdAt").exists())
                 .andExpect(jsonPath("$[1].updatedAt").exists())
-                .andExpect(jsonPath("$[1].answers").isArray())
-                .andExpect(jsonPath("$[1].tags").isArray())
-                .andDo(document(
-                        "get-QuestionsByAPI",
-                        getRequestPreProcessor(),
-                        getResponsePreProcessor(),
-                        pathParameters(
-                                parameterWithName("api").description("API 식별자")
-                        ),
-                        requestParameters(
-                                parameterWithName("page").description("페이지 번호 (기본값: 0)"),
-                                parameterWithName("size").description("페이지 크기 (기본값: 10)")
-                        ),
+                .andExpect(jsonPath("$[1].answers[0].answerId").exists())
+                .andExpect(jsonPath("$[1].answers[0].detail").value("answer"))
+                .andExpect(jsonPath("$[1].answers[0].votesCount").exists())
+                .andExpect(jsonPath("$[1].answers[0].solutionStatus").exists())
+                .andExpect(jsonPath("$[1].answers[0].comments[0].commentId").exists())
+                .andExpect(jsonPath("$[1].answers[0].comments[0].commentDetail").exists())
+                .andExpect(jsonPath("$[1].answers[0].comments[0].memberId").exists())
+                .andExpect(jsonPath("$[1].answers[0].memberId").exists())
+                .andExpect(jsonPath("$[1].tags[0].tagName").value("tag1"))
+                .andExpect(jsonPath("$[1].tags[0].tagDescription").value("tag1"))
+                .andExpect(jsonPath("$[1].tags[1].tagName").value("tag2"))
+                .andExpect(jsonPath("$[1].tags[1].tagDescription").value("tag2"))
+                .andDo(document("get-questions-by-api",
                         responseFields(
                                 fieldWithPath("[].questionId").type(JsonFieldType.NUMBER).description("질문 식별자(고유 번호)"),
-                                fieldWithPath("[].title").type(JsonFieldType.STRING).description("제목"),
-                                fieldWithPath("[].detail").type(JsonFieldType.STRING).description("내용"),
-                                fieldWithPath("[].solutionStatus").type(JsonFieldType.BOOLEAN).description("질문 완료 여부"),
+                                fieldWithPath("[].title").type(JsonFieldType.STRING).description("질문 제목"),
+                                fieldWithPath("[].detail").type(JsonFieldType.STRING).description("질문 내용"),
+                                fieldWithPath("[].solutionStatus").type(JsonFieldType.BOOLEAN).description("해결 상태"),
                                 fieldWithPath("[].answerCount").type(JsonFieldType.NUMBER).description("답변 수"),
-                                fieldWithPath("[].votesCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
+                                fieldWithPath("[].votesCount").type(JsonFieldType.NUMBER).description("추천 수"),
                                 fieldWithPath("[].viewCount").type(JsonFieldType.NUMBER).description("조회 수"),
-                                fieldWithPath("[].memberId").type(JsonFieldType.NUMBER).description("회원 식별자(고유 번호)"),
+                                fieldWithPath("[].memberId").type(JsonFieldType.NUMBER).description("질문 작성자 식별자(고유 번호)"),
                                 fieldWithPath("[].tags").type(JsonFieldType.ARRAY).description("태그 목록"),
                                 fieldWithPath("[].tags[].tagName").type(JsonFieldType.STRING).description("태그 이름"),
                                 fieldWithPath("[].tags[].tagDescription").type(JsonFieldType.STRING).description("태그 설명"),
                                 fieldWithPath("[].answers").type(JsonFieldType.ARRAY).description("답변 목록"),
                                 fieldWithPath("[].answers[].answerId").type(JsonFieldType.NUMBER).description("답변 식별자(고유 번호)"),
-                                fieldWithPath("[].answers[].answerTitle").type(JsonFieldType.STRING).description("답변 제목"),
-                                fieldWithPath("[].answers[].answerDetail").type(JsonFieldType.STRING).description("답변 내용"),
+                                fieldWithPath("[].answers[].detail").type(JsonFieldType.STRING).description("답변 내용"),
+                                fieldWithPath("[].answers[].votesCount").type(JsonFieldType.NUMBER).description("답변 추천 수"),
+                                fieldWithPath("[].answers[].solutionStatus").type(JsonFieldType.BOOLEAN).description("답변 해결 상태"),
+                                fieldWithPath("[].answers[].memberId").type(JsonFieldType.NUMBER).description("답변 작성자 식별자(고유 번호)"),
+                                fieldWithPath("[].answers[].comments[].commentId").type(JsonFieldType.NUMBER).description("대댓글 식별자(고유 번호)"),
+                                fieldWithPath("[].answers[].comments[].commentDetail").type(JsonFieldType.STRING).description("대댓글 내용"),
+                                fieldWithPath("[].answers[].comments[].memberId").type(JsonFieldType.NUMBER).description("대댓글 작성자 식별자(고유 번호)"),
                                 fieldWithPath("[].createdAt").type(JsonFieldType.STRING).description("생성 일자"),
                                 fieldWithPath("[].updatedAt").type(JsonFieldType.STRING).description("수정 일자")
                         )
-
-
-
                 ));
+    }
+
+
+
+    private TagDto createTagDto(String tagName, String tagDescription) {
+        TagDto tagDto = new TagDto();
+        ReflectionTestUtils.setField(tagDto, "tagName", tagName);
+        ReflectionTestUtils.setField(tagDto, "tagDescription", tagDescription);
+        return tagDto;
+    }
+
+    private List<Question> createQuestionsWithAnswersAndComments(int count) {
+        List<Question> questions = new ArrayList<>();
+        for (int i = 1; i <= count; i++) {
+            Question question = Question.builder()
+                    .title("title")
+                    .detail("detail")
+                    .memberId((long) i)
+                    .build();
+            ReflectionTestUtils.setField(question, "questionId", (long) i);
+
+            List<Answer> answerList = new ArrayList<>();
+            List<Comment> commentList = new ArrayList<>();
+            Comment comment = new Comment();
+            comment.setCommentId(1L);
+            comment.setCommentDetail("comment");
+            comment.setMemberId(1L);
+            commentList.add(comment);
+
+            Answer answer = new Answer();
+            answer.setAnswerId(1L);
+            answer.setDetail("answer");
+            answer.setVotesCount(1);
+            answer.setComments(commentList);
+            answerList.add(answer);
+
+            ReflectionTestUtils.setField(question, "answers", answerList);
+            questions.add(question);
+        }
+        return questions;
+    }
+
+    private List<QuestionResponseDto> createQuestionResponseDtos(List<Question> questions, List<TagDto> tags) {
+        List<QuestionResponseDto> responseDtoList = new ArrayList<>();
+        for (Question question : questions) {
+            QuestionResponseDto dto = new QuestionResponseDto();
+            BeanUtils.copyProperties(question, dto);
+            dto.setTags(tags);
+            ReflectionTestUtils.setField(dto, "createdAt", LocalDateTime.now().toString());
+            ReflectionTestUtils.setField(dto, "updatedAt", LocalDateTime.now().toString());
+            responseDtoList.add(dto);
+        }
+        return responseDtoList;
     }
 }
