@@ -3,7 +3,7 @@ import { QTitle, QWrapper, Qinput, TContainer } from './QuestionTitle.styled';
 
 export default function QuestionTitle(props) {
   const {value, onChange} = props;
-  const maxLength = 20;
+  const maxLength = 80;
   
 
   return (
@@ -16,7 +16,7 @@ export default function QuestionTitle(props) {
 
         <Qinput
         type='text'
-        placeholder='제목을 작성해 주세요. (20자 이하)'
+        placeholder='제목을 작성해 주세요. (80자 이하)'
         value={value}
         onChange={onChange}
         maxLength={maxLength}
