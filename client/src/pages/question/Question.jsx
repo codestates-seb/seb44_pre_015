@@ -51,7 +51,7 @@ export default function Question() {
     };
 
     axios
-    .post('https://56d7-59-11-30-105.ngrok-free.app/questions/register', requestData, { headers })
+    .post('http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/register', requestData, { headers })
     .then((response) => {
       clearInput();
       navigate('/');
