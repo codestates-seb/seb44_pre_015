@@ -14,17 +14,17 @@ import {
   Content
 } from './QuestionSection.styled';
 
-export default function QuestionSection({title, content, tags, createdAt}) {
+export default function QuestionSection({ title, content, tags, createdAt, questionId, memberId, votesCount }) {
   return (
     <EditContainer>
       <EditDiv> 
         <EditBtn />
-        <ReMoveBtn />
+        <ReMoveBtn questionId={questionId} memberId={memberId}/>
       </EditDiv>
 
       <div className="flex items-center">
         <Heart>
-          <HeartBtn />
+          <HeartBtn votesCount={votesCount} questionId={questionId} memberId={memberId}/>
         </Heart>
         <User>
           <UserInfoOwner createdAt={createdAt}/>

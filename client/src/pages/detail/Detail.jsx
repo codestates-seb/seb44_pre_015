@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { DetailContainer, DeatilBottomSection } from './Detail.styled'
@@ -10,27 +10,27 @@ import RecommentSection from '../../components/question/recomment-section/Recomm
 
 export default function Detail() {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [datas, setDatas] = useState({});
   const [answers, setAnswers] = useState([]);
 
   useEffect(()=>{
-    axios(`https://56d7-59-11-30-105.ngrok-free.app/questions/${id}/1`,  {
-      headers: {
-        "Content-Type": "application/json",
-        "ngrok-skip-browser-warning": "69420",
-      }
-    })
+    axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/${id}/1`)
       .then(res => {
         setDatas(res.data);
         setAnswers(res.data.answers);
         console.log(res.data);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        navigate('/')
+      });
   }, [])
 
   return (
     <DetailContainer>
-      <QuestionSection title={datas.title} content={datas.detail} tags={datas.tags} createdAt={datas.createdAt}/>
+      <QuestionSection title={datas.title} content={datas.detail} tags={datas.tags} createdAt={datas.createdAt} questionId={datas.questionId} memberId={datas.memberId} votesCount={datas.votesCount}/>
       <InputSection questionId={datas.questionId}/>
 
       <DeatilBottomSection>
