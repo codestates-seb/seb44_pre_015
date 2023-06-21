@@ -17,7 +17,7 @@ export default function Main() {
   const getApi = async () => {
     try {
       const response = await axios.get(
-        'https://56d7-59-11-30-105.ngrok-free.app/questions/recent?page=0&size=10',
+        'https://56d7-59-11-30-105.ngrok-free.app/questions/recent?page=0&size=100',
         {
           headers: {
             'Content-Type': 'application/json',
@@ -69,6 +69,7 @@ export default function Main() {
           answerCount={data.answerCount}
           createdAt={data.createdAt}
           memberId={data.memberId}
+          tags={data.tags}
         />
       ))}
     </MainContainer>
