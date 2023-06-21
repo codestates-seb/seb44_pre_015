@@ -1,6 +1,6 @@
 import { TagCheckContainer, TagCheck, TagCheckBoxed, TagLabel } from "./TagCheckBox.styled"
 
-export default function TagCheckBox({ handlerTag, tag, setTag }) {
+export default function TagCheckBox({ handlerTag }) {
   const tagList =
     [
       {
@@ -33,7 +33,12 @@ export default function TagCheckBox({ handlerTag, tag, setTag }) {
       {
         tagList.map((el, idx) => (
           <TagCheckBoxed key={idx}>
-            <TagCheck type="checkbox" id={`${el.tagName}-${idx}`} value=""></TagCheck>
+            <TagCheck 
+            type="checkbox"
+            id={`${el.tagName}-${idx}`}
+            value={el.tagName}
+            onChange={() => handlerTag(el.tagName, el.tagDescription)}
+            ></TagCheck>
             <TagLabel htmlFor={`${el.tagName}-${idx}`}><span>{el.tagName}</span></TagLabel>
           </TagCheckBoxed>
 
