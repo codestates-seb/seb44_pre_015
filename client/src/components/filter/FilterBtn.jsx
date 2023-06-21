@@ -2,14 +2,13 @@ import { useState } from 'react';
 import { FilterButton } from '../button/Button.styled';
 import { FilterContainer } from './FilterBtn.styled';
 
-
-export default function FilterBtn() {
-  const [filter, setFilter] = useState("latest");
+export default function FilterBtn({ handleFilter }) {
+  const [filter, setFilter] = useState('latest');
 
   const handleClick = (clickedFilter) => {
     setFilter(clickedFilter);
+    handleFilter(clickedFilter);
   };
-
 
   return (
     <FilterContainer>
@@ -23,5 +22,5 @@ export default function FilterBtn() {
         채택순
       </FilterButton>
     </FilterContainer>
-  )
+  );
 }

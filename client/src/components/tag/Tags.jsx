@@ -1,11 +1,13 @@
-import { TagContainer, Tag } from "./Tags.styled"
+import React from 'react';
+import { TagContainer, Tag } from "./Tags.styled";
 
-export default function Tags(){
-  return(
+export default function Tags({ tags }) {
+  return (
     <TagContainer>
-      <Tag>React</Tag>
-      <Tag>JavaScript</Tag>
-      <Tag>CSS</Tag>
-    </TagContainer>    
-  )
+      {tags &&
+        tags.map((tag, index) => (
+          <Tag key={index}>{tag.tagName}</Tag>
+        ))}
+    </TagContainer>
+  );
 }
