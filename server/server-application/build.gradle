@@ -13,7 +13,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
-	asciidoctorExtentions
+	asciidoctorExtensions
 }
 
 repositories {
