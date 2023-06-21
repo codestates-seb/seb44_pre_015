@@ -14,7 +14,7 @@ import {
   Content
 } from './QuestionSection.styled';
 
-export default function QuestionSection() {
+export default function QuestionSection({title, content, tags, createdAt}) {
   return (
     <EditContainer>
       <EditDiv> 
@@ -27,21 +27,18 @@ export default function QuestionSection() {
           <HeartBtn />
         </Heart>
         <User>
-          <UserInfoOwner />
+          <UserInfoOwner createdAt={createdAt}/>
         </User>
       </div>
 
       <QuestionContainer>
-        <Title>Clear Image Reader Buffer in CameraX API</Title>
-        <Tags />
+        <Title>{title}</Title>
+        <Tags tags={tags}/>
       </QuestionContainer>
 
       <Horizontal />
       
-      <Content>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, dolore impedit sequi exercitationem molestias deserunt quia ab nostrum quaerat, ratione dolorem sunt placeat quo obcaecati. Laborum vel sunt quas nihil!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, dolore impedit sequi exercitationem molestias deserunt quia ab nostrum quaerat, ratione dolorem sunt placeat quo obcaecati. Laborum vel sunt quas nihil!
-      </Content>
+      <Content>{content}</Content>
     </EditContainer>
   );
 }

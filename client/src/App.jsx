@@ -9,28 +9,15 @@ import Question from './pages/question/Question'
 import Mypage from './pages/mypage/Mypage';
 
 export default function App() {
-
-  const getApi = async () => {
-    await axios('https://39c3-59-11-30-105.ngrok-free.app/questions/recent?page=0&size=10',{
-      headers: {
-        "Content-Type": "application/json",
-        "ngrok-skip-browser-warning": "69420",
-      },
-    }
-    ).then(res => console.log(res.data));
-  }
-
-  getApi()
-
+  
   return (
     <BrowserRouter>
       <Header />
 
-
       <Routes>
         <Route path='/' element={<Main />} />
         <Route path="/login" element={<Login />} />
-        <Route path='/post:id' element={<Detail />} />
+        <Route path='/post/:id' element={<Detail />} />
         <Route path='/question' element={<Question />}/>
         <Route path="/mypage" element={<Mypage />} />
       </Routes>
