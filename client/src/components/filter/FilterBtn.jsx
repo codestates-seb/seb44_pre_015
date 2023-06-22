@@ -25,7 +25,6 @@ export default function FilterBtn() {
     }
   };
 
-
   return (
     <FilterContainer>
       <FilterButton clicked={filter === FILTER_LATEST ? 'true' : undefined} onClick={() => handleClick(FILTER_LATEST)}>
