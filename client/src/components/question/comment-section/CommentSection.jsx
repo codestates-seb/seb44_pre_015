@@ -4,6 +4,8 @@ import HeartBtn from "../../button/like/HeartBtn";
 import UserInfoOwner from "../../user/UserInfoOwner";
 import SelectionBtn from '../../selection/SelectionBtn'
 import CommentBtn from '../../button/comment/CommentBtn'
+import CommentEditBtn from '../../button/edit/CommentEditBtn';
+import CommentRemoveBtn from '../../button/remove/CommentRemoveBtn'
 import RecommentInput from './RecommentInput';
 
 
@@ -22,6 +24,12 @@ export default function CommentSection({ comment, answerId, memberId }) {
 
         <CommentBottomSectionWrap>
         <Comment>{ comment }</Comment>
+
+        <div className='pl-[20rem] gap-2 mb-3'>
+          <CommentEditBtn />
+          <CommentRemoveBtn />
+        </div>
+
         { !isOpen && <CommentBtn setIsOpen={setIsOpen} />}
         { isOpen && <RecommentInput answerId={answerId} memberId={memberId}/>}
         </CommentBottomSectionWrap>
