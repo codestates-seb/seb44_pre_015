@@ -2,6 +2,7 @@ package com.mzdevelopers.serverapplication.answer.dto;
 
 import com.mzdevelopers.serverapplication.comment.entity.Comment;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,6 +35,7 @@ public class AnswerDto {
     @Getter
     @Setter
     @AllArgsConstructor
+    @Builder
     public static class Response{
         private  long answerId;
 
@@ -46,6 +48,8 @@ public class AnswerDto {
         private long questionId;
 
         private long memberId;
+
+        private boolean answerVoteByMember;
         private List<Comment> comments;
     }
 }

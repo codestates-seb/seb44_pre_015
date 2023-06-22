@@ -1,5 +1,6 @@
 package com.mzdevelopers.serverapplication.question.dto;
 
+import com.mzdevelopers.serverapplication.answer.dto.AnswerDto;
 import com.mzdevelopers.serverapplication.answer.entity.Answer;
 import com.mzdevelopers.serverapplication.question.stub.StubAnswer;
 import com.mzdevelopers.serverapplication.tag.dto.TagDto;
@@ -24,7 +25,8 @@ public class QuestionResponseDto {
     private int viewCount;
     private Long memberId;
     private List<TagNameDto> tags;
-    private List<Answer> answers;
+    private List<AnswerDto.Response> answers;
+    private boolean questionVoteByMember;
     private String createdAt;
     private String updatedAt;
 }

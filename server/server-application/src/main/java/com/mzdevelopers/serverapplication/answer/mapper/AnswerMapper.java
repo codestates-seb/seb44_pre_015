@@ -24,15 +24,25 @@ public interface AnswerMapper {
     };
     Answer answerPatchToAnswer(AnswerDto.Patch requestBody);
     default AnswerDto.Response answerToAnswerResponse(Answer answer){
-        AnswerDto.Response answerResponse = new AnswerDto.Response(
-                answer.getAnswerId(),
-                answer.getDetail(),
-                answer.getVotesCount(),
-                answer.isSolutionStatus(),
-                answer.getQuestion().getQuestionId(),
-                answer.getMember().getMemberId(),
-                answer.getComments()
-        );
+        AnswerDto.Response answerResponse = AnswerDto.Response.builder()
+                .answerId(answer.getAnswerId())
+                .detail(answer.getDetail())
+                .votesCount(answer.getVotesCount())
+                .solutionStatus(answer.isSolutionStatus())
+                .questionId(answer.getQuestion().getQuestionId())
+                .memberId(answer.getMember().getMemberId())
+                .comments(answer.getComments())
+                .build();
+//        AnswerDto.Response answerResponse = new AnswerDto.Response(
+//                answer.getAnswerId(),
+//                answer.getDetail(),
+//                answer.getVotesCount(),
+//                answer.isSolutionStatus(),
+//                answer.getQuestion().getQuestionId(),
+//                answer.getMember().getMemberId(),
+//                answer.getAnswerVotes().
+//                answer.getComments()
+//        );
         return answerResponse;
     };
 

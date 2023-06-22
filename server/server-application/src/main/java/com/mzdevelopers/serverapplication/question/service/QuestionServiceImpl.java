@@ -1,6 +1,10 @@
 package com.mzdevelopers.serverapplication.question.service;
 
+import com.mzdevelopers.serverapplication.answer.dto.AnswerDto;
+import com.mzdevelopers.serverapplication.answer.entity.Answer;
 import com.mzdevelopers.serverapplication.answer.mapper.AnswerMapper;
+import com.mzdevelopers.serverapplication.answervote.entity.AnswerVote;
+import com.mzdevelopers.serverapplication.answervote.repository.AnswerVoteRepository;
 import com.mzdevelopers.serverapplication.member.entity.Member;
 import com.mzdevelopers.serverapplication.member.repository.MemberRepository;
 import com.mzdevelopers.serverapplication.question.dto.QuestionResponseDto;
@@ -40,15 +44,14 @@ public class QuestionServiceImpl implements QuestionService{
     private final MemberRepository memberRepository;
     private final QuestionMapper questionMapper;
     private final AnswerMapper answerMapper;
+    private final AnswerVoteRepository answerVoteRepository;
 
     @Override
     public long createQuestion(Question question, List<TagNameDto> tags) {
-//        System.out.println(question.toString());
         System.out.println("question,service");
 
         Optional<Member> findMember = memberRepository.findById(question.getMember().getMemberId());//.orElseThrow(()->new IllegalArgumentException("사용자를 찾을 수 없습니다."))
 
-//        System.out.println(findMember.get().toString());
         System.out.println("findMember,service");
 
         question.setMember(findMember.get());
@@ -72,13 +75,28 @@ public class QuestionServiceImpl implements QuestionService{
     @Override
     public QuestionResponseDto getQuestion(long questionId, long memberId) {
         Question findQuestion = findByQuestionId(questionId);
+        Member findMember = findByMemberId(memberId);
         QuestionResponseDto responseDto = questionMapper.questionToQuestionResponseDto(findQuestion);
         if(isRegisteredMember(memberId)){
             findQuestion.increaseView();
             questionRepository.save(findQuestion);
         }
+        Optional<QuestionVote> questionVote = questionVoteRepository.findByQuestionAndMember(findQuestion, findMember);
+        if(questionVote.isEmpty())
+            responseDto.setQuestionVoteByMember(false);
+        else responseDto.setQuestionVoteByMember(questionVote.get().isQuestionVoted());
 
-        responseDto.setAnswers(findQuestion.getAnswers());
+        List<AnswerDto.Response> answers = new ArrayList<>();
+        for (Answer answer : findQuestion.getAnswers()) {
+            AnswerDto.Response response = answerMapper.answerToAnswerResponse(answer);
+            Optional<AnswerVote> answerVote = answerVoteRepository.findByAnswerAndMember(answer, findMember);
+            if(answerVote.isEmpty())
+                response.setAnswerVoteByMember(false);
+            else response.setAnswerVoteByMember(answerVote.get().isAnswerVoted());
+            answers.add(response);
+        }
+
+        responseDto.setAnswers(answers);
         responseDto.setTags(findByQuestionTag(findQuestion));
         return responseDto;
     }
