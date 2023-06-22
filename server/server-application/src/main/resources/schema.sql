@@ -1,10 +1,24 @@
 CREATE TABLE IF NOT EXISTS member (
-                                      member_id INT PRIMARY KEY AUTO_INCREMENT,
-                                      name VARCHAR(255) NOT NULL,
+    member_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     picture VARCHAR(255),
     answer_vote_count INT NOT NULL
-    );
+);
+
+CREATE TABLE question (
+    question_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    detail VARCHAR(255) NOT NULL,
+    solution_status BOOLEAN NOT NULL,
+    answer_count INT NOT NULL,
+    votes_count INT NOT NULL,
+    view_count INT NOT NULL,
+    member_id BIGINT NOT NULL,
+    FOREIGN KEY (member_id) REFERENCES member (member_id)
+);
+
+
 
 -- CREATE TABLE IF NOT EXISTS question (
 --                                         question_id BIGINT PRIMARY KEY AUTO_INCREMENT,

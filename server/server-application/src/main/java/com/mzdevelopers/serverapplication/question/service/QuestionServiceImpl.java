@@ -43,10 +43,18 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public long createQuestion(Question question, List<TagNameDto> tags) {
+//        System.out.println(question.toString());
+        System.out.println("question,service");
 
-        Member findMember = memberRepository.findById(question.getMember().getMemberId()).orElseThrow(()->new RuntimeException("사용자를 찾을 수 없습니다."));
-        question.setMember(findMember);
+        Optional<Member> findMember = memberRepository.findById(question.getMember().getMemberId());//.orElseThrow(()->new IllegalArgumentException("사용자를 찾을 수 없습니다."))
+
+//        System.out.println(findMember.get().toString());
+        System.out.println("findMember,service");
+
+        question.setMember(findMember.get());
         Question savedQuestion = questionRepository.save(question);
+
+        System.out.println("findMember,service, complete");
 
         if (!tags.isEmpty()) {
             List<Tag> tagList = findByTagId(tags);
