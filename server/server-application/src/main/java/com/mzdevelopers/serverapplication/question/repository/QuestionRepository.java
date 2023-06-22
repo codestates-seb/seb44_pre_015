@@ -1,6 +1,7 @@
 package com.mzdevelopers.serverapplication.question.repository;
 
 import com.mzdevelopers.serverapplication.answer.entity.Answer;
+import com.mzdevelopers.serverapplication.member.entity.Member;
 import com.mzdevelopers.serverapplication.question.entity.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,4 +25,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     @EntityGraph(attributePaths = "answers")
     Question findByQuestionId(long questionId);
+
+    List<Question> findByMember(Member member);
 }
