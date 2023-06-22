@@ -33,18 +33,12 @@ public class QuestionController {
     // 질문 등록
     @PostMapping("/register")
     public ResponseEntity<?> postQuestion(@Valid @RequestBody QuestionRequestDto questionRequestDto) {
-        System.out.println(questionRequestDto.toString());
-        System.out.println("questionRequestDto");
 
         Question mappingQuestion = questionMapper.questionRequestDtoToQuestion(questionRequestDto);
-//        System.out.println(mappingQuestion.toString());
-        System.out.println("mappingQuestion");
 
         long questionId = questionService.createQuestion(
                 mappingQuestion, questionRequestDto.getTags()
         );
-        System.out.println(questionId);
-        System.out.println("questionId, Controller");
 
         URI location = questionService.uriBuilder(questionId, QUESTION_CREATE_URI);
 

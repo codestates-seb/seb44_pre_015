@@ -167,12 +167,11 @@ public class QuestionServiceImpl implements QuestionService{
         return tagList;
     }
 
-    public List<TagDto> findByQuestionTag(Question question) {
-        List<TagDto> tagList = new ArrayList<>();
+    public List<TagNameDto> findByQuestionTag(Question question) {
+        List<TagNameDto> tagList = new ArrayList<>();
         for (QuestionTag questionTag : question.getQuestionTags()) {
-            TagDto tagDto = new TagDto();
+            TagNameDto tagDto = new TagNameDto();
             tagDto.setTagName(questionTag.getTag().getTagName());
-            tagDto.setTagDescription(questionTag.getTag().getTagDescription());
             tagList.add(tagDto);
         }
 
