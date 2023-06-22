@@ -1,5 +1,6 @@
 package com.mzdevelopers.serverapplication.question.service;
 
+import com.mzdevelopers.serverapplication.answer.mapper.AnswerMapper;
 import com.mzdevelopers.serverapplication.member.entity.Member;
 import com.mzdevelopers.serverapplication.member.repository.MemberRepository;
 import com.mzdevelopers.serverapplication.question.dto.QuestionResponseDto;
@@ -37,11 +38,12 @@ public class QuestionServiceImpl implements QuestionService{
     private final QuestionVoteRepository questionVoteRepository;
     private final MemberRepository memberRepository;
     private final QuestionMapper questionMapper;
+    private final AnswerMapper answerMapper;
 
     @Override
     public long createQuestion(Question question, List<Long> tags) {
 
-        Member findMember = memberRepository.findById(question.getMember().getId()).orElseThrow(()->new RuntimeException("사용자를 찾을 수 없습니다."));
+        Member findMember = memberRepository.findById(question.getMember().getMemberId()).orElseThrow(()->new RuntimeException("사용자를 찾을 수 없습니다."));
         question.setMember(findMember);
         Question savedQuestion = questionRepository.save(question);
 
@@ -66,6 +68,7 @@ public class QuestionServiceImpl implements QuestionService{
             findQuestion.increaseView();
             questionRepository.save(findQuestion);
         }
+
         responseDto.setAnswers(findQuestion.getAnswers());
         responseDto.setTags(findByQuestionTag(findQuestion));
         return responseDto;
@@ -74,7 +77,7 @@ public class QuestionServiceImpl implements QuestionService{
     @Override
     public Question updateQuestion(long questionId, String title, String detail, long memberId) {
         Question findQuestion = findByQuestionId(questionId);
-        if (findQuestion.getMember().getId() == memberId) {
+        if (findQuestion.getMember().getMemberId() == memberId) {
             findQuestion.update(title, detail);
             return questionRepository.save(findQuestion);
         } else {
@@ -85,7 +88,7 @@ public class QuestionServiceImpl implements QuestionService{
     @Override
     public void deleteQuestion(long questionId, long memberId) {
         Question findQuestion = findByQuestionId(questionId);
-        if(findQuestion.getMember().getId() == memberId)
+        if(findQuestion.getMember().getMemberId() == memberId)
             questionRepository.delete(findQuestion);
         else
             throw new IllegalArgumentException("삭제할 권한이 없습니다: " + memberId);

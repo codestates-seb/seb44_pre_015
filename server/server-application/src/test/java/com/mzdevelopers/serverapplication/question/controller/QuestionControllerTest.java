@@ -145,9 +145,9 @@ class QuestionControllerTest {
         ReflectionTestUtils.setField(question, "createdAt",  LocalDateTime.now());
         ReflectionTestUtils.setField(question, "updatedAt", LocalDateTime.now());
         Member answerMember = new Member();
-        answerMember.setId(1L);
+        answerMember.setMemberId(1L);
         Member commentMember = new Member();
-        commentMember.setId(1L);
+        commentMember.setMemberId(1L);
         List<Answer> answerList = new ArrayList<>();
         List<Comment> commentList = new ArrayList<>();
         Comment comment = new Comment();
@@ -227,10 +227,10 @@ class QuestionControllerTest {
                                 fieldWithPath("answers[].detail").type(JsonFieldType.STRING).description("답변 내용"),
                                 fieldWithPath("answers[].votesCount").type(JsonFieldType.NUMBER).description("답변 추천 수"),
                                 fieldWithPath("answers[].solutionStatus").type(JsonFieldType.BOOLEAN).description("답변 해결 상태"),
-                                fieldWithPath("answers[].member.memberId").type(JsonFieldType.NUMBER).description("답변 작성자 식별자(고유 번호)"),
+                                fieldWithPath("answers[].memberId").type(JsonFieldType.NUMBER).description("답변 작성자 식별자(고유 번호)"),
                                 fieldWithPath("answers[].comments[].commentId").type(JsonFieldType.NUMBER).description("대댓글 식별자(고유 번호)"),
                                 fieldWithPath("answers[].comments[].commentDetail").type(JsonFieldType.STRING).description("대댓글 내용"),
-                                fieldWithPath("answers[].comments[].member.memberId").type(JsonFieldType.NUMBER).description("대댓글 작성자 식별자(고유 번호)"),
+                                fieldWithPath("answers[].comments[].memberId").type(JsonFieldType.NUMBER).description("대댓글 작성자 식별자(고유 번호)"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("생성 일자"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("수정 일자")
                         )

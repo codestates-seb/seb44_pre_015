@@ -14,7 +14,7 @@ public interface AnswerVoteMapper {
         answer.setAnswerId(answerVotePostDto.getAnswerId());
 
         Member member = new Member();
-        member.setId(answerVotePostDto.getMemberId());
+        member.setMemberId(answerVotePostDto.getMemberId());
 
         answerVote.setMember(member);
         answerVote.setAnswerVoted(answerVotePostDto.isAnswerVoted());
@@ -26,7 +26,7 @@ public interface AnswerVoteMapper {
     default AnswerVoteDto.Response answerVoteToAnswerVoteDtoResponse(AnswerVote answerVote){
         AnswerVoteDto.Response answerVoteResponse = new AnswerVoteDto.Response(
                 answerVote.getAnswerVoteId(),
-                answerVote.getMember().getId(),
+                answerVote.getMember().getMemberId(),
                 answerVote.getAnswer().getAnswerId(),
                 answerVote.isAnswerVoted()
         );

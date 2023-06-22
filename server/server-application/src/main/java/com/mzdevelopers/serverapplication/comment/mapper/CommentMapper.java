@@ -19,7 +19,7 @@ public interface CommentMapper {
         answer.setAnswerId(commentPostDto.getAnswerId());
 
         Member member = new Member();
-        member.setId(commentPostDto.getMemberId());
+        member.setMemberId(commentPostDto.getMemberId());
 
         comment.setMember(member);
         comment.setCommentDetail(commentPostDto.getCommentDetail());
@@ -37,7 +37,7 @@ public interface CommentMapper {
                 comment.getCommentId(),
                 comment.getCommentDetail(),
                 comment.getAnswer().getAnswerId(),
-                comment.getMember().getId()
+                comment.getMember().getMemberId()
         );
         return commentResponse;
     }

@@ -32,7 +32,7 @@ public class AnswerService {
 
     public Answer createAnswer(Answer answer){
         Question findQuestion = questionRepository.findByQuestionId(answer.getQuestion().getQuestionId());
-        Member findMember = memberRepository.findById(answer.getMember().getId()).orElseThrow(()->new RuntimeException("멤버를 찾을 수 없습니다."));
+        Member findMember = memberRepository.findById(answer.getMember().getMemberId()).orElseThrow(()->new RuntimeException("멤버를 찾을 수 없습니다."));
         answer.setMember(findMember);
 
         Answer saveAnswer = answerRepository.save(answer);
@@ -45,9 +45,9 @@ public class AnswerService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Answer updateAnswer(Answer answer){
         Answer findAnswer = findVerifiedAnswer(answer.getAnswerId());
-        Member findMember = memberRepository.findById(answer.getMember().getId()).orElseThrow(()->new RuntimeException("멤버를 찾을 수 없습니다."));
+        Member findMember = memberRepository.findById(answer.getMember().getMemberId()).orElseThrow(()->new RuntimeException("멤버를 찾을 수 없습니다."));
 
-        if(findAnswer.getMember().getId()!=findMember.getId()){
+        if(findAnswer.getMember().getMemberId()!=findMember.getMemberId()){
             throw new RuntimeException("수정할 권한이 없습니다.");
         }
 
@@ -75,7 +75,7 @@ public class AnswerService {
         Answer findAnswer = findVerifiedAnswer(answerId);
         Member findMember = memberRepository.findById(memberId).orElseThrow(()->new RuntimeException("멤버를 찾을 수 없습니다."));
 
-        if(findAnswer.getMember().getId()!=findMember.getId()){
+        if(findAnswer.getMember().getMemberId()!=findMember.getMemberId()){
             throw new RuntimeException("삭제할 권한이 없습니다.");
         }
 

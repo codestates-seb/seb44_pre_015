@@ -32,6 +32,7 @@ public class AnswerDto {
     }
 
     @Getter
+    @Setter
     @AllArgsConstructor
     public static class Response{
         private  long answerId;

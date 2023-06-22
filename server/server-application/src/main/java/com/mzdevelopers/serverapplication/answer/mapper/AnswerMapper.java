@@ -16,7 +16,7 @@ public interface AnswerMapper {
         Member member = new Member();
         question.setQuestionId(requestBody.getQuestionId());
 
-        member.setId(requestBody.getMemberId());
+        member.setMemberId(requestBody.getMemberId());
         answer.setQuestion(question);
         answer.setMember(member);
         answer.setDetail(requestBody.getDetail());
@@ -30,11 +30,11 @@ public interface AnswerMapper {
                 answer.getVotesCount(),
                 answer.isSolutionStatus(),
                 answer.getQuestion().getQuestionId(),
-                answer.getMember().getId(),
+                answer.getMember().getMemberId(),
                 answer.getComments()
         );
         return answerResponse;
     };
 
-    List<AnswerDto.Response> answersToAnswerResponses(List<Answer> members);
+    List<AnswerDto.Response> answersToAnswerResponses(List<Answer> answers);
 }

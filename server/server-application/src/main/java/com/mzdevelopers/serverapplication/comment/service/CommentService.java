@@ -35,7 +35,7 @@ public class CommentService {
     public Comment createComment(Comment comment){
         verifyComment(comment);
         Answer findAnswer = answerRepository.findByAnswerId(comment.getAnswer().getAnswerId()).orElseThrow(()->new RuntimeException("회원을 찾지 못했습니다."));
-        Member findMember = memberRepository.findById(comment.getMember().getId()).orElseThrow(()->new RuntimeException("회원을 찾지 못했습니다."));
+        Member findMember = memberRepository.findById(comment.getMember().getMemberId()).orElseThrow(()->new RuntimeException("회원을 찾지 못했습니다."));
 
         comment.setAnswer(findAnswer);
         comment.setMember(findMember);
@@ -50,7 +50,7 @@ public class CommentService {
         Comment findComment = findVerifiedComment(comment.getCommentId());
         Member findMember = memberRepository.findById(memberId).orElseThrow(()->new RuntimeException("회원을 찾지 못했습니다."));
 
-        if(findMember.getId()!=findComment.getMember().getId()){
+        if(findMember.getMemberId()!=findComment.getMember().getMemberId()){
             throw new RuntimeException("수정할 권한이 없습니다.");
         }
 
@@ -75,7 +75,7 @@ public class CommentService {
         Comment findComment = findVerifiedComment(commentId);
         Member findMember = memberRepository.findById(memberId).orElseThrow(()->new RuntimeException("회원을 찾지 못했습니다."));
 
-        if(findMember.getId()!=findComment.getMember().getId()){
+        if(findMember.getMemberId()!=findComment.getMember().getMemberId()){
             throw new RuntimeException("삭제할 권한이 없습니다.");
         }
 

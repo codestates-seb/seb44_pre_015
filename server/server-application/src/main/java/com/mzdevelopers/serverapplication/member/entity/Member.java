@@ -20,25 +20,26 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
-    private long id;
+    private long memberId;
 
-    @Column(name = "provider", nullable = false)
-    private String provider;
-
-    @Column(name = "name", nullable = false)
+    @Column( unique = true)
     private String name;
 
-    @Column(name = "email", nullable = false)
+    @Column( unique = true)
     private String email;
 
+    private String picture;
+
     @Column(name = "answer_vote_count", nullable = false)
-    private int answer_vote_count;
+    private int answer_vote_count = 0;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Question> questions;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Answer> answers;
+
+
+
 
 }

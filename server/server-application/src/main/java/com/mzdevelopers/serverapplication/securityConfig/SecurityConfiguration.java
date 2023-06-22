@@ -1,24 +1,35 @@
 package com.mzdevelopers.serverapplication.securityConfig;
 
-import com.mzdevelopers.serverapplication.member.service.Oauth2MemberService;
+import com.mzdevelopers.serverapplication.jwt.JwtAuthenticationFilter;
+import com.mzdevelopers.serverapplication.jwt.TokenService;
+import com.mzdevelopers.serverapplication.member.repository.MemberRepository;
+import com.mzdevelopers.serverapplication.oauth.CustomOAuth2UserService;
+import com.mzdevelopers.serverapplication.oauth.OAuth2SuccessHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    // MemberService Di 하기
-    @Autowired
-    private final Oauth2MemberService oauth2MemberService;
+//    private final Oauth2MemberService oauth2MemberService;
+    private final MemberRepository memberRepository;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final TokenService tokenService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
-    public SecurityConfiguration(Oauth2MemberService oauth2MemberService) {
-        this.oauth2MemberService = oauth2MemberService;
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -26,28 +37,31 @@ public class SecurityConfiguration {
         http
                 .csrf() // csrf 기능
                 .disable() // 안씀
-
+                .cors().disable()
                 .headers() // 여기서부터
                 .frameOptions().disable() // 여기까지는 h2-console 접근 가능하게 하는 역할
                 .and()
 
                 .formLogin().disable()
                 .httpBasic().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
 
                 .authorizeHttpRequests() // URL 별로 접근 권한 설정
-                .antMatchers("/", "/h2-console/**", "/v1/members/**").permitAll() // 이 경로들은 아무나 접근 가능
+                .antMatchers("/", "/h2/**", "/auth/**", "/oauth2/**", "/test").permitAll() // 이 경로들은 아무나 접근 가능
                 .anyRequest().authenticated() // 그 외 경로들은 인증 받은 사람만 접근가능
                 .and()
 
-                .logout() // 로그아웃 되면 자동으로
-                .logoutSuccessUrl("/") // 이 경로로 이동
+                .oauth2Login()
+                .defaultSuccessUrl("/test")
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService)
                 .and()
+                .successHandler(oAuth2SuccessHandler);
+        http.addFilterAfter(jwtAuthenticationFilter, CorsFilter.class);
 
-                .oauth2Login() // 로그인 기능 적용
-                .defaultSuccessUrl("/login-success") // 이 경로로 이동
-                .userInfoEndpoint() // 로그인 이후 사용자 정보 가져오는 설정
-                .userService(oauth2MemberService); // 로그인에 성공하면 유저 데이터 가지고 MemberService 에서 처리하겠다
 
         return http.build();
     }
+
 }
