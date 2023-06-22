@@ -1,15 +1,16 @@
 import OrangeCircle from '../questionwritehead/OrangeCircle';
 import { TitleWrap, TitleText, EditorContainer, EditorContent } from './QuestionInput.styled';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import 'react-quill/dist/quill.snow.css';
+import { typeDetail } from '../../../modules/questionSlice';
 
-export default function QuestionInput(props) {
-  const { value, onChange } = props;
-  const [editorState, setEditorState] = useState('');
+
+export default function QuestionInput() {
+  const detail = useSelector((state) => state.question.detail);
+  const dispatch = useDispatch();
 
   const handleEditorChange = (content) => {
-    setEditorState(content);
-    onChange(content);
+    dispatch(typeDetail(content));
   };
 
   return (
@@ -22,7 +23,7 @@ export default function QuestionInput(props) {
       <EditorContainer>
         <EditorContent
           placeholder='질문하실 내용을 작성해 주세요'
-          value={editorState}
+          value={detail}
           onChange={handleEditorChange}
         />
       </EditorContainer>
