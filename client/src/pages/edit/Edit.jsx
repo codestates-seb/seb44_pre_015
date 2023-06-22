@@ -11,7 +11,7 @@ import AskBtn from '../../components/button/askButton/AskBtn'
 export default function Edit() {
   const { questionId } = useParams();
   const [data, setData] = useState([]);
-
+  
   useEffect(()=> {
     axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/${questionId}/1`)
     .then(res => {

@@ -1,11 +1,15 @@
+import { useState } from 'react';
+import { HeartUser, AllWrap, CommentTopSectionWrap, CommentBottomSectionWrap, Comment } from "./CommentSection.styled";
 import HeartBtn from "../../button/like/HeartBtn";
 import UserInfoOwner from "../../user/UserInfoOwner";
 import SelectionBtn from '../../selection/SelectionBtn'
 import CommentBtn from '../../button/comment/CommentBtn'
+import RecommentInput from './RecommentInput';
 
-import { HeartUser,AllWrap, CommentTopSectionWrap, CommentBottomSectionWrap, Comment, CommentAdd } from "./CommentSection.styled";
 
 export default function CommentSection({ comment }) {
+  const [isOpen, setIsOpen] = useState(false);
+
     return (
       <AllWrap>
         <CommentTopSectionWrap>
@@ -18,7 +22,8 @@ export default function CommentSection({ comment }) {
 
         <CommentBottomSectionWrap>
         <Comment>{ comment }</Comment>
-        <CommentBtn />
+        { !isOpen && <CommentBtn setIsOpen={setIsOpen} />}
+        { isOpen && <RecommentInput />}
         </CommentBottomSectionWrap>
       </AllWrap>
     );

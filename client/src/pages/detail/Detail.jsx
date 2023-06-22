@@ -35,9 +35,17 @@ export default function Detail() {
 
       <DeatilBottomSection>
         {
-          answers.map(answer => <CommentSection key={answer.answerId} comment={answer.detail}/>)
+          answers.map(answer => {
+            return(
+              <>
+                <CommentSection key={answer.answerId} comment={answer.detail}/>
+                {
+                  answer.comments.map(recomment => <RecommentSection key={recomment.commentId} commentDetail={recomment.commentDetail}/>)
+                }
+              </>
+            )
+          })
         }
-        <RecommentSection />
       </DeatilBottomSection>
     </DetailContainer>
   )

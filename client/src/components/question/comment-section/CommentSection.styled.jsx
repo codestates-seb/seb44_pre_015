@@ -25,18 +25,6 @@ export const Comment = tw.p`
   my-3
 `;
 
-export const CommentAdd = tw.button`
-  border
-  border-gray-300
-  text-xs
-  w-16
-  h-8
-  rounded-full
-  text-slate-300
-  ml-48
-  mt-3
-`;
-
 export const HeartUser = tw.div `
   flex
   gap-3
