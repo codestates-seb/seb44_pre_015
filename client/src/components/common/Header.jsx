@@ -1,3 +1,5 @@
+import { useDispatch } from 'react-redux';
+import { setSearch } from '../../modules/searchSlice';
 import { Link } from "react-router-dom";
 import LoginBtn from "../button/login/LoginBtn";
 import Logo from "../../assets/logo-stackoverflow.svg";
@@ -7,10 +9,11 @@ import { UserImgSm, Img } from "../user/UserCommon.styled";
 import QuestionBtn from '../button/question/QuestionBtn';
 
 export default function Header({ isLoggedIn }) {
+  const dispatch = useDispatch();
 
   return (
     <HeaderContainer>
-      <LogoContainer>
+      <LogoContainer onClick={()=> dispatch(setSearch(''))}>
         <Link to="/">
           <LogoImg src={Logo} alt="logo" />
         </Link>
