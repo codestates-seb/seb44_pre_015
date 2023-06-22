@@ -30,7 +30,6 @@ export default function SearchBox({ searchRef }){
         placeholder="질문을 검색해 보세요"
         ref={searchRef}
         onKeyDown={(e)=> onKeyHandler(e)}
-        defaultValue={searchWord === '' ? '' : searchWord}
         />
 
       </MainSearchContainer>

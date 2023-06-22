@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { setDatas } from '../../modules/mainSlice'
+import { setSearch } from '../../modules/searchSlice';
 import axios from 'axios';
 import { useInView } from 'react-intersection-observer';
 import { MainContainer } from '../main/Main.styled'
@@ -22,6 +23,7 @@ export default function Main() {
     axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/recent?page=0&size=6`)
     .then(res => dispatch(setDatas(res.data)));
     searchRef.current.focus();
+    dispatch(setSearch(''));
   }, [])
 
   useEffect(()=> {
