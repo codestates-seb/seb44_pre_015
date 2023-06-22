@@ -24,7 +24,7 @@ export default function Detail() {
       })
       .catch(err => {
         console.log(err);
-        navigate('/')  // 404 페이지로 추가 수정 필요
+        navigate('/*');
       });
   }, [])
 
