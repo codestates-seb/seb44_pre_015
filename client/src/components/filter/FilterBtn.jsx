@@ -1,10 +1,11 @@
-import { useState } from 'react';
 import { FilterButton } from '../button/Button.styled';
 import { FilterContainer } from './FilterBtn.styled';
 
 
-export default function FilterBtn() {
-  const [filter, setFilter] = useState("latest");
+export default function FilterBtn({ filter, setFilter }) {
+  const FILTER_LATEST = 'latest';
+  const FILTER_LIKES = 'likes';
+  const FILTER_SOLUTION = 'soltuion';
 
   const handleClick = (clickedFilter) => {
     setFilter(clickedFilter);
@@ -13,13 +14,13 @@ export default function FilterBtn() {
 
   return (
     <FilterContainer>
-      <FilterButton clicked={filter === 'latest' ? 'true' : undefined} onClick={() => handleClick('latest')}>
+      <FilterButton clicked={filter === FILTER_LATEST ? 'true' : undefined} onClick={() => handleClick(FILTER_LATEST)}>
         최신순
       </FilterButton>
-      <FilterButton clicked={filter === 'like' ? 'true' : undefined} onClick={() => handleClick('like')}>
+      <FilterButton clicked={filter === FILTER_LIKES ? 'true' : undefined} onClick={() => handleClick(FILTER_LIKES)}>
         좋아요순
       </FilterButton>
-      <FilterButton clicked={filter === 'select' ? 'true' : undefined} onClick={() => handleClick('select')}>
+      <FilterButton clicked={filter === FILTER_SOLUTION ? 'true' : undefined} onClick={() => handleClick(FILTER_SOLUTION)}>
         채택순
       </FilterButton>
     </FilterContainer>

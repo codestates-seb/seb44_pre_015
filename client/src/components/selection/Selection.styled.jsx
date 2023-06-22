@@ -5,5 +5,5 @@ export const SelectionContainer = tw.div`
 `;
 
 export const SelectionText = tw.span`
-  ${({isChecked}) => ( "text-[#03B800]" || "text-[#DCDCDC]") }
+  ${({solutionStatus}) => solutionStatus ? "text-[#03B800]" :"text-[#DCDCDC]" }
 `;
