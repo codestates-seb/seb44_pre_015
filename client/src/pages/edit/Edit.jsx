@@ -14,7 +14,10 @@ export default function Edit() {
 
   useEffect(()=> {
     axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/${questionId}/1`)
-    .then(res => setData(res.data))
+    .then(res => {
+      setData(res.data);
+      console.log(res.data);
+    })
     .catch(err => {
       console.log(err);
       navigate('/')  // 404페이지로 추가 수정 필요
@@ -24,8 +27,8 @@ export default function Edit() {
   return (
     <EditContainer>
       <QuestionWriteHead />
-      <QuestionTitle/>
-      <QuestionInput />
+      <QuestionTitle title={data.title}/>
+      <QuestionInput content={data.detail}/>
       <QuestionTagCheck />
       <AskBtn />
     </EditContainer>
