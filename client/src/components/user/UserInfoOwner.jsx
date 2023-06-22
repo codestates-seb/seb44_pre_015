@@ -1,7 +1,8 @@
 import { UserImgSm, Img } from "./UserCommon.styled";
 import { UserInfoContainer, UserInfoData, UserData } from "./UserInfoOwner.styled"
 
-export default function UserInfoOwner() {
+export default function UserInfoOwner({ createdAt }) {
+
   return (
     <UserInfoContainer>
       <UserImgSm>
@@ -11,7 +12,7 @@ export default function UserInfoOwner() {
       </UserImgSm>
       <UserInfoData>
         <UserData>JIEUN</UserData>
-        <UserData>23.06.16</UserData>
+        <UserData>{ createdAt && createdAt.slice(0,10) }</UserData>
       </UserInfoData>
     </UserInfoContainer>
   );

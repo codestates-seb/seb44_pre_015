@@ -6,10 +6,10 @@ import Login from './pages/login/Login'
 import Main from './pages/main/Main'
 import Detail from './pages/detail/Detail'
 import Question from './pages/question/Question'
+import Edit from './pages/edit/Edit';
 import Mypage from './pages/mypage/Mypage';
 
 export default function App() {
-
   return (
     <BrowserRouter>
       <Header />
@@ -17,8 +17,9 @@ export default function App() {
       <Routes>
         <Route path='/' element={<Main />} />
         <Route path="/login" element={<Login />} />
-        <Route path='/post:id' element={<Detail />} />
+        <Route path='/post/:questionId' element={<Detail />} />
         <Route path='/question' element={<Question />}/>
+        <Route path='/edit/:questionId' element={<Edit />}/>
         <Route path="/mypage" element={<Mypage />} />
       </Routes>
 

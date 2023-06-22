@@ -3,6 +3,7 @@ import { TitleWrap, TitleText, QAInput } from './QuestionInput.styled'
 
 export default function QuestionInput(props) {
   const { value, onChange } = props;
+
   return (
     <div>
       <TitleWrap>
@@ -10,7 +11,7 @@ export default function QuestionInput(props) {
         <TitleText>질문 내용</TitleText>
       </TitleWrap>
 
-      <QAInput
+      <QAInput 
         placeholder='질문하실 내용을 작성해 주세요'
         value={value}
         onChange={onChange}
