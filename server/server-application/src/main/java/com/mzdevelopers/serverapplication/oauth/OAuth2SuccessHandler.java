@@ -41,7 +41,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         String token = tokenProvider.create(optionalMember.get());
         response.setHeader("Authorization", token);
-
+        response.setHeader("UID",String.valueOf(optionalMember.get().getMemberId()));
 
         log.info("{}", token);
 
