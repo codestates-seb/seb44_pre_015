@@ -20,7 +20,7 @@ export default function Main() {
   const [page, setPage] = useState(12);
 
   useEffect(()=> {
-    axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/recent?page=0&size=6`)
+    axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/recent?page=0&size=6`)
     .then(res => dispatch(setDatas(res.data)));
     searchRef.current.focus();
     dispatch(setSearch(''));
@@ -28,7 +28,7 @@ export default function Main() {
 
   useEffect(()=> {
     if(inView){
-      axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/recent?page=0&size=${page}`)
+      axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/recent?page=0&size=${page}`)
       .then(res => {
         dispatch(setDatas(res.data))
         if ( page < 100 ) setPage(prev => page + DEFAULT_PAGE);
