@@ -18,7 +18,7 @@ export const MainSearchInput = tw.input`
     w-full
     rounded-2xl
     text-m
-    
+    leading-10
 `;
 
 export const MainSearchIconWrap = tw.div`
