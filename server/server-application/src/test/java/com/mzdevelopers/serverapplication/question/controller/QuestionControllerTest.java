@@ -12,6 +12,7 @@ import com.mzdevelopers.serverapplication.question.mapper.QuestionMapper;
 import com.mzdevelopers.serverapplication.question.service.QuestionServiceImpl;
 import com.mzdevelopers.serverapplication.question.stub.StubAnswer;
 import com.mzdevelopers.serverapplication.tag.dto.TagDto;
+import com.mzdevelopers.serverapplication.tag.dto.TagNameDto;
 import com.mzdevelopers.serverapplication.tag.entity.QuestionTag;
 import com.mzdevelopers.serverapplication.tag.entity.Tag;
 import org.junit.jupiter.api.Test;
@@ -93,7 +94,7 @@ class QuestionControllerTest {
                 .buildAndExpand(questionId)
                 .toUri();
 
-        given(questionService.createQuestion(Mockito.any(Question.class), Mockito.any(List.class))).willReturn(questionId);
+        given(questionService.createQuestion(Mockito.any(Question.class), Mockito.anyList())).willReturn(questionId);
         given(questionService.uriBuilder(questionId, "http://localhost:8080/questions")).willReturn(uri);
 
         // when

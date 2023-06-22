@@ -1,5 +1,6 @@
 package com.mzdevelopers.serverapplication.question.dto;
 
+import com.mzdevelopers.serverapplication.tag.dto.TagNameDto;
 import com.mzdevelopers.serverapplication.tag.entity.Tag;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,5 +22,5 @@ public class QuestionRequestDto {
     @NotNull
     private Long memberId;
 
-    private List<Long> tags;
+    private List<TagNameDto> tags;
 }

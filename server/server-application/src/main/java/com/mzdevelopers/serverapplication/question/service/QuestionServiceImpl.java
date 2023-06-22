@@ -11,6 +11,7 @@ import com.mzdevelopers.serverapplication.question.entity.QuestionVote;
 import com.mzdevelopers.serverapplication.question.repository.QuestionRepository;
 import com.mzdevelopers.serverapplication.question.repository.QuestionVoteRepository;
 import com.mzdevelopers.serverapplication.tag.dto.TagDto;
+import com.mzdevelopers.serverapplication.tag.dto.TagNameDto;
 import com.mzdevelopers.serverapplication.tag.entity.QuestionTag;
 import com.mzdevelopers.serverapplication.tag.entity.Tag;
 import com.mzdevelopers.serverapplication.tag.repository.QuestionTagRepository;
@@ -41,7 +42,7 @@ public class QuestionServiceImpl implements QuestionService{
     private final AnswerMapper answerMapper;
 
     @Override
-    public long createQuestion(Question question, List<Long> tags) {
+    public long createQuestion(Question question, List<TagNameDto> tags) {
 
         Member findMember = memberRepository.findById(question.getMember().getMemberId()).orElseThrow(()->new RuntimeException("사용자를 찾을 수 없습니다."));
         question.setMember(findMember);
@@ -149,10 +150,10 @@ public class QuestionServiceImpl implements QuestionService{
         return findMember.orElseThrow(() -> new IllegalArgumentException("No Search Member: " + memberId));
     }
 
-    public List<Tag> findByTagId(List<Long> tagIds) {
+    public List<Tag> findByTagId(List<TagNameDto> tagNameDtoList) {
         List<Tag> tagList = new ArrayList<>();
-        for (Long id : tagIds) {
-            Tag tag = tagRepository.findById(id).orElseGet(() -> null);
+        for (TagNameDto tagNameDto : tagNameDtoList) {
+            Tag tag = tagRepository.findByTagName(tagNameDto.getTagName());
             tagList.add(tag);
         }
         return tagList;
@@ -179,5 +180,15 @@ public class QuestionServiceImpl implements QuestionService{
     }
     // --------------------------------------------------------------- 부기능
 
+    public List<TagNameDto> getTags() {
+        List<Tag> tagList = tagRepository.findAll();
+        List<TagNameDto> tagNameDtoList = new ArrayList<>();
+        for (Tag tag : tagList) {
+            TagNameDto tagNameDto = new TagNameDto();
+            tagNameDto.setTagName(tag.getTagName());
+            tagNameDtoList.add(tagNameDto);
+        }
+        return tagNameDtoList;
+    }
 
 }

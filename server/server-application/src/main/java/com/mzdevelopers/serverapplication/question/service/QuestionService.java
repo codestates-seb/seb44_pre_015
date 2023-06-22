@@ -2,6 +2,7 @@ package com.mzdevelopers.serverapplication.question.service;
 
 import com.mzdevelopers.serverapplication.question.dto.QuestionResponseDto;
 import com.mzdevelopers.serverapplication.question.entity.Question;
+import com.mzdevelopers.serverapplication.tag.dto.TagNameDto;
 import com.mzdevelopers.serverapplication.tag.entity.Tag;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface QuestionService {
     5. 최신, 좋아요, solutionStatus = true(시간) 질문 리스트
     6. 질문 votes, answers, views 기능
      */
-    public long createQuestion(Question question, List<Long> tags);
+    public long createQuestion(Question question, List<TagNameDto> tags);
 
     public QuestionResponseDto getQuestion(long questionId, long memberId);
 

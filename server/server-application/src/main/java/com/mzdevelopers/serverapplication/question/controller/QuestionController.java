@@ -7,6 +7,7 @@ import com.mzdevelopers.serverapplication.question.dto.QuestionVoteCountDto;
 import com.mzdevelopers.serverapplication.question.entity.Question;
 import com.mzdevelopers.serverapplication.question.mapper.QuestionMapper;
 import com.mzdevelopers.serverapplication.question.service.QuestionServiceImpl;
+import com.mzdevelopers.serverapplication.tag.dto.TagNameDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -91,6 +92,13 @@ public class QuestionController {
             responseDtoList.add(dto);
         }
         return ResponseEntity.ok(responseDtoList);
+    }
+
+    // 태그 가져오기
+    @GetMapping("/tags")
+    public ResponseEntity<?> getTagsName() {
+        List<TagNameDto> tagNameDtoList = questionService.getTags();
+        return ResponseEntity.ok(tagNameDtoList);
     }
 
 
