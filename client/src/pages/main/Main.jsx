@@ -10,6 +10,7 @@ export default function Main() {
       <FilterBtn />
       
       
+      
       <MainPostCard />
       <MainPostCard />
       <MainPostCard />
