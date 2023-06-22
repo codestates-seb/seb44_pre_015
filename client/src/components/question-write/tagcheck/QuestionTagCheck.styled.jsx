@@ -10,6 +10,7 @@ export const QuestionTitWrap = tw.div`
 export const QuestionTit = tw.h3`
   text-lg
   font-bold
+  mt-8
 `
 
 export const QuestionText = tw.p`
