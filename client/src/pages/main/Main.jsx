@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { setDatas } from '../../modules/mainSlice'
 import axios from 'axios';
@@ -12,6 +12,8 @@ import MainPostCard from '../../components/card/MainPostCard'
 export default function Main() {
   const dispatch = useDispatch();
   const datas = useSelector(state => state.main.datas);
+  const searchRef = useRef();
+  const DEFAULT_PAGE = 6;
 
   const [ref, inView] = useInView();
   const [page, setPage] = useState(12);
@@ -19,6 +21,7 @@ export default function Main() {
   useEffect(()=> {
     axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/recent?page=0&size=6`)
     .then(res => dispatch(setDatas(res.data)));
+    searchRef.current.focus();
   }, [])
 
   useEffect(()=> {
@@ -26,14 +29,14 @@ export default function Main() {
       axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/recent?page=0&size=${page}`)
       .then(res => {
         dispatch(setDatas(res.data))
-        setPage(prev => page + 6);
+        if ( page < 100 ) setPage(prev => page + DEFAULT_PAGE);
       });
     }
   }, [inView])
 
     return(
       <MainContainer>
-        <SearchBox />
+        <SearchBox searchRef={searchRef}/>
         <FilterBtn />
           {
             datas.map(data => <MainPostCard key={data.questionId} title={data.title} detail={data.detail} status={data.solutionStatus.toString()} viewCount={data.viewCount} votesCount={data.votesCount} answerCount={data.answerCount}/>)
