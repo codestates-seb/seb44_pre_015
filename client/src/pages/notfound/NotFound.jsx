@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import ReturnBtn from '../../components/button/return/ReturnBtn';
-import { BtnContainer, IconWrapper, Number, TextContainer, TextOne, TextTwo } from './NotFound.styled';
+import { BtnContainer, Number, TextContainer, TextOne, TextTwo } from './NotFound.styled';
 
 export default function NotFound() {
   return (

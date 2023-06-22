@@ -8,6 +8,7 @@ import Detail from './pages/detail/Detail'
 import Question from './pages/question/Question'
 import Edit from './pages/edit/Edit';
 import Mypage from './pages/mypage/Mypage';
+import NotFound from './pages/notfound/NotFound'
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Route path='/question' element={<Question />}/>
         <Route path='/edit/:questionId' element={<Edit />}/>
         <Route path="/mypage" element={<Mypage />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
 
       <Footer />

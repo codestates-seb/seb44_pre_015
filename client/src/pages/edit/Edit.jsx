@@ -20,7 +20,7 @@ export default function Edit() {
     })
     .catch(err => {
       console.log(err);
-      navigate('/')  // 404페이지로 추가 수정 필요
+      navigate('/*');
     });
   }, [])
 
