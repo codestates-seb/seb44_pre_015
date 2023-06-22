@@ -7,9 +7,11 @@ export default function QuestionInput(props) {
   const { value, onChange } = props;
   const [editorState, setEditorState] = useState('');
 
+
+
   const handleEditorChange = (content) => {
     setEditorState(content);
-    onChange(content);
+    onChange(content)
   };
 
   return (
@@ -22,7 +24,7 @@ export default function QuestionInput(props) {
       <EditorContainer>
         <EditorContent
           placeholder='질문하실 내용을 작성해 주세요'
-          value={editorState}
+          value={editorState || value}          
           onChange={handleEditorChange}
         />
       </EditorContainer>

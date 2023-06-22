@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { QuestionContainer } from './Question.styled';
 import QuestionWriteHead from '../../components/question-write/questionwritehead/QuestionWriteHead';
@@ -7,42 +7,45 @@ import QuestionInput from '../../components/question-write/question-input/Questi
 import QuestionTagCheck from '../../components/question-write/tagcheck/QuestionTagCheck';
 import AskBtn from '../../components/button/askButton/AskBtn';
 import { useNavigate } from 'react-router-dom';
+import { resetInput, typeTitle, typeDetail, typeTags , checkPlusTags, checkMinusTags, updateTags} from '../../modules/questionSlice';
 
 export default function Question() {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [tags, setTags] = useState([]);
-  const [checkCount, setCheckCount] = useState(0);
   const navigate = useNavigate();
+  const title = useSelector((state) => state.question.title);
+  const detail = useSelector((state) => state.question.detail);
+  const tags = useSelector((state) => state.question.tags);
+  const checkCount = useSelector(state => state.question.checkedCount)
+
+  const dispatch = useDispatch();
 
   const handlerTag = (name, description) => {
     const tagSelected = tags.some((el) => el.tagName === name);
 
     if (tagSelected) {
       const updatedTags = tags.filter((el) => el.tagName !== name);
-      setTags(updatedTags);
-      setCheckCount((prevCount) => prevCount - 1);
+      dispatch(updateTags(updatedTags));
+      dispatch(checkMinusTags())
     } else {
       const newTag = { tagName: name, tagDescription: description };
-      setTags((prevTags) => [...prevTags, newTag]);
-      setCheckCount((prevCount) => prevCount + 1);
+      dispatch(typeTags(newTag));
+      dispatch(checkPlusTags())
     }
   };
 
   const titleChange = (e) => {
-    setTitle(e.target.value);
+    dispatch(typeTitle(e.target.value));
   };
 
   const contentChange = (value) => {
-    setContent(value);
+    dispatch(typeDetail(value));
   };
 
   const questionSubmit = () => {
     const requestData = {
       title: title,
-      detail: content,
+      detail: detail,
       memberId: 1,
-      tags: [1, 2, 3]
+      tags: [1, 2, 3],
     };
 
     const headers = {
@@ -51,28 +54,25 @@ export default function Question() {
     };
 
     axios
-    .post('http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/register', requestData, { headers })
-    .then((response) => {
-      clearInput();
-      navigate('/');
-    })
-    .catch((error) => {
-      console.log('에러:', error);
-    });
+      .post('http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/register', requestData, { headers })
+      .then((response) => {
+        clearInput();
+        navigate('/');
+      })
+      .catch((error) => {
+        console.log('에러:', error);
+      });
   };
 
   const clearInput = () => {
-    setTitle('');
-    setContent('');
-    setTags([]);
-    setCheckCount(0);
+    dispatch(resetInput());
   };
 
   return (
     <QuestionContainer>
       <QuestionWriteHead />
       <QuestionTitle value={title} onChange={titleChange} />
-      <QuestionInput value={content} onChange={contentChange} />
+      <QuestionInput value={detail} onChange={contentChange} />
       <QuestionTagCheck handlerTag={handlerTag} tags={tags} checkCount={checkCount} />
       <AskBtn onClick={questionSubmit} />
     </QuestionContainer>
