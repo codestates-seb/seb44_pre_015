@@ -18,7 +18,7 @@ export default function QuestionSection({ title, content, tags, createdAt, quest
   return (
     <EditContainer>
       <EditDiv> 
-        <EditBtn />
+        <EditBtn questionId={questionId}/>
         <ReMoveBtn questionId={questionId} memberId={memberId}/>
       </EditDiv>
 
