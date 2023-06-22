@@ -20,7 +20,9 @@ export const QTitle = tw.h3`
 export const Qinput = tw.input`
   w-[40rem]
   max-sm:w-[29rem]
-  bg-[#F7F7F7]
+  bg-white
+  border-[#ccc]
+  border-[1px]
   mt-3
   py-3
   px-4

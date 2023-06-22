@@ -29,7 +29,8 @@ export const TagLabel = tw.label`
   justify-between
   items-center
   border-solid
-  border-[0.1rem]
+  border-[1px]
+  border-[#ccc]
   px-3
   py-3
   text-[#797979]
@@ -41,5 +42,5 @@ export const TagLabel = tw.label`
   after:w-3
   after:h-3
   after:rounded-full
-  after:bg-[#DCDCDC]  
+  after:bg-[#ccc]  
 `
