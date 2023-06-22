@@ -1,9 +1,9 @@
 import { AskButton, AskContainer } from './AskBtn.styled';
 
-export default function AskBtn() {
+export default function AskBtn({onClick}) {
   return (
     <AskContainer>
-      <AskButton>질문하기</AskButton>
+      <AskButton onClick={onClick}>질문하기</AskButton>
     </AskContainer>
   )
 }

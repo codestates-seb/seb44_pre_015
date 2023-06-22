@@ -10,7 +10,6 @@ import Edit from './pages/edit/Edit';
 import Mypage from './pages/mypage/Mypage';
 
 export default function App() {
-  
   return (
     <BrowserRouter>
       <Header />

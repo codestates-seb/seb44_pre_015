@@ -1,27 +1,26 @@
-import { TagCheckContainer, TagCheck, TagLabel } from "./TagCheckBox.styled"
+import { tagList } from "./tagList"
+import { TagCheckContainer, TagCheck, TagCheckBoxed, TagLabel } from "./TagCheckBox.styled"
 
-export default function TagCheckBox() {
+export default function TagCheckBox({ handlerTag, tags, checkCount }) {
   return (
     <TagCheckContainer>
-
-      <TagCheck type="checkbox" id="Javascript" value=""></TagCheck>
-      <TagLabel htmlFor="Javascript"><span>Javascript</span></TagLabel>
-
-      <TagCheck type="checkbox" id="React" value=""></TagCheck>
-      <TagLabel htmlFor="React"><span>React</span></TagLabel>
-
-      <TagCheck type="checkbox" id="Java" value=""></TagCheck>
-      <TagLabel htmlFor="Java"><span>Java</span></TagLabel>
-
-      <TagCheck type="checkbox" id="HTML" value=""></TagCheck>
-      <TagLabel htmlFor="HTML"> <span>HTML</span></TagLabel>
-
-      <TagCheck type="checkbox" id="C#" value=""></TagCheck>
-      <TagLabel htmlFor="C#"><span>C#</span></TagLabel>
-
-      <TagCheck type="checkbox" id="etc" value=""></TagCheck>
-      <TagLabel htmlFor="etc"><span>etc</span></TagLabel>
-
+      {
+        tagList.map((el) => (
+          <TagCheckBoxed key={el.tagName}>
+            <TagCheck
+              type="checkbox"
+              id={el.tagName}
+              value={el.tagName}
+              checked={tags.some(item => item.tagName === el.tagName)}
+              disabled={!tags.some(item => item.tagName === el.tagName) && checkCount >= 3}
+              onChange={() => handlerTag(el.tagName, el.tagDescription)}
+            ></TagCheck>
+            <TagLabel htmlFor={el.tagName}>
+              <span>{el.tagName}</span>
+            </TagLabel>
+          </TagCheckBoxed>
+        ))
+      }
     </TagCheckContainer>
   )
 }
