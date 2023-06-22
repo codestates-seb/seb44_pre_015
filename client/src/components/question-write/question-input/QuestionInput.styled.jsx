@@ -1,21 +1,25 @@
-import tw from 'tailwind-styled-components'
+import 'react-quill/dist/quill.snow.css';
+import tw from 'tailwind-styled-components';
+import ReactQuill from 'react-quill';
+
 
 export const TitleWrap = tw.div`
   flex
   items-center
   gap-2
-`
+`;
 
 export const TitleText = tw.h1`
   text-lg
   font-bold
-`
+`;
 
-export const QAInput = tw.textarea`
+export const EditorContainer = tw.div`
   w-[40rem]
   max-sm:w-[29rem]
-  bg-[#F7F7F7]
-  text-sm
-  p-5
   h-60
-`
+`;
+
+export const EditorContent = tw(ReactQuill)`
+  h-full
+`;
