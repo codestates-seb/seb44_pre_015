@@ -9,14 +9,14 @@ import RecommentSection from '../../components/question/recomment-section/Recomm
 
 
 export default function Detail() {
-  const { id } = useParams();
+  const { questionId } = useParams();
   const navigate = useNavigate();
 
   const [datas, setDatas] = useState({});
   const [answers, setAnswers] = useState([]);
 
   useEffect(()=>{
-    axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/${id}/1`)
+    axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/${questionId}/1`)
       .then(res => {
         setDatas(res.data);
         setAnswers(res.data.answers);

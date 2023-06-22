@@ -18,7 +18,7 @@ export default function App() {
       <Routes>
         <Route path='/' element={<Main />} />
         <Route path="/login" element={<Login />} />
-        <Route path='/post/:id' element={<Detail />} />
+        <Route path='/post/:questionId' element={<Detail />} />
         <Route path='/question' element={<Question />}/>
         <Route path='/edit/:questionId' element={<Edit />}/>
         <Route path="/mypage" element={<Mypage />} />
