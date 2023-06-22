@@ -7,7 +7,7 @@ import CommentBtn from '../../button/comment/CommentBtn'
 import RecommentInput from './RecommentInput';
 
 
-export default function CommentSection({ comment }) {
+export default function CommentSection({ comment, answerId, memberId }) {
   const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -23,7 +23,7 @@ export default function CommentSection({ comment }) {
         <CommentBottomSectionWrap>
         <Comment>{ comment }</Comment>
         { !isOpen && <CommentBtn setIsOpen={setIsOpen} />}
-        { isOpen && <RecommentInput />}
+        { isOpen && <RecommentInput answerId={answerId} memberId={memberId}/>}
         </CommentBottomSectionWrap>
       </AllWrap>
     );

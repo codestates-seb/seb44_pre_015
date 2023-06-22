@@ -35,14 +35,14 @@ export default function Detail() {
 
       <DeatilBottomSection>
         {
-          answers.map(answer => {
+          answers.map((answer, idx) => {
             return(
-              <>
-                <CommentSection key={answer.answerId} comment={answer.detail}/>
+              <div key={idx} className='flex flex-col gap-5'>
+                <CommentSection key={answer.answerId} comment={answer.detail} answerId={answer.answerId} memberId={answer.memberId}/>
                 {
                   answer.comments.map(recomment => <RecommentSection key={recomment.commentId} commentDetail={recomment.commentDetail}/>)
                 }
-              </>
+              </div>
             )
           })
         }
