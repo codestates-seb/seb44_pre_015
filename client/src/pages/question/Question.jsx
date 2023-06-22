@@ -33,8 +33,8 @@ export default function Question() {
     setTitle(e.target.value);
   };
 
-  const contentChange = (e) => {
-    setContent(e.target.value);
+  const contentChange = (value) => {
+    setContent(value);
   };
 
   const questionSubmit = () => {
