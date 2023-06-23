@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { QuestionContainer } from './Question.styled';
 import QuestionWriteHead from '../../components/question-write/questionwritehead/QuestionWriteHead';
@@ -6,8 +7,7 @@ import QuestionTitle from '../../components/question-write/question-title/Questi
 import QuestionInput from '../../components/question-write/question-input/QuestionInput';
 import QuestionTagCheck from '../../components/question-write/tagcheck/QuestionTagCheck';
 import AskBtn from '../../components/button/askButton/AskBtn';
-import { useNavigate } from 'react-router-dom';
-import { resetInput, typeTitle, typeDetail, typeTags , checkPlusTags, checkMinusTags, updateTags} from '../../modules/questionSlice';
+import { resetInput, typeTitle, typeDetail, typeTags, checkPlusTags, checkMinusTags, updateTags } from '../../modules/questionSlice';
 
 export default function Question() {
   const navigate = useNavigate();
@@ -17,6 +17,9 @@ export default function Question() {
   const checkCount = useSelector(state => state.question.checkedCount)
 
   const dispatch = useDispatch();
+
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+  const UID = JSON.parse(localStorage.getItem("UID"));
 
   const handlerTag = (name, description) => {
     const tagSelected = tags.some((el) => el.tagName === name);
@@ -41,27 +44,28 @@ export default function Question() {
   };
 
   const questionSubmit = () => {
+
     const requestData = {
       title: title,
       detail: detail,
-      memberId: 1,
-      tags: [1, 2, 3],
+      memberId: UID,
+      tags: [{ tagName: "html" }],
     };
 
     const headers = {
-      'Content-Type': 'application/json',
-      'ngrok-skip-browser-warning': true,
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Authorization': `Bearer ${accessToken}`
     };
 
-    axios
-      .post('http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/register', requestData, { headers })
+    axios.post(
+      `http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/register`, requestData, { headers })
       .then((response) => {
         clearInput();
         navigate('/');
       })
       .catch((error) => {
-        console.log('에러:', error);
-      });
+        console.error(error);
+      })
   };
 
   const clearInput = () => {
