@@ -52,9 +52,7 @@ export default function Edit() {
         const questionData = res.data;
         dispatch(typeTitle(questionData.title));
         dispatch(typeDetail(questionData.detail));
-
-        const newTags = questionData.tags.map((tag) => ({ tagName: tag }));
-        dispatch(updateTags(newTags));
+        dispatch(updateTags(res.data.tags));
       })
       .catch((err) => {
         console.log(err);
@@ -69,7 +67,7 @@ export default function Edit() {
       title: title,
       detail: detail,
       memberId: UID,
-      tags: tags.map((tag) => tag.tagName),
+      tags: tags,
     };
     const headers = {
       'Content-Type': 'application/json',
@@ -95,7 +93,7 @@ export default function Edit() {
       <QuestionWriteHead />
       <QuestionTitle memTitle={title} onChange={titleChange} />
       <QuestionInput memDetail={detail} onChange={contentChange} />
-      <QuestionTagCheck memTags={tags} handlerTag={handlerTag} tags={tags} checkCount={checkCount} />
+      <QuestionTagCheck handlerTag={handlerTag} tags={tags} checkCount={checkCount} />
       <AskBtn onClick={questionSubmit} buttonText="수정하기" />
     </EditContainer>
   );
