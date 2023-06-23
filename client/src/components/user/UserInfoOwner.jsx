@@ -1,18 +1,28 @@
+import { useEffect, useState } from 'react';
 import { UserImgSm, Img } from "./UserCommon.styled";
-import { UserInfoContainer, UserInfoData, UserData } from "./UserInfoOwner.styled"
+import { UserInfoContainer, UserInfoData, UserData, Date } from "./UserInfoOwner.styled"
+import user from '../../assets/user.png'
 
-export default function UserInfoOwner({ createdAt }) {
+export default function UserInfoOwner({ memberInfo, createdAt}) {
+  const [info, setInfo] = useState('');
+  
+  useEffect(()=>{
+    if (memberInfo !== undefined){
+      setInfo(memberInfo);
+    }
+  }, [])
+
 
   return (
     <UserInfoContainer>
       <UserImgSm>
         <Img
-          src="https://velog.velcdn.com/images/crg1050/profile/c180a703-e4c1-4c72-a014-9b7f0f3787a4/image.JPG"
+          src={info.picture === undefined ? user : info.picture}
           alt="userImg" />
       </UserImgSm>
       <UserInfoData>
-        <UserData>JIEUN</UserData>
-        <UserData>{ createdAt && createdAt.slice(0,10) }</UserData>
+        <UserData>{info.userName}</UserData>
+        <Date>{ createdAt && createdAt.slice(0,10) }</Date>
       </UserInfoData>
     </UserInfoContainer>
   );

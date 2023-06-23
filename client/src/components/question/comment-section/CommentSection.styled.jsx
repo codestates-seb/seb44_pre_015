@@ -27,6 +27,6 @@ export const Comment = tw.p`
 
 export const HeartUser = tw.div `
   flex
-  gap-3
+  gap-x-1
   items-center
 `;

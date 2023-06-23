@@ -13,6 +13,7 @@ import {
   Title,
   Content
 } from './QuestionSection.styled';
+import ReactQuill from 'react-quill';
 
 export default function QuestionSection({ title, content, tags, createdAt, questionId, memberId, votesCount }) {
   return (
@@ -37,8 +38,10 @@ export default function QuestionSection({ title, content, tags, createdAt, quest
       </QuestionContainer>
 
       <Horizontal />
-      
-      <Content>{content}</Content>
+        <ReactQuill
+          value={content}
+          readOnly={true}
+          theme={'bubble'} />
     </EditContainer>
   );
 }

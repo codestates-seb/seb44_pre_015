@@ -5,11 +5,10 @@ import UserInfoOwner from "../../user/UserInfoOwner";
 import SelectionBtn from '../../selection/SelectionBtn'
 import CommentBtn from '../../button/comment/CommentBtn'
 import CommentEditBtn from '../../button/edit/CommentEditBtn';
-import CommentRemoveBtn from '../../button/remove/CommentRemoveBtn'
 import RecommentInput from './RecommentInput';
 
 
-export default function CommentSection({ comment, answerId, memberId }) {
+export default function CommentSection({ comment, answerId, memberId, memberInfo, createdAt }) {
   const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -17,18 +16,17 @@ export default function CommentSection({ comment, answerId, memberId }) {
         <CommentTopSectionWrap>
           <HeartUser>
           <HeartBtn />
-          <UserInfoOwner />
+          <UserInfoOwner memberInfo={memberInfo} createdAt={createdAt}/>
           </HeartUser>
-          <SelectionBtn />
+          <div className='flex gap-1 mb-3 pt-3'>
+            <CommentEditBtn memberId={memberId}/>
+            <SelectionBtn />
+          </div>
+          
         </CommentTopSectionWrap>
 
         <CommentBottomSectionWrap>
         <Comment>{ comment }</Comment>
-
-        <div className='pl-[20rem] gap-2 mb-3'>
-          <CommentEditBtn />
-          <CommentRemoveBtn />
-        </div>
 
         { !isOpen && <CommentBtn setIsOpen={setIsOpen} />}
         { isOpen && <RecommentInput answerId={answerId} memberId={memberId}/>}

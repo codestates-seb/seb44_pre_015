@@ -37,9 +37,9 @@ export default function Detail() {
           answers.map((answer, idx) => {
             return(
               <div key={idx} className='flex flex-col gap-5'>
-                <CommentSection key={answer.answerId} comment={answer.detail} answerId={answer.answerId} memberId={answer.memberId}/>
+                <CommentSection key={answer.answerId} comment={answer.detail} answerId={answer.answerId} memberId={answer.memberId} memberInfo={answer.memberInfoDto} createdAt={answer.createdAt}/>
                 {
-                  answer.comments.map(recomment => <RecommentSection key={recomment.commentId} commentDetail={recomment.commentDetail}/>)
+                  answer.comments.map(recomment => <RecommentSection key={recomment.commentId} commentDetail={recomment.commentDetail} createdAt={recomment.createdAt} memberInfo={recomment.memberInfoDto} commentId={recomment.commentId}/>)
                 }
               </div>
             )
