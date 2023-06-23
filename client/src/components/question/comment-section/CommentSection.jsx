@@ -8,7 +8,7 @@ import CommentEditBtn from '../../button/edit/CommentEditBtn';
 import RecommentInput from './RecommentInput';
 
 
-export default function CommentSection({ comment, answerId, memberId, memberInfo, createdAt }) {
+export default function CommentSection({ comment, answerId, memberId, memberInfo, createdAt, solutionStatus, writer }) {
   const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -17,9 +17,9 @@ export default function CommentSection({ comment, answerId, memberId, memberInfo
           <HeartUser>
           <UserInfoOwner memberInfo={memberInfo} createdAt={createdAt}/>
           </HeartUser>
-          <div className='flex gap-1 mb-3 pt-3'>
-            <CommentEditBtn memberId={memberId}/>
-            <SelectionBtn />
+          <div className='flex gap-3 mb-3 pt-3'>
+            <CommentEditBtn memberId={memberId} memberInfo={memberInfo}/>
+            <SelectionBtn solutionStatus={solutionStatus} answerId={answerId} writer={writer}/>
           </div>
           
         </CommentTopSectionWrap>

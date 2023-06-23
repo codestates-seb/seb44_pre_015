@@ -1,9 +1,15 @@
 import axios from 'axios';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RemoveButtonWrap } from "./RemoveBtn.styled";
 
-export default function ReMoveBtn({ questionId, memberId }) {
+export default function ReMoveBtn({ questionId, memberInfo }) {
+  const [memberId, setMemberId]= useState(1);
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(memberInfo !== undefined) setMemberId(memberInfo.memberId);
+  }, [memberInfo])
 
   const onClickHandler = async (e) => {
     const UID = JSON.parse(localStorage.getItem('UID'));
@@ -20,11 +26,9 @@ export default function ReMoveBtn({ questionId, memberId }) {
             'Authorization': `Bearer ${accessToken}`,
           }
         })
-      .then(res=> console.log(res))
-      .catch(err => console.log(err))
-      await navigate('/');
+      .then(res=> navigate('/'))
+      .catch(err => navigate('/*'));
     }
-    return
   }
 
   return (

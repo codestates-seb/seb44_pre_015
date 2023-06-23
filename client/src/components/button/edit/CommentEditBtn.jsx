@@ -1,6 +1,12 @@
+import { useEffect, useState } from 'react';
 import { EditButtonWrap } from "./EditBtn.style";
 
-export default function CommentEditBtn({ memberId }) {
+export default function CommentEditBtn({ memberInfo }) {
+  const [memberId, setMemberId] = useState(1);
+
+  useEffect(()=>{
+    if(memberInfo !== undefined) setMemberId(memberInfo.memberId);
+  }, [])
 
   const onClickHandler = () => {
     const UID = JSON.parse(localStorage.getItem('UID'));

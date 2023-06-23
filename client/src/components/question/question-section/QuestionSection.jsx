@@ -15,18 +15,18 @@ import {
 } from './QuestionSection.styled';
 import ReactQuill from 'react-quill';
 
-export default function QuestionSection({ title, content, tags, createdAt, questionId, memberId, votesCount, memberInfo }) {
+export default function QuestionSection({ title, content, tags, createdAt, questionId, votesCount, memberInfo, questionVoteByMember}) {
 
   return (
     <EditContainer>
       <EditDiv> 
-        <EditBtn questionId={questionId}/>
-        <ReMoveBtn questionId={questionId} memberId={memberId}/>
+        <EditBtn questionId={questionId} memberInfo={memberInfo}/>
+        <ReMoveBtn questionId={questionId} memberInfo={memberInfo}/>
       </EditDiv>
 
       <div className="flex items-center">
         <Heart>
-          <HeartBtn votesCount={votesCount} questionId={questionId} memberId={memberId}/>
+          <HeartBtn votesCount={votesCount} questionId={questionId} memberInfo={memberInfo} questionVoteByMember={questionVoteByMember}/>
         </Heart>
         <User>
           <UserInfoOwner createdAt={createdAt} memberInfo={memberInfo}/>
