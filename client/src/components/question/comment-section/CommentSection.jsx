@@ -3,12 +3,14 @@ import { HeartUser, AllWrap, CommentTopSectionWrap, CommentBottomSectionWrap, Co
 import HeartBtn from "../../button/like/HeartBtn";
 import UserInfoOwner from "../../user/UserInfoOwner";
 import SelectionBtn from '../../selection/SelectionBtn'
+import EditInput from '../input-section/EditInput';
 import CommentBtn from '../../button/comment/CommentBtn'
 import CommentEditBtn from '../../button/edit/CommentEditBtn';
 import RecommentInput from './RecommentInput';
 
 
-export default function CommentSection({ comment, answerId, memberId, memberInfo, createdAt }) {
+export default function CommentSection({ comment, answerId, memberId, memberInfo, createdAt, solutionStatus, writer }) {
+  const [editIsOpen, setEditIsOpen]= useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -17,15 +19,16 @@ export default function CommentSection({ comment, answerId, memberId, memberInfo
           <HeartUser>
           <UserInfoOwner memberInfo={memberInfo} createdAt={createdAt}/>
           </HeartUser>
-          <div className='flex gap-1 mb-3 pt-3'>
-            <CommentEditBtn memberId={memberId}/>
-            <SelectionBtn />
+          <div className='flex gap-3 mb-3 pt-3'>
+            <CommentEditBtn memberId={memberId} memberInfo={memberInfo} setEditIsOpen={setEditIsOpen} editIsOpen={editIsOpen}/>
+            <SelectionBtn solutionStatus={solutionStatus} answerId={answerId} writer={writer}/>
           </div>
           
         </CommentTopSectionWrap>
 
         <CommentBottomSectionWrap>
-        <Comment>{ comment }</Comment>
+        {!editIsOpen && <Comment>{ comment }</Comment>}
+        {editIsOpen && <EditInput comment={comment} answerId={answerId} solutionStatus={solutionStatus}/>}
 
         { !isOpen && <CommentBtn setIsOpen={setIsOpen} />}
         { isOpen && <RecommentInput answerId={answerId} memberId={memberId}/>}

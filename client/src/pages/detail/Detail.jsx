@@ -27,9 +27,10 @@ export default function Detail() {
         navigate('/*');
       });
   }, [])
+
   return (
     <DetailContainer>
-      <QuestionSection title={datas.title} content={datas.detail} tags={datas.tags} createdAt={datas.createdAt} questionId={datas.questionId} memberId={datas.memberId} votesCount={datas.votesCount} memberInfo={datas.memberInfoDto}/>
+      <QuestionSection title={datas.title} content={datas.detail} tags={datas.tags} createdAt={datas.createdAt} questionId={datas.questionId} votesCount={datas.votesCount} memberInfo={datas.memberInfoDto} questionVoteByMember={datas.questionVoteByMember}/>
       <InputSection questionId={datas.questionId}/>
 
       <DeatilBottomSection>
@@ -37,7 +38,7 @@ export default function Detail() {
           answers.map((answer, idx) => {
             return(
               <div key={idx} className='flex flex-col gap-5'>
-                <CommentSection key={answer.answerId} comment={answer.detail} answerId={answer.answerId} memberId={answer.memberId} memberInfo={answer.memberInfoDto} createdAt={answer.createdAt}/>
+                <CommentSection key={answer.answerId} comment={answer.detail} answerId={answer.answerId} memberId={answer.memberId} memberInfo={answer.memberInfoDto} createdAt={answer.createdAt} solutionStatus={answer.solutionStatus} writer={datas.memberInfoDto.memberId} />
                 {
                   answer.comments.map(recomment => <RecommentSection key={recomment.commentId} commentDetail={recomment.commentDetail} createdAt={recomment.createdAt} memberInfo={recomment.memberInfoDto} commentId={recomment.commentId}/>)
                 }
