@@ -16,7 +16,7 @@ export default function InputSection({ questionId }) {
 
     const isLogIn = JSON.parse(localStorage.getItem('isLogIn'));
     const UID = JSON.parse(localStorage.getItem('UID'));
-    if( isLogIn === null) return alert('로그인을 해주세요!');
+    if( isLogIn !== true ) return alert('로그인을 해주세요!');
 
     const body = {
       questionId,

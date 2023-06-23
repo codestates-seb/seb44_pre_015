@@ -12,10 +12,16 @@ export default function RecommentInput({ answerId, memberId }) {
 
     if ( detailInput.current.value === '') return alert('공백은 입력할 수 없습니다.')
 
+    const isLogIn = JSON.parse(localStorage.getItem('isLogIn'));
+    if( isLogIn !== true ) return alert('로그인을 해주세요!');
+
+    const UID = JSON.parse(localStorage.getItem('UID'));
+    const accessToken = JSON.parse(localStorage.getItem('accessToken'));
+
     const body = {
       commentDetail: detailInput.current.value,
       answerId,
-      memberId
+      memberId: UID,
     }
 
     await axios.post(
@@ -23,7 +29,8 @@ export default function RecommentInput({ answerId, memberId }) {
       JSON.stringify(body),
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': `Bearer ${accessToken}`,
         },
       }
     )
