@@ -2,7 +2,8 @@ import tw from "tailwind-styled-components";
 
 export const UserInfoContainer = tw.section`
   flex
-  gap-3
+  gap-2
+  ml-1
   items-center
 `
 
@@ -31,4 +32,9 @@ export const UserData = tw.span`
 
   last:pr-0
   last:after:hidden
+`
+
+export const Date = tw.span`
+  text-[#797979]
+  text-xs
 `

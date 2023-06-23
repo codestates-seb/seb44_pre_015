@@ -29,7 +29,7 @@ export default function Detail() {
   }, [])
   return (
     <DetailContainer>
-      <QuestionSection title={datas.title} content={datas.detail} tags={datas.tags} createdAt={datas.createdAt} questionId={datas.questionId} memberId={datas.memberId} votesCount={datas.votesCount}/>
+      <QuestionSection title={datas.title} content={datas.detail} tags={datas.tags} createdAt={datas.createdAt} questionId={datas.questionId} memberId={datas.memberId} votesCount={datas.votesCount} memberInfo={datas.memberInfoDto}/>
       <InputSection questionId={datas.questionId}/>
 
       <DeatilBottomSection>
@@ -37,9 +37,9 @@ export default function Detail() {
           answers.map((answer, idx) => {
             return(
               <div key={idx} className='flex flex-col gap-5'>
-                <CommentSection key={answer.answerId} comment={answer.detail} answerId={answer.answerId} memberId={answer.memberId}/>
+                <CommentSection key={answer.answerId} comment={answer.detail} answerId={answer.answerId} memberId={answer.memberId} memberInfo={answer.memberInfoDto} createdAt={answer.createdAt}/>
                 {
-                  answer.comments.map(recomment => <RecommentSection key={recomment.commentId} commentDetail={recomment.commentDetail}/>)
+                  answer.comments.map(recomment => <RecommentSection key={recomment.commentId} commentDetail={recomment.commentDetail} createdAt={recomment.createdAt} memberInfo={recomment.memberInfoDto} commentId={recomment.commentId}/>)
                 }
               </div>
             )
