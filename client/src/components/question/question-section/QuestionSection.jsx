@@ -15,7 +15,8 @@ import {
 } from './QuestionSection.styled';
 import ReactQuill from 'react-quill';
 
-export default function QuestionSection({ title, content, tags, createdAt, questionId, memberId, votesCount }) {
+export default function QuestionSection({ title, content, tags, createdAt, questionId, memberId, votesCount, memberInfo }) {
+
   return (
     <EditContainer>
       <EditDiv> 
@@ -28,7 +29,7 @@ export default function QuestionSection({ title, content, tags, createdAt, quest
           <HeartBtn votesCount={votesCount} questionId={questionId} memberId={memberId}/>
         </Heart>
         <User>
-          <UserInfoOwner createdAt={createdAt}/>
+          <UserInfoOwner createdAt={createdAt} memberInfo={memberInfo}/>
         </User>
       </div>
 

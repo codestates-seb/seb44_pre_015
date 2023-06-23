@@ -29,7 +29,7 @@ export default function Detail() {
   }, [])
   return (
     <DetailContainer>
-      <QuestionSection title={datas.title} content={datas.detail} tags={datas.tags} createdAt={datas.createdAt} questionId={datas.questionId} memberId={datas.memberId} votesCount={datas.votesCount}/>
+      <QuestionSection title={datas.title} content={datas.detail} tags={datas.tags} createdAt={datas.createdAt} questionId={datas.questionId} memberId={datas.memberId} votesCount={datas.votesCount} memberInfo={datas.memberInfoDto}/>
       <InputSection questionId={datas.questionId}/>
 
       <DeatilBottomSection>

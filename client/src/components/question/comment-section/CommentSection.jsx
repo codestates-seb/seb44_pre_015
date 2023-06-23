@@ -15,7 +15,6 @@ export default function CommentSection({ comment, answerId, memberId, memberInfo
       <AllWrap>
         <CommentTopSectionWrap>
           <HeartUser>
-          <HeartBtn />
           <UserInfoOwner memberInfo={memberInfo} createdAt={createdAt}/>
           </HeartUser>
           <div className='flex gap-1 mb-3 pt-3'>

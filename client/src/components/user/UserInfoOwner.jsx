@@ -6,13 +6,12 @@ import user from '../../assets/user.png'
 export default function UserInfoOwner({ memberInfo, createdAt}) {
   const [info, setInfo] = useState('');
   
-  useEffect(()=>{
-    if (memberInfo !== undefined){
+  useEffect(() => {
+    if (memberInfo !== undefined) {
       setInfo(memberInfo);
     }
-  }, [])
-
-
+  }, [memberInfo]);
+  
   return (
     <UserInfoContainer>
       <UserImgSm>
