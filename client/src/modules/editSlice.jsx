@@ -1,13 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
 const initialState = {
   title: "",
   detail: "",
   memberId: 1,
   tags: [],
   checkedCount: 0,
-}
+};
 
 const editSlice = createSlice({
   name: "edit",
@@ -18,11 +17,11 @@ const editSlice = createSlice({
       state.title = title;
       state.detail = detail;
       state.memberId = memberId;
-      state.tags = tags;
+      state.tags = tags.map((tag) => ({ tagName: tag }));
     },
     resetEditInput: (state) => {
-      state.title = '';
-      state.detail = '';
+      state.title = "";
+      state.detail = "";
       state.tags = [];
       state.checkedCount = 0;
     },
@@ -33,13 +32,20 @@ const editSlice = createSlice({
       state.detail = action.payload;
     },
     typeEditTags: (state, action) => {
-      state.tags.push(action.payload);
+      state.tags = [...state.tags, { tagName: action.payload }];
     },
     updateEditTags: (state, action) => {
-      state.tags = action.payload;
+      state.tags = action.payload.map((tag) => ({ tagName: tag }));
     },
-  }
-})
+  },
+});
 
-export const { setQuestionData, resetEditInput, typeEditTitle, typeEditDetail, typeEditTags, updateEditTags } = editSlice.actions;
+export const {
+  setQuestionData,
+  resetEditInput,
+  typeEditTitle,
+  typeEditDetail,
+  typeEditTags,
+  updateEditTags,
+} = editSlice.actions;
 export default editSlice.reducer;
