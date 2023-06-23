@@ -21,7 +21,7 @@ export default function Question() {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   const UID = JSON.parse(localStorage.getItem("UID"));
 
-  const handlerTag = (name, description) => {
+  const handlerTag = (name) => {
     const tagSelected = tags.some((el) => el.tagName === name);
 
     if (tagSelected) {
@@ -29,10 +29,11 @@ export default function Question() {
       dispatch(updateTags(updatedTags));
       dispatch(checkMinusTags())
     } else {
-      const newTag = { tagName: name, tagDescription: description };
+      const newTag = { tagName: name };
       dispatch(typeTags(newTag));
       dispatch(checkPlusTags())
     }
+    
   };
 
   const titleChange = (e) => {
@@ -49,7 +50,7 @@ export default function Question() {
       title: title,
       detail: detail,
       memberId: UID,
-      tags: [{ tagName: "html" }],
+      tags: tags,
     };
 
     const headers = {
@@ -77,7 +78,7 @@ export default function Question() {
       <QuestionWriteHead />
       <QuestionTitle value={title} onChange={titleChange} />
       <QuestionInput value={detail} onChange={contentChange} />
-      <QuestionTagCheck handlerTag={handlerTag} tags={tags} checkCount={checkCount} />
+      <QuestionTagCheck accessToken={accessToken} handlerTag={handlerTag} tags={tags} checkCount={checkCount} />
       <AskBtn onClick={questionSubmit} />
     </QuestionContainer>
   );
