@@ -9,7 +9,7 @@ import QuestionInput from '../../components/question-write/question-input/Questi
 import QuestionTagCheck from '../../components/question-write/tagcheck/QuestionTagCheck';
 import AskBtn from '../../components/button/askButton/AskBtn';
 import { useNavigate } from 'react-router-dom';
-import { resetInput, typeTitle, typeDetail, typeTags, checkPlusTags, checkMinusTags, updateTags } from '../../modules/questionSlice';
+import { typeTitle, typeDetail, checkPlusTags, checkMinusTags, updateTags } from '../../modules/questionSlice';
 
 export default function Edit() {
   const navigate = useNavigate();
