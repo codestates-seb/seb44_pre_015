@@ -1,27 +1,29 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { EditContainer } from './Edit.styled'
-import QuestionWriteHead from '../../components/question-write/questionwritehead/QuestionWriteHead'
-import QuestionTitle from '../../components/question-write/question-title/QuestionTitle'
-import QuestionInput from '../../components/question-write/question-input/QuestionInput'
-import QuestionTagCheck from '../../components/question-write/tagcheck/QuestionTagCheck'
-import AskBtn from '../../components/button/askButton/AskBtn'
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { EditContainer } from './Edit.styled';
+import QuestionWriteHead from '../../components/question-write/questionwritehead/QuestionWriteHead';
+import QuestionTitle from '../../components/question-write/question-title/QuestionTitle';
+import QuestionInput from '../../components/question-write/question-input/QuestionInput';
+import QuestionTagCheck from '../../components/question-write/tagcheck/QuestionTagCheck';
+import AskBtn from '../../components/button/askButton/AskBtn';
 import { useNavigate } from 'react-router-dom';
 import { resetInput, typeTitle, typeDetail, typeTags, checkPlusTags, checkMinusTags, updateTags } from '../../modules/questionSlice';
 
 export default function Edit() {
   const navigate = useNavigate();
   const { questionId } = useParams();
-  const [data, setData] = useState([]);
 
   const title = useSelector((state) => state.question.title);
   const detail = useSelector((state) => state.question.detail);
   const tags = useSelector((state) => state.question.tags);
-  const checkCount = useSelector(state => state.question.checkedCount)
+  const checkCount = useSelector((state) => state.question.checkedCount);
 
   const dispatch = useDispatch();
+
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+  const UID = JSON.parse(localStorage.getItem("UID"));
 
   const handlerTag = (name, description) => {
     const tagSelected = tags.some((el) => el.tagName === name);
@@ -29,11 +31,12 @@ export default function Edit() {
     if (tagSelected) {
       const updatedTags = tags.filter((el) => el.tagName !== name);
       dispatch(updateTags(updatedTags));
-      dispatch(checkMinusTags())
+      dispatch(checkMinusTags());
     } else {
       const newTag = { tagName: name, tagDescription: description };
-      dispatch(typeTags(newTag));
-      dispatch(checkPlusTags())
+      const updatedTags = [...tags, newTag];
+      dispatch(updateTags(updatedTags));
+      dispatch(checkPlusTags());
     }
   };
 
@@ -46,56 +49,62 @@ export default function Edit() {
   };
 
   useEffect(() => {
-    axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/${questionId}/1`)
-      .then(res => {
-        setData(res.data);
-        dispatch(typeTitle(res.data.title));
-        dispatch(typeDetail(res.data.detail));
-        res.data.tags.forEach(tag => dispatch(typeTags(tag)));
-        console.log(res.data);
+    axios
+      .get(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/${questionId}/${UID}`)
+      .then((res) => {
+        const questionData = res.data;
+        dispatch(typeTitle(questionData.title));
+        dispatch(typeDetail(questionData.detail));
+        dispatch(updateTags(res.data.tags));
+        console.log(res.data.memberInfoDto.memberId)
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-        navigate('/*');
+        navigate('/');
       });
-  }, [dispatch, questionId])
+  }, [dispatch, navigate, questionId]);
 
   const questionSubmit = () => {
     const requestData = {
       title: title,
       detail: detail,
-      memberId: data.memberId,
-      tags: tags
+      memberId: UID,
+      tags: tags,
     };
 
     const headers = {
-      'Content-Type': 'application/json',
-      'ngrok-skip-browser-warning': true,
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Authorization': `Bearer ${accessToken}`,
     };
 
     axios
-      .patch(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/${questionId}/1`, requestData, { headers })
+      .patch(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/${questionId}/${UID}`, JSON.stringify(requestData), { headers })
       .then((response) => {
-        clearInput();
+        const updatedQuestion = response.data;
+        dispatch(typeTitle(updatedQuestion.title));
+        dispatch(typeDetail(updatedQuestion.detail));
         navigate('/');
+        console.log(updatedQuestion)
       })
       .catch((error) => {
         console.log('에러:', error);
-        navigate('/*');
+        navigate('/');
       });
   };
 
-  const clearInput = () => {
-    dispatch(resetInput());
-  };
+  useEffect(() => {
+    console.log(UID, questionId)
+
+  })
+
 
   return (
     <EditContainer>
       <QuestionWriteHead />
       <QuestionTitle memTitle={title} onChange={titleChange} />
       <QuestionInput memDetail={detail} onChange={contentChange} />
-      <QuestionTagCheck memTags={tags} handlerTag={handlerTag} tags={tags} checkCount={checkCount} />
-      <AskBtn memTitle={title} onClick={questionSubmit} />
+      <QuestionTagCheck handlerTag={handlerTag} tags={tags} checkCount={checkCount} />
+      <AskBtn onClick={questionSubmit} buttonText="수정하기" />
     </EditContainer>
-  )
+  );
 }
