@@ -2,7 +2,7 @@ import { RecommentSectionContainer, TopSection, ReContainer, BottomSection, Reco
 import UserInfoOwner from '../../user/UserInfoOwner'
 import { BsArrowReturnRight } from 'react-icons/bs'
 
-export default function RecommentSection() {
+export default function RecommentSection({ commentDetail }) {
   return (
     <RecommentSectionContainer>
       <TopSection>
@@ -13,7 +13,7 @@ export default function RecommentSection() {
       </TopSection>
 
       <BottomSection>
-      <Recomment>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat nobis excepturi dolor, exercitationem unde autem ipsum ut voluptas reiciendis ad vel repudiandae consectetur. Nulla ex dolores tempora minima, praesentium ducimus.</Recomment>
+      <Recomment>{commentDetail}</Recomment>
       </BottomSection>
 
     </RecommentSectionContainer>

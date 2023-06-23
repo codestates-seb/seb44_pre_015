@@ -14,11 +14,17 @@ export default function InputSection({ questionId }) {
       return
     }
 
+    const isLogIn = JSON.parse(localStorage.getItem('isLogIn'));
+    const UID = JSON.parse(localStorage.getItem('UID'));
+    if( isLogIn !== true ) return alert('로그인을 해주세요!');
+
     const body = {
       questionId,
-      memberId: 300,
+      memberId: UID,
       detail: comment
     }
+
+    const accessToken = JSON.parse(localStorage.getItem('accessToken'));
 
     try {
       await axios.post(
@@ -26,7 +32,8 @@ export default function InputSection({ questionId }) {
         JSON.stringify(body),
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Authorization': `Bearer ${accessToken}`,
           },
         }
       );

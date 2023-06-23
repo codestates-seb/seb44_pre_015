@@ -60,7 +60,7 @@ export default function Main() {
         <SearchBox searchRef={searchRef}/>
         <FilterBtn />
           {
-            datas.map(data => <MainPostCard key={data.questionId} title={data.title} detail={data.detail} status={data.solutionStatus.toString()} viewCount={data.viewCount} votesCount={data.votesCount} answerCount={data.answerCount}/>)
+            datas.map(data => <MainPostCard key={data.questionId} title={data.title} detail={data.detail} status={data.solutionStatus.toString()} viewCount={data.viewCount} votesCount={data.votesCount} answerCount={data.answerCount} questionId={data.questionId}/>)
           }
         <div ref={ref}/>
       </MainContainer>
