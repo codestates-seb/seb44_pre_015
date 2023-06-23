@@ -1,7 +1,31 @@
-import { tagList } from "./tagList"
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { TagCheckContainer, TagCheck, TagCheckBoxed, TagLabel } from "./TagCheckBox.styled"
 
-export default function TagCheckBox({ handlerTag, tags, checkCount }) {
+export default function TagCheckBox({ handlerTag, tags, checkCount, accessToken }) {
+  const [tagList, setTagList] = useState([])
+  const tagsData = () => {
+    axios
+      .get('http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/tags',
+        {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Authorization': `Bearer ${accessToken}`,
+          },
+        }
+      )
+      .then(response => {
+        setTagList(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  useEffect(() => {
+    tagsData()
+  }, [])
+
   return (
     <TagCheckContainer>
       {
@@ -13,7 +37,7 @@ export default function TagCheckBox({ handlerTag, tags, checkCount }) {
               value={el.tagName}
               checked={tags.some(item => item.tagName === el.tagName)}
               disabled={!tags.some(item => item.tagName === el.tagName) && checkCount >= 3}
-              onChange={() => handlerTag(el.tagName, el.tagDescription)}
+              onChange={() => handlerTag(el.tagName)}
             ></TagCheck>
             <TagLabel htmlFor={el.tagName}>
               <span>{el.tagName}</span>
