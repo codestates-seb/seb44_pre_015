@@ -22,6 +22,9 @@ export default function Edit() {
 
   const dispatch = useDispatch();
 
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+  const UID = JSON.parse(localStorage.getItem("UID"));
+
   const handlerTag = (name, description) => {
     const tagSelected = tags.some((el) => el.tagName === name);
 
@@ -47,12 +50,13 @@ export default function Edit() {
 
   useEffect(() => {
     axios
-      .get(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/${questionId}/1`)
+      .get(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/${questionId}/${UID}`)
       .then((res) => {
         const questionData = res.data;
         dispatch(typeTitle(questionData.title));
         dispatch(typeDetail(questionData.detail));
         dispatch(updateTags(res.data.tags));
+        console.log(res.data.memberInfoDto.memberId)
       })
       .catch((err) => {
         console.log(err);
@@ -61,32 +65,38 @@ export default function Edit() {
   }, [dispatch, navigate, questionId]);
 
   const questionSubmit = () => {
-    const UID = localStorage.getItem('UID');
-  
     const requestData = {
       title: title,
       detail: detail,
       memberId: UID,
       tags: tags,
     };
+
     const headers = {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Authorization': `Bearer ${accessToken}`,
     };
-  
+
     axios
-      .patch(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/${questionId}/1`, requestData, { headers })
+      .patch(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/${questionId}/${UID}`, JSON.stringify(requestData), { headers })
       .then((response) => {
         const updatedQuestion = response.data;
         dispatch(typeTitle(updatedQuestion.title));
         dispatch(typeDetail(updatedQuestion.detail));
         navigate('/');
+        console.log(updatedQuestion)
       })
       .catch((error) => {
         console.log('에러:', error);
         navigate('/');
       });
   };
-  
+
+  useEffect(() => {
+    console.log(UID, questionId)
+
+  })
+
 
   return (
     <EditContainer>
