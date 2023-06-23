@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { MainPostCardContainer,CardTopSection, CardMiddleSection, CardBottomSection, TitleText, ContentText, Counters, CountContainer, CountText } from './MainPostCard.styled'
 import UserInfoOwner from '../user/UserInfoOwner'
 import Selection from '../selection/Selection'
@@ -6,11 +7,13 @@ import { AiFillHeart, AiFillEye } from 'react-icons/ai'
 import { IoChatbubble } from 'react-icons/io5'
 import Tags from '../tag/Tags'
 
-export default function MainPostCard({ title, detail, viewCount, votesCount, status, answerCount }) {
+export default function MainPostCard({ title, detail, viewCount, votesCount, status, answerCount, questionId }) {
   const [text, setText] = useState(detail.replace(/(<([^>]+)>)/gi, ''))
+  const navigate= useNavigate();
+  const UID = JSON.parse(localStorage.getItem('UID')) === null ? 1 : JSON.parse(localStorage.getItem('UID'));
 
   return (
-    <MainPostCardContainer>
+    <MainPostCardContainer onClick={()=> navigate(`/post/${questionId}/${UID}`)}>
       <CardTopSection>
         <UserInfoOwner />
         <Selection status={status}/>

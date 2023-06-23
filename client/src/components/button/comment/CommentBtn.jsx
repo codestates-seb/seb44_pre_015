@@ -1,8 +1,8 @@
 import { CommentButton } from './CommentBtn.styled'
 
-export default function CommentBtn() {
+export default function CommentBtn({ setIsOpen }) {
   return (
-    <CommentButton>
+    <CommentButton onClick={()=> setIsOpen(true)}>
       댓글쓰기
     </CommentButton>
   )

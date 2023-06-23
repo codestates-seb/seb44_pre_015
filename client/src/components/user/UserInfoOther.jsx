@@ -1,16 +1,25 @@
+import { useEffect, useState } from 'react';
 import { UserImgSm, Img } from "./UserCommon.styled"
+import user from '../../assets/user.png'
 import { UserInfoContainer, UserInfoData, UserData } from "./UserInfoOther.styled"
 
 export default function UserInfoOther() {
+  const [userInfo, setUserInfo] = useState('');
+  
+  useEffect(()=> {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    if (userInfo !== null ) setUserInfo(userInfo);
+  }, [])
+
   return (
     <UserInfoContainer>
       <UserImgSm>
         <Img
-          src="https://velog.velcdn.com/images/crg1050/profile/c180a703-e4c1-4c72-a014-9b7f0f3787a4/image.JPG"
+          src={userInfo === '' ? user : userInfo.picture}
           alt="userImg" />
       </UserImgSm>
       <UserInfoData>
-        <UserData>JIEUN</UserData>
+        <UserData>{userInfo === '' ? 'please LogIn' : userInfo.userName }</UserData>
       </UserInfoData>
     </UserInfoContainer>
   )
