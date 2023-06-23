@@ -36,7 +36,7 @@ export const GoogleBtn = tw.button`
 `;
 
 export const NaverBtn = tw.button `
-    bg-lime-500
+    bg-green-500
     w-96
     h-10
     rounded-lg
