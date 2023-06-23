@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { EditButtonWrap } from "./EditBtn.style";
 
-export default function CommentEditBtn({ memberInfo }) {
+export default function CommentEditBtn({ memberInfo, setEditIsOpen, editIsOpen }) {
   const [memberId, setMemberId] = useState(1);
 
   useEffect(()=>{
@@ -11,6 +11,8 @@ export default function CommentEditBtn({ memberInfo }) {
   const onClickHandler = () => {
     const UID = JSON.parse(localStorage.getItem('UID'));
     if( memberId !== UID) return alert('본인만 수정할 수 있습니다!');
+
+    setEditIsOpen(!editIsOpen);
   }
 
   return (
