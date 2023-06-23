@@ -83,7 +83,7 @@ export default function Edit() {
         const updatedQuestion = response.data;
         dispatch(typeTitle(updatedQuestion.title));
         dispatch(typeDetail(updatedQuestion.detail));
-        navigate('/');
+        navigate(`/post/${questionId}/${UID}`);
         console.log(updatedQuestion)
       })
       .catch((error) => {
