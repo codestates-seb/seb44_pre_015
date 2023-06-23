@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { AiFillHeart } from "react-icons/ai";
 import { ImBubble } from "react-icons/im";
 import { AiFillEye } from "react-icons/ai";
@@ -49,26 +50,32 @@ const LoginBox = () => {
             Earn reputation and badges
           </Logintext>
         </Wrap>
-        <GoogleBtn>
-          <img
-            src={googleimg}
-            style={{ display: "inline" }}
-            className="googleimg"
-            width="28px"
-            alt="구글 로그인"
-          />{" "}
-          Sign up with Google
-        </GoogleBtn>
-        <NaverBtn>
-          <img
-            src={Naverimg}
-            style={{ display: "inline" }}
-            className="naverimg"
-            width="19px"
-            alt="네이버 로그인"
-          />{" "}
-          Sign up with Naver
-        </NaverBtn>
+
+        <Link to="http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/login">
+          <GoogleBtn>
+            <img
+              src={googleimg}
+              style={{ display: "inline" }}
+              className="googleimg"
+              width="28px"
+              alt="구글 로그인"
+            />{" "}
+            Sign up with Google
+          </GoogleBtn>
+        </Link>
+
+        <Link to="http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/login">
+          <NaverBtn>
+            <img
+              src={Naverimg}
+              style={{ display: "inline" }}
+              className="naverimg"
+              width="19px"
+              alt="네이버 로그인"
+            />{" "}
+            Sign up with Naver
+          </NaverBtn>
+        </Link>
       </Loginbox>
     </GlobalStyle>
   );

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setSearch } from '../../modules/searchSlice';
 import { Link } from "react-router-dom";
@@ -8,8 +9,19 @@ import LogoutBtn from "../button/login/LogoutBtn";
 import { UserImgSm, Img } from "../user/UserCommon.styled";
 import QuestionBtn from '../button/question/QuestionBtn';
 
-export default function Header({ isLoggedIn }) {
+export default function Header() {
+  const [isLogIn, setIsLogin] = useState(false);
+  const [userInfo, setUserInfo]= useState('');
   const dispatch = useDispatch();
+
+  useEffect(()=> {
+    const check = JSON.parse(localStorage.getItem('isLogIn'));
+    if ( check ){
+      setIsLogin(true);
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+      setUserInfo(userInfo);
+    }
+  }, [isLogIn])
 
   return (
     <HeaderContainer>
@@ -19,13 +31,13 @@ export default function Header({ isLoggedIn }) {
         </Link>
       </LogoContainer>
       <Nav>
-        {isLoggedIn ? (
+        {isLogIn ? (
           <>
             <QuestionBtn />
-            <LogoutBtn />
+            <LogoutBtn setIsLogin={setIsLogin} />
             <UserImgSm>
               <Img
-                src="https://velog.velcdn.com/images/crg1050/profile/c180a703-e4c1-4c72-a014-9b7f0f3787a4/image.JPG"
+                src={userInfo === null ? `https://www.google.com/url?sa=i&url=https%3A%2F%2Fnamu.wiki%2Fw%2F%25EA%25B3%25A0%25EC%2596%2591%25EC%259D%25B4&psig=AOvVaw2QeI-SJMfLdtM2dLn8fw90&ust=1687583039014000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCMCjy-_O2P8CFQAAAAAdAAAAABAD` : userInfo.picture }
                 alt="userImg"
               />
             </UserImgSm>

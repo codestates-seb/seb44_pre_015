@@ -1,7 +1,7 @@
 import {InfoContainer, TitleContainer, SubTitleContainer, Line, QuestionCardContainer} from './Mypage.style.jsx'
 import {MainTitle, SubTitle} from '../../style/Title.styled'
 import UserInfoMy from '../../components/user/UserInfoMy'
-import FilterBtn from '../../components/filter/FilterBtn'
+import MyFilterBtn from '../../components/filter/MyFilterBtn.jsx'
 import QuestionCard from '../../components/card/QuestionCard'
 
 export default function Mypage() {
@@ -14,7 +14,7 @@ export default function Mypage() {
 
       <Line/>
 
-      <FilterBtn/>
+      <MyFilterBtn />
 
       <SubTitleContainer>
         <SubTitle>Questions</SubTitle>
