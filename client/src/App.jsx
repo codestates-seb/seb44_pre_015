@@ -20,7 +20,7 @@ export default function App() {
         <Route path='/' element={<Main />} />
         <Route path='/search' element={<Search />} />
         <Route path="/login" element={<Login />} />
-        <Route path='/post/:questionId' element={<Detail />} />
+        <Route path='/post/:questionId/:memberId' element={<Detail />} />
         <Route path='/question' element={<Question />}/>
         <Route path='/edit/:questionId' element={<Edit />}/>
         <Route path="/mypage" element={<Mypage />} />
