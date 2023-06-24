@@ -15,6 +15,7 @@ import {
 } from './QuestionSection.styled';
 import ReactQuill from 'react-quill';
 
+
 export default function QuestionSection({ title, content, tags, createdAt, questionId, votesCount, memberInfo, questionVoteByMember}) {
 
   return (
