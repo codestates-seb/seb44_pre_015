@@ -1,14 +1,14 @@
 import { UserImgLg, Img } from "./UserCommon.styled"
-import { UserInfoMyContainer, UserInfoBox, InfoData, SmTit, NameEdit, UserInfo, NameEditBtn } from "./UserInfoMy.styled"
-import { BsPencilFill } from "react-icons/bs"
-import { FcGoogle } from "react-icons/fc"
+import { UserInfoMyContainer, UserInfoBox, InfoData, SmTit, NameEdit, UserInfo} from "./UserInfoMy.styled"
+import { AiFillBulb } from "react-icons/ai"
+import User from '../../assets/user.png'
 
-export default function UserInfoMy() {
+export default function UserInfoMy({ picture, userName, total }) {
   return (
     <UserInfoMyContainer>
       <UserImgLg>
         <Img
-          src="https://velog.velcdn.com/images/crg1050/profile/c180a703-e4c1-4c72-a014-9b7f0f3787a4/image.JPG"
+          src={picture ? picture : User}
           alt="userImg" />
       </UserImgLg>
 
@@ -17,14 +17,13 @@ export default function UserInfoMy() {
         <InfoData>
           <SmTit>name</SmTit>
           <NameEdit>
-            <UserInfo>yeon</UserInfo>
-            <NameEditBtn><BsPencilFill /></NameEditBtn>
+            <UserInfo>{ userName }</UserInfo>
           </NameEdit>
         </InfoData>
 
         <InfoData>
-          <SmTit>linked account</SmTit>
-          <UserInfo><FcGoogle />yeon0226</UserInfo>
+          <SmTit>total</SmTit>
+          <UserInfo><AiFillBulb className='text-[#FF7E22]'/>{ total && total.length } questions</UserInfo>
         </InfoData>
       </UserInfoBox>
 

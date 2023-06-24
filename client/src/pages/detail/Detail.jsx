@@ -6,6 +6,8 @@ import QuestionSection from '../../components/question/question-section/Question
 import InputSection from '../../components/question/input-section/InputSection'
 import CommentSection from '../../components/question/comment-section/CommentSection'
 import RecommentSection from '../../components/question/recomment-section/RecommentSection'
+
+
 export default function Detail() {
   const { questionId } = useParams();
   const navigate = useNavigate();

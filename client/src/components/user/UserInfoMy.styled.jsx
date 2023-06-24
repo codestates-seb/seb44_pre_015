@@ -33,7 +33,3 @@ export const NameEdit = tw.div`
   flex
   gap-1
 `
-
-export const NameEditBtn = tw.button`
-  text-[#797979]
-`

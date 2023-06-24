@@ -2,13 +2,15 @@ import tw from 'tailwind-styled-components';
 
 export const CardWrapper = tw.div`
   w-[13rem]
+  h-36
+  max-sm:h-[7rem]
   border
   border-solid
   border-[#DCDCDC]
   rounded-lg
   p-3
   cursor-pointer
-  hover:border-ff7e22
+  hover:backdrop-brightness-90
   duration-300
   max-sm:w-[30rem]
 `
