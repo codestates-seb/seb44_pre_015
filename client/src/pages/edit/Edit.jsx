@@ -80,11 +80,8 @@ export default function Edit() {
     axios
       .patch(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/${questionId}/${UID}`, JSON.stringify(requestData), { headers })
       .then((response) => {
-        const updatedQuestion = response.data;
-        dispatch(typeTitle(updatedQuestion.title));
-        dispatch(typeDetail(updatedQuestion.detail));
+        dispatch(resetInput()); 
         navigate(`/post/${questionId}/${UID}`);
-        console.log(updatedQuestion)
       })
       .catch((error) => {
         console.log('에러:', error);
@@ -92,10 +89,6 @@ export default function Edit() {
       });
   };
 
-  useEffect(() => {
-    console.log(UID, questionId)
-
-  })
 
 
   return (
