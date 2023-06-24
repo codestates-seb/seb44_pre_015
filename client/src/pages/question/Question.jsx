@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -11,15 +12,17 @@ import { resetInput, typeTitle, typeDetail, typeTags, checkPlusTags, checkMinusT
 
 export default function Question() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const title = useSelector((state) => state.question.title);
   const detail = useSelector((state) => state.question.detail);
   const tags = useSelector((state) => state.question.tags);
-  const checkCount = useSelector(state => state.question.checkedCount)
-
-  const dispatch = useDispatch();
-
+  const checkCount = useSelector(state => state.question.checkedCount);
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   const UID = JSON.parse(localStorage.getItem("UID"));
+
+  useEffect(()=>{
+    dispatch(resetInput());
+  }, [])
 
   const handlerTag = (name) => {
     const tagSelected = tags.some((el) => el.tagName === name);
