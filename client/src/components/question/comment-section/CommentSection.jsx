@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { HeartUser, AllWrap, CommentTopSectionWrap, CommentBottomSectionWrap, Comment } from "./CommentSection.styled";
-import HeartBtn from "../../button/like/HeartBtn";
 import UserInfoOwner from "../../user/UserInfoOwner";
 import SelectionBtn from '../../selection/SelectionBtn'
 import EditInput from '../input-section/EditInput';
