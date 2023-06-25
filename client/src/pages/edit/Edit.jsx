@@ -27,7 +27,7 @@ export default function Edit() {
 
   const handleErrors = (err) => {
     console.error(err);
-    navigate('/');
+    navigate('/*');
   }
 
   const defaultHeaders = {

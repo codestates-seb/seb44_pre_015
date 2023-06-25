@@ -69,6 +69,7 @@ export default function Question() {
       })
       .catch((error) => {
         console.error(error);
+        navigate('/*');
       })
   };
 
