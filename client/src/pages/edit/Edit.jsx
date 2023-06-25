@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import { EditContainer } from './Edit.styled';
 import QuestionWriteHead from '../../components/question-write/questionwritehead/QuestionWriteHead';
@@ -9,7 +9,7 @@ import QuestionInput from '../../components/question-write/question-input/Questi
 import QuestionTagCheck from '../../components/question-write/tagcheck/QuestionTagCheck';
 import AskBtn from '../../components/button/askButton/AskBtn';
 import { useNavigate } from 'react-router-dom';
-import { resetInput, typeTitle, typeDetail, typeTags, checkPlusTags, checkMinusTags, updateTags } from '../../modules/questionSlice';
+import { resetInput, typeTitle, typeDetail, checkPlusTags, checkMinusTags, updateTags } from '../../modules/questionSlice';
 
 export default function Edit() {
   const navigate = useNavigate();
@@ -25,32 +25,27 @@ export default function Edit() {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   const UID = JSON.parse(localStorage.getItem("UID"));
 
+  const handleErrors = (err) => {
+    console.error(err);
+    navigate('/');
+  }
+
+  const defaultHeaders = {
+    'Content-Type': 'application/json;charset=UTF-8',
+    'Authorization': `Bearer ${accessToken}`,
+  }
+
   const handlerTag = (name, selectType) => {
-    const tagSelected = tags.some((el) => el.tagName === name && selectType === true);
+    const newTag = { tagName: name, select: !selectType };
+    const updatedTag = tags.map((el) => el.tagName === name ? newTag : el)
 
-    if (tagSelected) {
-      const newTag = { tagName: name, select: !selectType };
-      const updatedTag = tags.map((el) => el.tagName === name ? newTag : el)
-
-      dispatch(updateTags(updatedTag));
-      dispatch(checkMinusTags());
-    } else {
-      const newTag = { tagName: name, select: !selectType };
-      const updatedTag = tags.map((el) => el.tagName === name ? newTag : el)
-
-      dispatch(updateTags(updatedTag));
-      dispatch(checkPlusTags());
-    }
-
+    dispatch(updateTags(updatedTag));
+    tags.some((el) => el.tagName === name && selectType === true) ? dispatch(checkMinusTags()) : dispatch(checkPlusTags());
   };
 
-  const titleChange = (e) => {
-    dispatch(typeTitle(e.target.value));
-  };
+  const titleChange = (e) => dispatch(typeTitle(e.target.value));
 
-  const contentChange = (value) => {
-    dispatch(typeDetail(value));
-  };
+  const contentChange = (value) => dispatch(typeDetail(value));
 
   useEffect(() => {
     axios
@@ -59,12 +54,8 @@ export default function Edit() {
         const questionData = res.data;
         dispatch(typeTitle(questionData.title));
         dispatch(typeDetail(questionData.detail));
-        console.log(res.data.memberInfoDto.memberId)
       })
-      .catch((err) => {
-        console.log(err);
-        navigate('/');
-      });
+      .catch(handleErrors);
   }, [dispatch, navigate, questionId]);
 
   useEffect(() => {
@@ -74,39 +65,28 @@ export default function Edit() {
         const questionData = res.data;
         dispatch(updateTags(questionData.tags));
       })
-      .catch((err) => {
-        console.log(err);
-        navigate('/');
-      });
+      .catch(handleErrors);
   }, [dispatch, navigate, questionId]);
 
 
   const questionSubmit = () => {
+    const selectedTags = tags.filter((el) => el.select).map((el) => ({tagName : el.tagName}))
+
     const requestData = {
       title: title,
       detail: detail,
       memberId: UID,
-      tags: tags
-    };
-
-    const headers = {
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Authorization': `Bearer ${accessToken}`,
+      tags: selectedTags
     };
 
     axios
-      .patch(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/${questionId}/${UID}`, JSON.stringify(requestData), { headers })
+      .patch(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/${questionId}/${UID}`, JSON.stringify(requestData), { headers: defaultHeaders })
       .then((response) => {
         dispatch(resetInput());
         navigate(`/post/${questionId}/${UID}`);
       })
-      .catch((error) => {
-        console.log('에러:', error);
-        navigate('/');
-      });
+      .catch(handleErrors);
   };
-
-
 
   return (
     <EditContainer>
