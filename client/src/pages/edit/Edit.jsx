@@ -55,7 +55,6 @@ export default function Edit() {
         const questionData = res.data;
         dispatch(typeTitle(questionData.title));
         dispatch(typeDetail(questionData.detail));
-        dispatch(updateTags(res.data.tags));
         console.log(res.data.memberInfoDto.memberId)
       })
       .catch((err) => {
@@ -63,6 +62,20 @@ export default function Edit() {
         navigate('/');
       });
   }, [dispatch, navigate, questionId]);
+
+   useEffect(() => {
+    axios
+      .get(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/patch/${questionId}/${UID}`)
+      .then((res) => {
+        const questionData = res.data;
+        dispatch(updateTags(questionData.tags));
+      })
+      .catch((err) => {
+        console.log(err);
+        navigate('/');
+      });
+  }, [questionId]);
+
 
   const questionSubmit = () => {
     const requestData = {
@@ -96,7 +109,7 @@ export default function Edit() {
       <QuestionWriteHead />
       <QuestionTitle memTitle={title} onChange={titleChange} />
       <QuestionInput memDetail={detail} onChange={contentChange} />
-      <QuestionTagCheck handlerTag={handlerTag} tags={tags} checkCount={checkCount} />
+      <QuestionTagCheck UID={UID} questionId={questionId} handlerTag={handlerTag} memtags={tags} checkCount={checkCount} />
       <AskBtn onClick={questionSubmit} buttonText="수정하기" />
     </EditContainer>
   );
