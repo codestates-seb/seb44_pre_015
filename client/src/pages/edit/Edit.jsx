@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { EditContainer } from './Edit.styled';
 import QuestionWriteHead from '../../components/question-write/questionwritehead/QuestionWriteHead';
@@ -25,19 +25,23 @@ export default function Edit() {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   const UID = JSON.parse(localStorage.getItem("UID"));
 
-  const handlerTag = (name, description) => {
-    const tagSelected = tags.some((el) => el.tagName === name);
+  const handlerTag = (name, selectType) => {
+    const tagSelected = tags.some((el) => el.tagName === name && selectType === true);
 
     if (tagSelected) {
-      const updatedTags = tags.filter((el) => el.tagName !== name);
-      dispatch(updateTags(updatedTags));
+      const newTag = { tagName: name, select: !selectType };
+      const updatedTag = tags.map((el) => el.tagName === name ? newTag : el)
+
+      dispatch(updateTags(updatedTag));
       dispatch(checkMinusTags());
     } else {
-      const newTag = { tagName: name, tagDescription: description };
-      const updatedTags = [...tags, newTag];
-      dispatch(updateTags(updatedTags));
+      const newTag = { tagName: name, select: !selectType };
+      const updatedTag = tags.map((el) => el.tagName === name ? newTag : el)
+
+      dispatch(updateTags(updatedTag));
       dispatch(checkPlusTags());
     }
+
   };
 
   const titleChange = (e) => {
@@ -55,7 +59,6 @@ export default function Edit() {
         const questionData = res.data;
         dispatch(typeTitle(questionData.title));
         dispatch(typeDetail(questionData.detail));
-        dispatch(updateTags(res.data.tags));
         console.log(res.data.memberInfoDto.memberId)
       })
       .catch((err) => {
@@ -64,12 +67,26 @@ export default function Edit() {
       });
   }, [dispatch, navigate, questionId]);
 
+  useEffect(() => {
+    axios
+      .get(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/patch/${questionId}/${UID}`)
+      .then((res) => {
+        const questionData = res.data;
+        dispatch(updateTags(questionData.tags));
+      })
+      .catch((err) => {
+        console.log(err);
+        navigate('/');
+      });
+  }, [dispatch, navigate, questionId]);
+
+
   const questionSubmit = () => {
     const requestData = {
       title: title,
       detail: detail,
       memberId: UID,
-      tags: tags,
+      tags: tags
     };
 
     const headers = {
@@ -80,7 +97,7 @@ export default function Edit() {
     axios
       .patch(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/${questionId}/${UID}`, JSON.stringify(requestData), { headers })
       .then((response) => {
-        dispatch(resetInput()); 
+        dispatch(resetInput());
         navigate(`/post/${questionId}/${UID}`);
       })
       .catch((error) => {
@@ -96,7 +113,7 @@ export default function Edit() {
       <QuestionWriteHead />
       <QuestionTitle memTitle={title} onChange={titleChange} />
       <QuestionInput memDetail={detail} onChange={contentChange} />
-      <QuestionTagCheck handlerTag={handlerTag} tags={tags} checkCount={checkCount} />
+      <QuestionTagCheck UID={UID} questionId={questionId} handlerTag={handlerTag} memtags={tags} checkCount={checkCount} />
       <AskBtn onClick={questionSubmit} buttonText="수정하기" />
     </EditContainer>
   );
