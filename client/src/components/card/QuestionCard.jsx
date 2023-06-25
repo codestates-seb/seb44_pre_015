@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Tags from '../tag/Tags';
 import { CardContent, CardTitle, CardWrapper, SelectWrapper} from './QuestionCard.styled';
+import Selection from '../selection/Selection';
 
-export default function QuestionCard({ title, detail, questionId }) {
+export default function QuestionCard({ title, detail, questionId, solutionStatus
+}) {
   const navigate = useNavigate();
   const [content, setContent] = useState('');
   
@@ -22,6 +24,10 @@ export default function QuestionCard({ title, detail, questionId }) {
       <Tags />
       <CardTitle>{ title }</CardTitle>
       <CardContent>{ content.length >= 75 ? content.slice(0, 75) + '...' : content} </CardContent>
+
+      <div className='flex justify-end mt-4'>
+      <Selection status={solutionStatus.toString()} />
+      </div>
     </CardWrapper>
     </>
   )

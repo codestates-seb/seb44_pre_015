@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import {InfoContainer, TitleContainer, SubTitleContainer, Line, QuestionCardContainer} from './Mypage.style.jsx'
 import {MainTitle, SubTitle} from '../../style/Title.styled'
 import UserInfoMy from '../../components/user/UserInfoMy'
-import MyFilterBtn from '../../components/filter/MyFilterBtn.jsx'
 import QuestionCard from '../../components/card/QuestionCard'
 
 export default function Mypage() {
@@ -44,7 +43,7 @@ export default function Mypage() {
       <QuestionCardContainer>
         {
           userInfo !== '' && userInfo.questions.map(
-            question => <QuestionCard key={question.questionId} title={question.title} detail={question.detail} questionId={question.questionId}/>)
+            question => <QuestionCard key={question.questionId} title={question.title} detail={question.detail} questionId={question.questionId} solutionStatus={question.solutionStatus} />)
         }
       </QuestionCardContainer>
 

@@ -2,8 +2,8 @@ import tw from 'tailwind-styled-components';
 
 export const CardWrapper = tw.div`
   w-[13rem]
-  h-36
-  max-sm:h-[7rem]
+  h-40
+  max-sm:h-[8rem]
   border
   border-solid
   border-[#DCDCDC]
