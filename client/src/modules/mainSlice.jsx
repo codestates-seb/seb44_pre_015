@@ -18,7 +18,7 @@ const mainSlice = createSlice({
       console.log(state.datas);
     },
     setLikes: (state) => {
-      const sortedData = [...state.datas].sort((a, b) => b.answerCount - a.answerCount);
+      const sortedData = [...state.datas].sort((a, b) => b.votesCount - a.votesCount);
       state.datas = sortedData;
       console.log(state.datas);
     },

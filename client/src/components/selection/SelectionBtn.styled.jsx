@@ -8,10 +8,10 @@ export const SelectionBtnContainer = tw.div`
   rounded-3xl
   border
   cursor-pointer
-  ${({solutionStatus}) => solutionStatus ? 'border-[#03B800]' : 'border-[#CACACA]'}
+  ${({isSelected}) => isSelected ? 'border-[#03B800]' : 'border-[#CACACA]'}
 `
 
 export const SelectionBtnText = tw.span`
-  ${({solutionStatus}) => solutionStatus ? 'text-[#03B800]' : 'text-[#DCDCDC]' }
+  ${({isSelected}) => isSelected ? 'text-[#03B800]' : 'text-[#DCDCDC]' }
   text-sm
 `
