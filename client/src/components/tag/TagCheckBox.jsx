@@ -4,6 +4,8 @@ import { TagCheckContainer, TagCheck, TagCheckBoxed, TagLabel } from "./TagCheck
 
 export default function TagCheckBox({ handlerTag, memtags, tags, checkCount, accessToken }) {
   const [tagList, setTagList] = useState([])
+  const selectMemTags = memtags?.filter((el) => el.select)
+
   const tagsData = () => {
     axios
       .get('http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/tags',
@@ -24,18 +26,18 @@ export default function TagCheckBox({ handlerTag, memtags, tags, checkCount, acc
 
   if (memtags) {
     null
-    console.log(memtags.map((el) => el.select))
   } else {
     useEffect(() => {
       tagsData()
     })
   }
+  
 
   return (
     <TagCheckContainer>
       {
         memtags
-          ?          
+          ?
           memtags.map((el) => (
             <TagCheckBoxed key={el.tagName}>
               <TagCheck
@@ -43,8 +45,8 @@ export default function TagCheckBox({ handlerTag, memtags, tags, checkCount, acc
                 id={el.tagName}
                 value={el.tagName}
                 checked={el.select}
-                disabled={!memtags.some(item => item.tagName === el.tagName) && checkCount >= 3}
-                onChange={() => handlerTag(el.tagName)}
+                disabled={selectMemTags.length >= 3 && !el.select}
+                onChange={() => handlerTag(el.tagName, el.select)}
               ></TagCheck>
               <TagLabel htmlFor={el.tagName}>
                 <span>{el.tagName}</span>
