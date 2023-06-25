@@ -5,26 +5,41 @@ import { AiFillHeart } from 'react-icons/ai';
 
 export default function HeartBtn({ votesCount, questionId, memberInfo, questionVoteByMember }) {
   const [memberId, setMemberId]= useState(1);
+  const [totalVoteCount, setTotalVoteCount] = useState(0);
+  const [isVoted, setIsVoted]= useState(false);
 
   useEffect(()=>{
     if( memberInfo !== undefined ) setMemberId(memberInfo.memberId);
-  }, [memberInfo]);
+    if (votesCount !== undefined) setTotalVoteCount(votesCount);
+    if (questionVoteByMember !== undefined) setIsVoted(questionVoteByMember);
+  }, [memberInfo, votesCount]);
 
   const onClickHandler = () => {
-    const UID = JSON.parse(localStorage.getItem('UID'));
-    if( memberId !== UID ) return alert('회원만 좋아요를 누를 수 있습니다.')
+    const isLogIn = JSON.parse(localStorage.getItem('isLogIn'));
+    if( !isLogIn ) return alert('회원만 좋아요를 누를 수 있습니다.');
 
-    axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/votes/${questionId}/${UID}`)
-    .then(res => window.location.reload())
+    const accessToken = JSON.parse(localStorage.getItem('accessToken'));
+    const UID = JSON.parse(localStorage.getItem('UID'));
+
+    axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/votes/${questionId}/${UID}`, {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Authorization': `Bearer ${accessToken}`,
+      }
+    })
+    .then(res => {
+      setTotalVoteCount(res.data.totalVoteCount);
+      setIsVoted(res.data.questionVoteStatus);
+    })
     .catch(err => console.log(err));
   };
 
   return (
     <div>
       <HeartButtonWrap onClick={onClickHandler}>
-        <AiFillHeart className={questionVoteByMember ? "text-orange-500" : "text-gray-300"} style={{fontSize : '13px'}}/>
+        <AiFillHeart className={isVoted ? "text-orange-500" : "text-gray-300"} style={{fontSize : '13px'}}/>
       </HeartButtonWrap>
-      <p className="ml-2.5 text-xs text-[#797979]">{ votesCount }</p>
+      <p className="ml-2.5 text-xs text-[#797979]">{ totalVoteCount }</p>
     </div>
   );
 }
