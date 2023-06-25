@@ -13,17 +13,10 @@ const editSlice = createSlice({
   initialState,
   reducers: {
     setQuestionData: (state, action) => {
-      const { title, detail, memberId, tags } = action.payload;
-      state.title = title;
-      state.detail = detail;
-      state.memberId = memberId;
-      state.tags = tags.map((tag) => ({ tagName: tag }));
+      state = {...state, ...action.payload};
     },
     resetEditInput: (state) => {
-      state.title = "";
-      state.detail = "";
-      state.tags = [];
-      state.checkedCount = 0;
+      return initialState;
     },
     typeEditTitle: (state, action) => {
       state.title = action.payload;
@@ -35,7 +28,7 @@ const editSlice = createSlice({
       state.tags = [...state.tags, { tagName: action.payload }];
     },
     updateEditTags: (state, action) => {
-      state.tags = action.payload.map((tag) => ({ tagName: tag }));
+      state.tags = action.payload;
     },
   },
 });
@@ -48,4 +41,5 @@ export const {
   typeEditTags,
   updateEditTags,
 } = editSlice.actions;
+
 export default editSlice.reducer;
