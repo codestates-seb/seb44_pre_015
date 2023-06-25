@@ -29,8 +29,8 @@ export default function CommentSection({ comment, answerId, memberId, memberInfo
         {!editIsOpen && <Comment>{ comment }</Comment>}
         {editIsOpen && <EditInput comment={comment} answerId={answerId} solutionStatus={solutionStatus}/>}
 
-        { !isOpen && <CommentBtn setIsOpen={setIsOpen} />}
-        { isOpen && <RecommentInput answerId={answerId} memberId={memberId}/>}
+        { !isOpen && <CommentBtn setIsOpen={setIsOpen} isOpen={isOpen}/>}
+        { isOpen && <RecommentInput answerId={answerId} memberId={memberId} />}
         </CommentBottomSectionWrap>
       </AllWrap>
     );
