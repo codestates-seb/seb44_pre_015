@@ -14,7 +14,7 @@ export default function Mypage() {
     const UID = JSON.parse(localStorage.getItem('UID'));
     const accessToken = JSON.parse(localStorage.getItem('accessToken'));
 
-    axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/members/${UID}`, {
+    axios(`/members/${UID}`, {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Authorization': `Bearer ${accessToken}`,
