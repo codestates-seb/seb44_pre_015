@@ -26,7 +26,6 @@ export default function Edit() {
   const UID = JSON.parse(localStorage.getItem("UID"));
 
   const handleErrors = (err) => {
-    console.error(err);
     navigate('/*');
   }
 
@@ -81,7 +80,7 @@ export default function Edit() {
 
     axios
       .patch(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/${questionId}/${UID}`, JSON.stringify(requestData), { headers: defaultHeaders })
-      .then((response) => {
+      .then(() => {
         dispatch(resetInput());
         navigate(`/post/${questionId}/${UID}`);
       })
@@ -93,7 +92,7 @@ export default function Edit() {
       <QuestionWriteHead />
       <QuestionTitle memTitle={title} onChange={titleChange} />
       <QuestionInput memDetail={detail} onChange={contentChange} />
-      <QuestionTagCheck UID={UID} questionId={questionId} handlerTag={handlerTag} memtags={tags} checkCount={checkCount} />
+      <QuestionTagCheck questionId={questionId} handlerTag={handlerTag} memtags={tags} checkCount={checkCount} />
       <AskBtn onClick={questionSubmit} buttonText="수정하기" />
     </EditContainer>
   );
