@@ -9,7 +9,7 @@ import CommentEditBtn from '../../button/edit/CommentEditBtn';
 import RecommentInput from './RecommentInput';
 
 
-export default function CommentSection({ comment, answerId, memberId, memberInfo, createdAt, solutionStatus, writer, votesCount, answerVoteByMember}) {
+export default function CommentSection({ comment, answerId, memberId, memberInfo, createdAt, solutionStatus, writer, votesCount, answerVoteByMember, selected }) {
   const [editIsOpen, setEditIsOpen]= useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,7 +22,7 @@ export default function CommentSection({ comment, answerId, memberId, memberInfo
           </HeartUser>
           <div className='flex gap-3 mb-3 pt-3'>
             <CommentEditBtn memberId={memberId} memberInfo={memberInfo} setEditIsOpen={setEditIsOpen} editIsOpen={editIsOpen}/>
-            <SelectionBtn solutionStatus={solutionStatus} answerId={answerId} writer={writer}/>
+            <SelectionBtn solutionStatus={solutionStatus} answerId={answerId} writer={writer} />
           </div>
           
         </CommentTopSectionWrap>
