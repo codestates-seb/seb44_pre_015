@@ -12,6 +12,7 @@ import MainPostCard from '../../components/card/MainPostCard'
 
 
 export default function Main() {
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const [searchParams, setSearchParams]=useSearchParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ export default function Main() {
       return navigate('/');
     }
 
-    axios(`/questions/get/recent?page=0&size=6`)
+    axios(`${PROXY}/questions/get/recent?page=0&size=6`)
     .then(res => dispatch(setDatas(res.data)));
     searchRef.current.focus();
     dispatch(setSearch(''));
@@ -48,7 +49,7 @@ export default function Main() {
 
   useEffect(()=> {
     if(inView){
-      axios(`/questions/get/recent?page=0&size=${page}`)
+      axios(`${PROXY}/questions/get/recent?page=0&size=${page}`)
       .then(res => {
         dispatch(setDatas(res.data))
         if(status === 'latest') dispatch(setLatest());
