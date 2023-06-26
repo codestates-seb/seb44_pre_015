@@ -26,14 +26,12 @@ export default function TagCheckBox({ handlerTag, memtags, tags, checkCount, acc
       })
   }
 
-  if (memtags) {
-    null
-  } else {
+  if (!memtags) {
     useEffect(() => {
       tagsData()
     })
   }
-  
+
 
   return (
     <TagCheckContainer>
