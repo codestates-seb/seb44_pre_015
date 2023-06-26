@@ -15,7 +15,7 @@ export default function Search() {
   const datas = useSelector(state => state.search.searchData);
 
   useEffect(()=>{
-    axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/recent?page=0&size=100`)
+    axios(`/questions/get/recent?page=0&size=100`)
     .then(res => dispatch(filterData(res.data)));
   }, [searchWord])
 

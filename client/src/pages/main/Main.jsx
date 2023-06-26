@@ -31,7 +31,7 @@ export default function Main() {
       localStorage.setItem('accessToken', JSON.stringify(accessToken));
       localStorage.setItem('UID', JSON.stringify(UID));
       localStorage.setItem('isLogIn', JSON.stringify(true));
-      axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/members/${UID}`, {
+      axios(`/members/${UID}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         }
@@ -40,7 +40,7 @@ export default function Main() {
       return navigate('/');
     }
 
-    axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/recent?page=0&size=6`)
+    axios(`/questions/get/recent?page=0&size=6`)
     .then(res => dispatch(setDatas(res.data)));
     searchRef.current.focus();
     dispatch(setSearch(''));
@@ -48,7 +48,7 @@ export default function Main() {
 
   useEffect(()=> {
     if(inView){
-      axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/recent?page=0&size=${page}`)
+      axios(`/questions/get/recent?page=0&size=${page}`)
       .then(res => {
         dispatch(setDatas(res.data))
         if(status === 'latest') dispatch(setLatest());
