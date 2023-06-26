@@ -10,7 +10,7 @@ export default function TagCheckBox({ handlerTag, memtags, tags, checkCount, acc
 
   const tagsData = () => {
     axios
-      .get('http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/tags',
+      .get('/questions/tags',
         {
           headers: {
             'Content-Type': 'application/json;charset=UTF-8',
@@ -26,12 +26,20 @@ export default function TagCheckBox({ handlerTag, memtags, tags, checkCount, acc
       })
   }
 
-  if (!memtags) {
-    useEffect(() => {
+  useEffect(() => {
+    if (!memtags) {
       tagsData()
-    })
-  }
+    }
+  }, [memtags]);
 
+  const checkLimitExceeded = (el, tags) => {
+    const isTagChecked = tags.some(item => item.tagName === el.tagName);
+    if (!isTagChecked && checkCount >= 3) {
+      alert('최대 3개의 태그만 선택할 수 있습니다.');
+      return true;
+    }
+    return false;
+  }
 
   return (
     <TagCheckContainer>
@@ -46,7 +54,10 @@ export default function TagCheckBox({ handlerTag, memtags, tags, checkCount, acc
                 value={el.tagName}
                 checked={el.select}
                 disabled={selectMemTags.length >= 3 && !el.select}
-                onChange={() => handlerTag(el.tagName, el.select)}
+                onChange={() => {
+                  if (checkLimitExceeded(el, memtags)) return;
+                  handlerTag(el.tagName, el.select);
+                }}
               ></TagCheck>
               <TagLabel htmlFor={el.tagName}>
                 <span>{el.tagName}</span>
@@ -62,7 +73,10 @@ export default function TagCheckBox({ handlerTag, memtags, tags, checkCount, acc
                 value={el.tagName}
                 checked={tags.some(item => item.tagName === el.tagName)}
                 disabled={!tags.some(item => item.tagName === el.tagName) && checkCount >= 3}
-                onChange={() => handlerTag(el.tagName)}
+                onChange={() => {
+                  if (checkLimitExceeded(el, tags)) return;
+                  handlerTag(el.tagName);
+                }}
               ></TagCheck>
               <TagLabel htmlFor={el.tagName}>
                 <span>{el.tagName}</span>
