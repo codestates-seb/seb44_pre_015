@@ -11,7 +11,6 @@ import {
   QuestionContainer,
   User,
   Title,
-  Content
 } from './QuestionSection.styled';
 import ReactQuill from 'react-quill';
 

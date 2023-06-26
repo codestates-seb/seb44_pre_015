@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { HeartButtonWrap } from "./HeartBtn.styled";
 import { AiFillHeart } from 'react-icons/ai';
 
 export default function HeartBtn({ votesCount, questionId, memberInfo, questionVoteByMember }) {
+  const navigate = useNavigate();
   const [memberId, setMemberId]= useState(1);
   const [totalVoteCount, setTotalVoteCount] = useState(0);
   const [isVoted, setIsVoted]= useState(false);
@@ -12,7 +14,7 @@ export default function HeartBtn({ votesCount, questionId, memberInfo, questionV
     if( memberInfo !== undefined ) setMemberId(memberInfo.memberId);
     if (votesCount !== undefined) setTotalVoteCount(votesCount);
     if (questionVoteByMember !== undefined) setIsVoted(questionVoteByMember);
-  }, [memberInfo, votesCount]);
+  }, [memberInfo, votesCount, questionVoteByMember]);
 
   const onClickHandler = () => {
     const isLogIn = JSON.parse(localStorage.getItem('isLogIn'));
@@ -31,7 +33,7 @@ export default function HeartBtn({ votesCount, questionId, memberInfo, questionV
       setTotalVoteCount(res.data.totalVoteCount);
       setIsVoted(res.data.questionVoteStatus);
     })
-    .catch(err => console.log(err));
+    .catch(err => navigate('/*'));
   };
 
   return (
