@@ -71,3 +71,6 @@ export const IconWrap = tw.div`
     mr-4
 `;
 
+export const LogoImg = tw.img `
+    w-44
+`;

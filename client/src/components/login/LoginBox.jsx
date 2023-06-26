@@ -2,15 +2,7 @@ import { Link } from 'react-router-dom';
 import { AiFillHeart, AiFillEye, AiOutlineCheck} from "react-icons/ai";
 import { ImBubble } from "react-icons/im";
 import {
-  GlobalStyle,
-  Loginbox,
-  HeadText,
-  Logintext,
-  Wrap,
-  IconWrap,
-  GoogleBtn,
-  NaverBtn
-} from "./LoginBox.styled.jsx";
+  GlobalStyle, Loginbox, HeadText, Logintext,Wrap, IconWrap, GoogleBtn, NaverBtn, LogoImg} from "./LoginBox.styled.jsx";
 import googleimg from "../../assets/googleimg.svg";
 import Naverimg from "../../assets/naverimg.svg";
 import logo from "../../assets/logo-stackoverflow.svg";
@@ -19,7 +11,7 @@ const LoginBox = () => {
   return (
     <GlobalStyle>
       <Loginbox>
-        <img src={logo} width="180px"></img>
+        <LogoImg src={logo}></LogoImg>
         <HeadText>Login the Stack Overflow community</HeadText>
         <Wrap>
           <Logintext>
