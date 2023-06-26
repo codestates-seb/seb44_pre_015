@@ -1,7 +1,7 @@
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setDatas } from '../../modules/mainSlice'
+import { setDatas, setLatest, setLikes, setSolution } from '../../modules/mainSlice'
 import { setSearch } from '../../modules/searchSlice';
 import axios from 'axios';
 import { useInView } from 'react-intersection-observer';
@@ -16,6 +16,7 @@ export default function Main() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const datas = useSelector(state => state.main.datas);
+  const status = useSelector(state => state.main.status);
   const searchRef = useRef();
   const DEFAULT_PAGE = 6;
 
@@ -50,6 +51,9 @@ export default function Main() {
       axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/recent?page=0&size=${page}`)
       .then(res => {
         dispatch(setDatas(res.data))
+        if(status === 'latest') dispatch(setLatest());
+        else if(status === 'likes') dispatch(setLikes());
+        else dispatch(setSolution());
         if ( page < 100 ) setPage(prev => page + DEFAULT_PAGE);
       });
     }

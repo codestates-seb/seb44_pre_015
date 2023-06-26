@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setLatest, setLikes, setSolution } from '../../modules/mainSlice';
+import { setLatest, setLikes, setSolution, setStatus } from '../../modules/mainSlice';
 import { FilterButton } from '../button/Button.styled';
 import { FilterContainer } from './FilterBtn.styled';
 
@@ -16,12 +16,15 @@ export default function FilterBtn() {
     if( clickedFilter === FILTER_LATEST ){
       setFilter(FILTER_LATEST);
       dispatch(setLatest());
+      dispatch(setStatus(FILTER_LATEST));
     } else if (clickedFilter === FILTER_LIKES){
       setFilter(FILTER_LIKES);
       dispatch(setLikes());
+      dispatch(setStatus(FILTER_LIKES));
     } else {
       setFilter(FILTER_SOLUTION);
       dispatch(setSolution());
+      dispatch(setStatus(FILTER_SOLUTION));
     }
   };
 

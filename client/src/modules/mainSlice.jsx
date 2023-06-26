@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   datas: [],
+  status: 'latest',
 }
 
 const mainSlice = createSlice({
@@ -26,9 +27,12 @@ const mainSlice = createSlice({
       const sortedData = [...state.datas].sort((a, b) => b.solutionStatus - a.solutionStatus);
       state.datas = sortedData;
       console.log(state.datas);
-    }        
+    },
+    setStatus: (state, action) => {
+      state.status = action.payload;
+    }
   }
 })
 
-export const { setDatas, setLatest, setLikes, setSolution } = mainSlice.actions;
+export const { setDatas, setLatest, setLikes, setSolution, setStatus } = mainSlice.actions;
 export default mainSlice;
