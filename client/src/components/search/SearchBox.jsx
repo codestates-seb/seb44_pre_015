@@ -13,7 +13,7 @@ export default function SearchBox({ searchRef }){
     if(e.target.value === '' && e.key === 'Enter') return alert('공백은 입력할 수 없습니다.')
     if(e.key === 'Enter'){
       dispatch(setSearch(e.target.value));
-      navigate('/search');
+      navigate(`/search/${e.target.value}`);
     }
   }
 

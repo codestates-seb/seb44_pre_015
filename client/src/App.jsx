@@ -18,7 +18,7 @@ export default function App() {
 
       <Routes>
         <Route path='/' element={<Main />} />
-        <Route path='/search' element={<Search />} />
+        <Route path='/search/:searchWord' element={<Search />} />
         <Route path="/login" element={<Login />} />
         <Route path='/post/:questionId/:memberId' element={<Detail />} />
         <Route path='/question' element={<Question />}/>
