@@ -25,7 +25,7 @@ export default function QuestionCard({ title, detail, questionId, solutionStatus
       <CardTitle>{ title }</CardTitle>
       <CardContent>{ content.length >= 75 ? content.slice(0, 75) + '...' : content} </CardContent>
 
-      <div className='flex justify-end mt-4'>
+      <div className='absolute right-3 bottom-2 max-sm:bottom-3'>
       <Selection status={solutionStatus.toString()} />
       </div>
     </CardWrapper>

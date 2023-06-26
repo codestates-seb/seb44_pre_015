@@ -13,6 +13,7 @@ export const CardWrapper = tw.div`
   hover:backdrop-brightness-90
   duration-300
   max-sm:w-[30rem]
+  relative
 `
 
 export const CardTitle = tw.h3`
