@@ -20,7 +20,7 @@ export default function EditInput({ comment, solutionStatus, answerId}) {
     const UID = JSON.parse(localStorage.getItem('UID'));
     const accessToken = JSON.parse(localStorage.getItem('accessToken'));
 
-    axios.patch(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/answers/${answerId}/${UID}`, JSON.stringify(body), {
+    axios.patch(`/answers/${answerId}/${UID}`, JSON.stringify(body), {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Authorization': `Bearer ${accessToken}`,

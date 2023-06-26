@@ -23,7 +23,7 @@ export default function HeartBtn({ votesCount, questionId, memberInfo, questionV
     const accessToken = JSON.parse(localStorage.getItem('accessToken'));
     const UID = JSON.parse(localStorage.getItem('UID'));
 
-    axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/votes/${questionId}/${UID}`, {
+    axios(`/questions/votes/${questionId}/${UID}`, {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Authorization': `Bearer ${accessToken}`,

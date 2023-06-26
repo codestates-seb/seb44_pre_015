@@ -24,9 +24,7 @@ export default function RecommentInput({ answerId }) {
       memberId: UID,
     }
 
-    await axios.post(
-      "http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/comments",
-      JSON.stringify(body),
+    await axios.post("/comments", JSON.stringify(body),
       {
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',

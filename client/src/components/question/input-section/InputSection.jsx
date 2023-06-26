@@ -27,7 +27,7 @@ export default function InputSection({ questionId }) {
 
     try {
       await axios.post(
-        "http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/answers",
+        "/answers",
         JSON.stringify(body),
         {
           headers: {

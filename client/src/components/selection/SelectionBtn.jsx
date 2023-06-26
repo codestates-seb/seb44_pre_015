@@ -19,7 +19,7 @@ export default function SelectionBtn({ solutionStatus, answerId, writer }) {
     if(UID !== writer) return alert('작성자만 답변 채택이 가능합니다.');
 
     const accessToken = JSON.parse(localStorage.getItem('accessToken'));
-    axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/answers/selection?answerId=${answerId}&memberId=${UID}`, {
+    axios(`/answers/selection?answerId=${answerId}&memberId=${UID}`, {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Authorization': `Bearer ${accessToken}`,
