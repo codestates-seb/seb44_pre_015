@@ -58,7 +58,7 @@ export default function Question() {
     };
 
     axios.post(
-      `http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/register`, requestData, { headers })
+      `/questions/register`, requestData, { headers })
       .then(() => {
         clearInput();
         navigate('/');
