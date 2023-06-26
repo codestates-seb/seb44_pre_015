@@ -39,13 +39,9 @@ export default function Question() {
     
   };
 
-  const titleChange = (e) => {
-    dispatch(typeTitle(e.target.value));
-  };
+  const titleChange = (e) => dispatch(typeTitle(e.target.value));
 
-  const contentChange = (value) => {
-    dispatch(typeDetail(value));
-  };
+  const contentChange = (value) => dispatch(typeDetail(value));
 
   const questionSubmit = () => {
 
@@ -63,12 +59,11 @@ export default function Question() {
 
     axios.post(
       `http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/register`, requestData, { headers })
-      .then((response) => {
+      .then(() => {
         clearInput();
         navigate('/');
       })
-      .catch((error) => {
-        console.error(error);
+      .catch(() => {
         navigate('/*');
       })
   };
