@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { RemoveButtonWrap } from "./RemoveBtn.styled";
 
 export default function ReMoveBtn({ questionId, memberInfo }) {
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const [memberId, setMemberId]= useState(1);
   const navigate = useNavigate();
 
@@ -19,7 +20,7 @@ export default function ReMoveBtn({ questionId, memberInfo }) {
       const accessToken = JSON.parse(localStorage.getItem('accessToken'));
 
       await axios
-        .delete(`/questions/${questionId}/${UID}`,
+        .delete(`${PROXY}/questions/${questionId}/${UID}`,
         {
           headers: {
             'Content-Type': 'application/json;charset=UTF-8',

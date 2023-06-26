@@ -6,6 +6,7 @@ import AnswerBtn from "../../button/answer/AnswerBtn"
 import { InputFormContainer, AnswerForm, AnswerTextarea, AnswerBox } from "./InputSection.styled"
 
 export default function InputSection({ questionId }) {
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const navigate= useNavigate();
   const [comment, setComment] = useState('');
 
@@ -27,7 +28,7 @@ export default function InputSection({ questionId }) {
 
     try {
       await axios.post(
-        "/answers",
+        `${PROXY}/answers`,
         JSON.stringify(body),
         {
           headers: {

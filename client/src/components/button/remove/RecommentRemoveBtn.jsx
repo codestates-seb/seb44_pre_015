@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { RemoveButtonWrap } from "./RemoveBtn.styled";
 
 export default function CommentReMoveBtn({ memberInfo, commentId }) {
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const navigate = useNavigate();
 
   const onClickHandler = async () => {
@@ -11,7 +12,7 @@ export default function CommentReMoveBtn({ memberInfo, commentId }) {
 
     const accessToken = JSON.parse(localStorage.getItem('accessToken'));
     
-    await axios.delete(`/comments/${commentId}/${UID}`,
+    await axios.delete(`${PROXY}/comments/${commentId}/${UID}`,
       {
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',

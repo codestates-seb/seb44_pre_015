@@ -9,6 +9,7 @@ import RecommentSection from '../../components/question/recomment-section/Recomm
 
 
 export default function Detail() {
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const { questionId } = useParams();
   const navigate = useNavigate();
   const [datas, setDatas] = useState({});
@@ -18,7 +19,7 @@ export default function Detail() {
     let UID = JSON.parse(localStorage.getItem('UID'));
     if(UID === null) UID = 1;
 
-    axios(`/questions/get/${questionId}/${UID}`)
+    axios(`${PROXY}/questions/get/${questionId}/${UID}`)
       .then(res => {
         setDatas(res.data);
         setAnswers(res.data.answers);

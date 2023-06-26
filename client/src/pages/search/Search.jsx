@@ -10,12 +10,13 @@ import MainPostCard from '../../components/card/MainPostCard'
 
 
 export default function Search() {
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const dispatch = useDispatch();
   const { searchWord } = useParams();
   const datas = useSelector(state => state.search.searchData);
 
   useEffect(()=>{
-    axios(`/questions/get/recent?page=0&size=100`)
+    axios(`${PROXY}/questions/get/recent?page=0&size=100`)
     .then(res => dispatch(filterData(res.data)));
   }, [searchWord])
 

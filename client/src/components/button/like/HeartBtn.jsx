@@ -5,6 +5,7 @@ import { HeartButtonWrap } from "./HeartBtn.styled";
 import { AiFillHeart } from 'react-icons/ai';
 
 export default function HeartBtn({ votesCount, questionId, memberInfo, questionVoteByMember }) {
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const navigate = useNavigate();
   const [memberId, setMemberId]= useState(1);
   const [totalVoteCount, setTotalVoteCount] = useState(0);
@@ -23,7 +24,7 @@ export default function HeartBtn({ votesCount, questionId, memberInfo, questionV
     const accessToken = JSON.parse(localStorage.getItem('accessToken'));
     const UID = JSON.parse(localStorage.getItem('UID'));
 
-    axios(`/questions/votes/${questionId}/${UID}`, {
+    axios(`${PROXY}/questions/votes/${questionId}/${UID}`, {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Authorization': `Bearer ${accessToken}`,
