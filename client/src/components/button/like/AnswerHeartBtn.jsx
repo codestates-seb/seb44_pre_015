@@ -3,7 +3,6 @@ import { AiFillHeart } from 'react-icons/ai';
 
 export default function AnswerHeartBtn() {
 
-
   return (
     <div>
       <HeartButtonWrap className='mt-3'>

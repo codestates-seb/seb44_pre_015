@@ -1,18 +1,17 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import UserInfoOther from "../../user/UserInfoOther"
 import AnswerBtn from "../../button/answer/AnswerBtn"
 import { InputFormContainer, AnswerForm, AnswerTextarea, AnswerBox } from "./InputSection.styled"
 
 export default function InputSection({ questionId }) {
+  const navigate= useNavigate();
   const [comment, setComment] = useState('');
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    if ( comment === '') {
-      alert('공백은 입력할 수 없습니다.');
-      return
-    }
+    if ( comment === '') return alert('공백은 입력할 수 없습니다.');
 
     const isLogIn = JSON.parse(localStorage.getItem('isLogIn'));
     const UID = JSON.parse(localStorage.getItem('UID'));
@@ -38,7 +37,7 @@ export default function InputSection({ questionId }) {
         }
       );
     } catch (error) {
-      console.error(error);
+      navigate('/*')
     }
     
     return window.location.reload()

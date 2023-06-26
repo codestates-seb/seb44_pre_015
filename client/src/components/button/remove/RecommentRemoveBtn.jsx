@@ -19,7 +19,7 @@ export default function CommentReMoveBtn({ memberInfo, commentId }) {
         }
       })
       .then(res=> window.location.reload())
-      .catch(err => console.log(err))
+      .catch(err => navigate('/*'))
   }
 
   return (

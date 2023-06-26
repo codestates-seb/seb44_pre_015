@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { RecommentInputContainer, Input, SubmitButton } from './RecommentInput.styled'
 
-export default function RecommentInput({ answerId, memberId }) {
+export default function RecommentInput({ answerId }) {
   const detailInput = useRef();
   const navigate = useNavigate();
 
