@@ -11,7 +11,7 @@ export default function CommentReMoveBtn({ memberInfo, commentId }) {
 
     const accessToken = JSON.parse(localStorage.getItem('accessToken'));
     
-    await axios.delete(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/comments/${commentId}/${UID}`,
+    await axios.delete(`/comments/${commentId}/${UID}`,
       {
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',

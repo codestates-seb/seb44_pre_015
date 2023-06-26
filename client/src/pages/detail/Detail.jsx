@@ -18,7 +18,7 @@ export default function Detail() {
     let UID = JSON.parse(localStorage.getItem('UID'));
     if(UID === null) UID = 1;
 
-    axios(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/${questionId}/${UID}`)
+    axios(`/questions/get/${questionId}/${UID}`)
       .then(res => {
         setDatas(res.data);
         setAnswers(res.data.answers);

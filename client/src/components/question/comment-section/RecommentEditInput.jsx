@@ -25,7 +25,7 @@ export default function RecommentEditInput({ commentId, memberInfo, commentDetai
       commentDetail: detailInput.current.value
     };
 
-    axios.patch(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/comments/${commentId}/${UID}`, JSON.stringify(body), {
+    axios.patch(`/comments/${commentId}/${UID}`, JSON.stringify(body), {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Authorization': `Bearer ${accessToken}`,
