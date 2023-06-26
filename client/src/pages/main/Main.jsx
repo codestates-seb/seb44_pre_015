@@ -64,7 +64,7 @@ export default function Main() {
         <SearchBox searchRef={searchRef}/>
         <FilterBtn />
           {
-            datas.map(data => <MainPostCard key={data.questionId} title={data.title} detail={data.detail} status={data.solutionStatus.toString()} viewCount={data.viewCount} votesCount={data.votesCount} answerCount={data.answerCount} questionId={data.questionId} createdAt={data.createdAt} memberInfo={data.memberInfoDto} tags={data.tags}/>)
+            datas.map(data => <MainPostCard key={data.questionId} title={data.title} detail={data.detail} status={data.solutionStatus.toString()} viewCount={data.viewCount} votesCount={data.votesCount} answers={data.answers} questionId={data.questionId} createdAt={data.createdAt} memberInfo={data.memberInfoDto} tags={data.tags}/>)
           }
         <div className="h-2" ref={ref}/>
       </MainContainer>

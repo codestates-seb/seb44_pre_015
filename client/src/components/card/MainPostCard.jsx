@@ -7,7 +7,7 @@ import { AiFillHeart, AiFillEye } from 'react-icons/ai'
 import { IoChatbubble } from 'react-icons/io5'
 import Tags from '../tag/Tags'
 
-export default function MainPostCard({ title, detail, viewCount, votesCount, status, answerCount, questionId, createdAt, memberInfo, tags }) {
+export default function MainPostCard({ title, detail, viewCount, votesCount, status, answers, questionId, createdAt, memberInfo, tags }) {
   const [text, setText] = useState(detail.replace(/(<([^>]+)>)/gi, ''))
   const navigate= useNavigate();
   const UID = JSON.parse(localStorage.getItem('UID')) === null ? 1 : JSON.parse(localStorage.getItem('UID'));
@@ -38,7 +38,7 @@ export default function MainPostCard({ title, detail, viewCount, votesCount, sta
 
           <CountContainer>
             <IoChatbubble style={{ color : "#CACACA"}}/>
-            <CountText>{ answerCount }</CountText>
+            <CountText>{ answers.length }</CountText>
           </CountContainer>
         </Counters>
 
