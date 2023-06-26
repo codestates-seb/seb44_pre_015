@@ -22,7 +22,7 @@ export const Loginbox = tw.div`
     pt-10
 `;
 
-export const GoogleBtn = tw.button`
+export const GoogleBtnWrap = tw.button`
     bg-white
     w-96
     h-10
@@ -35,7 +35,17 @@ export const GoogleBtn = tw.button`
     
 `;
 
-export const NaverBtn = tw.button `
+export const GoogleBtn = tw.img`
+    inline
+    w-7
+`;
+
+export const NaverBtn = tw.img `
+    inline
+    w-5
+`;
+
+export const NaverBtnWrap = tw.button `
     bg-green-500
     w-96
     h-10
@@ -71,3 +81,6 @@ export const IconWrap = tw.div`
     mr-4
 `;
 
+export const LogoImg = tw.img `
+    w-44
+`;

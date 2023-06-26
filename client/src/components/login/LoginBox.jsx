@@ -1,18 +1,8 @@
 import { Link } from 'react-router-dom';
-import { AiFillHeart } from "react-icons/ai";
+import { AiFillHeart, AiFillEye, AiOutlineCheck} from "react-icons/ai";
 import { ImBubble } from "react-icons/im";
-import { AiFillEye } from "react-icons/ai";
-import { AiOutlineCheck } from "react-icons/ai";
 import {
-  GlobalStyle,
-  Loginbox,
-  HeadText,
-  Logintext,
-  Wrap,
-  IconWrap,
-  GoogleBtn,
-  NaverBtn
-} from "./LoginBox.styled.jsx";
+  GlobalStyle, Loginbox, HeadText, Logintext,Wrap, IconWrap, GoogleBtnWrap, GoogleBtn, NaverBtnWrap, NaverBtn, LogoImg} from "./LoginBox.styled.jsx";
 import googleimg from "../../assets/googleimg.svg";
 import Naverimg from "../../assets/naverimg.svg";
 import logo from "../../assets/logo-stackoverflow.svg";
@@ -21,7 +11,7 @@ const LoginBox = () => {
   return (
     <GlobalStyle>
       <Loginbox>
-        <img src={logo} width="180px"></img>
+        <LogoImg src={logo}></LogoImg>
         <HeadText>Login the Stack Overflow community</HeadText>
         <Wrap>
           <Logintext>
@@ -52,29 +42,17 @@ const LoginBox = () => {
         </Wrap>
 
         <Link to="http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/login">
-          <GoogleBtn>
-            <img
-              src={googleimg}
-              style={{ display: "inline" }}
-              className="googleimg"
-              width="28px"
-              alt="구글 로그인"
-            />{" "}
+          <GoogleBtnWrap>
+            <GoogleBtn src={googleimg}/>
             Sign up with Google
-          </GoogleBtn>
+          </GoogleBtnWrap>
         </Link>
 
         <Link to="http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/login">
-          <NaverBtn>
-            <img
-              src={Naverimg}
-              style={{ display: "inline" }}
-              className="naverimg"
-              width="19px"
-              alt="네이버 로그인"
-            />{" "}
+          <NaverBtnWrap>
+            <NaverBtn src={Naverimg} />
             Sign up with Naver
-          </NaverBtn>
+          </NaverBtnWrap>
         </Link>
       </Loginbox>
     </GlobalStyle>
