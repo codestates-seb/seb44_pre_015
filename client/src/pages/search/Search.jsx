@@ -23,7 +23,7 @@ export default function Search() {
       <MainContainer>
         <SearchBox />
           {
-            datas.map(data => <MainPostCard key={data.questionId} title={data.title} detail={data.detail} status={data.solutionStatus.toString()} viewCount={data.viewCount} votesCount={data.votesCount} answerCount={data.answerCount} questionId={data.questionId} createdAt={data.createdAt} memberInfo={data.memberInfoDto}/>)
+            datas.map(data => <MainPostCard key={data.questionId} title={data.title} detail={data.detail} status={data.solutionStatus.toString()} viewCount={data.viewCount} votesCount={data.votesCount} answerCount={data.answerCount} questionId={data.questionId} createdAt={data.createdAt} memberInfo={data.memberInfoDto} answers={data.answers}/>)
           }
         <div />
       </MainContainer>
