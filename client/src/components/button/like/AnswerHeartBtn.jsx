@@ -36,8 +36,8 @@ export default function AnswerHeartBtn({votesCount, answerVoteByMember, answerId
 
   return (
     <div>
-      <HeartButtonWrap className='mt-3'>
-        <AiFillHeart className={isVoted ? "text-orange-500" : "text-gray-300"} style={{fontSize : '13px'}} onClick={onClickHandler}/>
+      <HeartButtonWrap className='mt-3' onClick={onClickHandler}>
+        <AiFillHeart className={isVoted ? "text-orange-500" : "text-gray-300"} style={{fontSize : '13px'}} />
       </HeartButtonWrap>
       <p className="ml-2.5 text-xs text-[#797979]">{totalCount}</p>
     </div>

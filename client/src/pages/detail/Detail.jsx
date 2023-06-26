@@ -22,6 +22,7 @@ export default function Detail() {
       .then(res => {
         setDatas(res.data);
         setAnswers(res.data.answers);
+        console.log(res.data);
       })
       .catch(err => {
         navigate('/*');
@@ -39,7 +40,7 @@ export default function Detail() {
           answers.map((answer, idx) => {
             return(
               <div key={idx} className='flex flex-col gap-5'>
-                <CommentSection key={answer.answerId} comment={answer.detail} answerId={answer.answerId} memberId={answer.memberId} memberInfo={answer.memberInfoDto} createdAt={answer.createdAt} solutionStatus={answer.solutionStatus} writer={datas.memberInfoDto.memberId} votesCount={answer.votesCount} answerVoteByMember={answer.answerVoteByMember}/>
+                <CommentSection key={answer.answerId} comment={answer.detail} answerId={answer.answerId} memberId={answer.memberId} memberInfo={answer.memberInfoDto} createdAt={answer.createdAt} solutionStatus={answer.solutionStatus} writer={datas.memberInfoDto.memberId} votesCount={answer.votesCount} answerVoteByMember={answer.answerVoteByMember} />
                 {
                   answer.comments.map(recomment => <RecommentSection key={recomment.commentId} commentDetail={recomment.commentDetail} createdAt={recomment.createdAt} memberInfo={recomment.memberInfoDto} commentId={recomment.commentId}/>)
                 }
