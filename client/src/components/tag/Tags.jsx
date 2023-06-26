@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { TagContainer, Tag } from "./Tags.styled"
 
 export default function Tags({ tags }){

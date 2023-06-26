@@ -33,6 +33,7 @@ export default function Detail() {
   return (
     <DetailContainer>
       <QuestionSection title={datas.title} content={datas.detail} tags={datas.tags} createdAt={datas.createdAt} questionId={datas.questionId} votesCount={datas.votesCount} memberInfo={datas.memberInfoDto} questionVoteByMember={datas.questionVoteByMember}/>
+      <hr className='border-[0.9px] border-[#DCDCDC] w-[40rem] max-sm:w-[30rem] mt-10'></hr>
       <InputSection questionId={datas.questionId}/>
 
       <DeatilBottomSection>
