@@ -11,6 +11,7 @@ import AskBtn from '../../components/button/askButton/AskBtn';
 import { resetInput, typeTitle, typeDetail, typeTags, checkPlusTags, checkMinusTags, updateTags } from '../../modules/questionSlice';
 
 export default function Question() {
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const title = useSelector((state) => state.question.title);
@@ -58,7 +59,7 @@ export default function Question() {
     };
 
     axios.post(
-      `/questions/register`, requestData, { headers })
+      `${PROXY}/questions/register`, requestData, { headers })
       .then(() => {
         clearInput();
         navigate('/');
