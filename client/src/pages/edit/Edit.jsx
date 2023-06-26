@@ -69,7 +69,7 @@ export default function Edit() {
 
 
   const questionSubmit = () => {
-    const selectedTags = tags.filter((el) => el.select).map((el) => ({tagName : el.tagName}))
+    const selectedTags = tags.filter((el) => el.select).map((el) => ({ tagName: el.tagName }))
 
     const requestData = {
       title: title,
@@ -89,7 +89,7 @@ export default function Edit() {
 
   return (
     <EditContainer>
-      <QuestionWriteHead />
+      <QuestionWriteHead headTitleText="질문 수정" />
       <QuestionTitle memTitle={title} onChange={titleChange} />
       <QuestionInput memDetail={detail} onChange={contentChange} />
       <QuestionTagCheck questionId={questionId} handlerTag={handlerTag} memtags={tags} checkCount={checkCount} />
