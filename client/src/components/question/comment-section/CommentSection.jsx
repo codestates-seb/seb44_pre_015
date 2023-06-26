@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { HeartUser, AllWrap, CommentTopSectionWrap, CommentBottomSectionWrap, Comment } from "./CommentSection.styled";
+import AnswerHeartBtn from '../../button/like/AnswerHeartBtn';
 import UserInfoOwner from "../../user/UserInfoOwner";
 import SelectionBtn from '../../selection/SelectionBtn'
 import EditInput from '../input-section/EditInput';
@@ -16,6 +17,7 @@ export default function CommentSection({ comment, answerId, memberId, memberInfo
       <AllWrap>
         <CommentTopSectionWrap>
           <HeartUser>
+          <AnswerHeartBtn />
           <UserInfoOwner memberInfo={memberInfo} createdAt={createdAt}/>
           </HeartUser>
           <div className='flex gap-3 mb-3 pt-3'>
