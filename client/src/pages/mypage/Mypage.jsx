@@ -7,6 +7,7 @@ import UserInfoMy from '../../components/user/UserInfoMy'
 import QuestionCard from '../../components/card/QuestionCard'
 
 export default function Mypage() {
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const navigate = useNavigate();
   const [userInfo, setUser] = useState('');
 
@@ -14,7 +15,7 @@ export default function Mypage() {
     const UID = JSON.parse(localStorage.getItem('UID'));
     const accessToken = JSON.parse(localStorage.getItem('accessToken'));
 
-    axios(`/members/${UID}`, {
+    axios(`${PROXY}/members/${UID}`, {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Authorization': `Bearer ${accessToken}`,

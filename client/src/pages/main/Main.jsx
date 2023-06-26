@@ -32,7 +32,7 @@ export default function Main() {
       localStorage.setItem('accessToken', JSON.stringify(accessToken));
       localStorage.setItem('UID', JSON.stringify(UID));
       localStorage.setItem('isLogIn', JSON.stringify(true));
-      axios(`/members/${UID}`, {
+      axios(`${PROXY}/members/${UID}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         }
