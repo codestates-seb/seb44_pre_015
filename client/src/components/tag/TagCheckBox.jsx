@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { TagCheckContainer, TagCheck, TagCheckBoxed, TagLabel } from "./TagCheckBox.styled"
 
 export default function TagCheckBox({ handlerTag, memtags, tags, checkCount, accessToken }) {
+  const navigate = useNavigate();
   const [tagList, setTagList] = useState([])
   const selectMemTags = memtags?.filter((el) => el.select)
 
@@ -19,19 +21,17 @@ export default function TagCheckBox({ handlerTag, memtags, tags, checkCount, acc
       .then(response => {
         setTagList(response.data);
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch(() => {
+        navigate('/*');
+      })
   }
 
-  if (memtags) {
-    null
-  } else {
+  if (!memtags) {
     useEffect(() => {
       tagsData()
     })
   }
-  
+
 
   return (
     <TagCheckContainer>
