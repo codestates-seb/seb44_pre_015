@@ -25,7 +25,7 @@ export default function Edit() {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   const UID = JSON.parse(localStorage.getItem("UID"));
 
-  const handleErrors = (err) => {
+  const handleErrors = () => {
     navigate('/*');
   }
 
