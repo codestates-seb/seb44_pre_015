@@ -48,7 +48,7 @@ export default function Edit() {
 
   useEffect(() => {
     axios
-      .get(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/${questionId}/${UID}`)
+      .get(`/questions/get/${questionId}/${UID}`)
       .then((res) => {
         const questionData = res.data;
         dispatch(typeTitle(questionData.title));
@@ -59,7 +59,7 @@ export default function Edit() {
 
   useEffect(() => {
     axios
-      .get(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/get/patch/${questionId}/${UID}`)
+      .get(`/questions/get/patch/${questionId}/${UID}`)
       .then((res) => {
         const questionData = res.data;
         dispatch(updateTags(questionData.tags));
@@ -79,7 +79,7 @@ export default function Edit() {
     };
 
     axios
-      .patch(`http://ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions/${questionId}/${UID}`, JSON.stringify(requestData), { headers: defaultHeaders })
+      .patch(`/questions/${questionId}/${UID}`, JSON.stringify(requestData), { headers: defaultHeaders })
       .then(() => {
         dispatch(resetInput());
         navigate(`/post/${questionId}/${UID}`);
