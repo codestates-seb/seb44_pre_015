@@ -12,7 +12,7 @@ export default function TagCheckBox({ handlerTag, memtags, tags, checkCount, acc
 
   const tagsData = () => {
     axios
-      .get('${PROXY}/questions/tags',
+      .get(`${PROXY}/questions/tags`,
         {
           headers: {
             'Content-Type': 'application/json;charset=UTF-8',
