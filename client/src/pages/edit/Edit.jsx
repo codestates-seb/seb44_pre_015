@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import { resetInput, typeTitle, typeDetail, checkPlusTags, checkMinusTags, updateTags } from '../../modules/questionSlice';
 
 export default function Edit() {
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
+
   const navigate = useNavigate();
   const { questionId } = useParams();
 
@@ -19,6 +21,7 @@ export default function Edit() {
   const detail = useSelector((state) => state.question.detail);
   const tags = useSelector((state) => state.question.tags);
   const checkCount = useSelector((state) => state.question.checkedCount);
+
 
   const dispatch = useDispatch();
 
@@ -48,7 +51,7 @@ export default function Edit() {
 
   useEffect(() => {
     axios
-      .get(`/questions/get/${questionId}/${UID}`)
+      .get(`${PROXY}/questions/get/${questionId}/${UID}`)
       .then((res) => {
         const questionData = res.data;
         dispatch(typeTitle(questionData.title));
@@ -59,7 +62,7 @@ export default function Edit() {
 
   useEffect(() => {
     axios
-      .get(`/questions/get/patch/${questionId}/${UID}`)
+      .get(`${PROXY}/questions/get/patch/${questionId}/${UID}`)
       .then((res) => {
         const questionData = res.data;
         dispatch(updateTags(questionData.tags));
@@ -79,10 +82,10 @@ export default function Edit() {
     };
 
     axios
-      .patch(`/questions/${questionId}/${UID}`, JSON.stringify(requestData), { headers: defaultHeaders })
+      .patch(`${PROXY}/questions/${questionId}/${UID}`, JSON.stringify(requestData), { headers: defaultHeaders })
       .then(() => {
         dispatch(resetInput());
-        navigate(`/post/${questionId}/${UID}`);
+        navigate(`${PROXY}/post/${questionId}/${UID}`);
       })
       .catch(handleErrors);
   };
