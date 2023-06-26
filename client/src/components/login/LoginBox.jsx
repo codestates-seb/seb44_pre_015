@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
-import { AiFillHeart } from "react-icons/ai";
+import { AiFillHeart, AiFillEye, AiOutlineCheck} from "react-icons/ai";
 import { ImBubble } from "react-icons/im";
-import { AiFillEye } from "react-icons/ai";
-import { AiOutlineCheck } from "react-icons/ai";
 import {
   GlobalStyle,
   Loginbox,
