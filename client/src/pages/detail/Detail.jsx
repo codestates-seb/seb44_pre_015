@@ -22,7 +22,6 @@ export default function Detail() {
       .then(res => {
         setDatas(res.data);
         setAnswers(res.data.answers);
-        console.log(res.data);
       })
       .catch(err => {
         navigate('/*');
