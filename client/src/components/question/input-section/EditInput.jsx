@@ -5,6 +5,7 @@ import AnswerBtn from "../../button/answer/AnswerBtn"
 import { EditInputFormContainer, AnswerForm, AnswerEditTextarea, AnswerBox } from './InputSection.styled'
 
 export default function EditInput({ comment, solutionStatus, answerId}) {
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const navigate = useNavigate();
   const answerInput = useRef();
 
@@ -20,7 +21,7 @@ export default function EditInput({ comment, solutionStatus, answerId}) {
     const UID = JSON.parse(localStorage.getItem('UID'));
     const accessToken = JSON.parse(localStorage.getItem('accessToken'));
 
-    axios.patch(`/answers/${answerId}/${UID}`, JSON.stringify(body), {
+    axios.patch(`${PROXY}/answers/${answerId}/${UID}`, JSON.stringify(body), {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Authorization': `Bearer ${accessToken}`,

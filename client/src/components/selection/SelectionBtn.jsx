@@ -5,6 +5,7 @@ import { SelectionBtnContainer, SelectionBtnText } from './SelectionBtn.styled';
 import { AiOutlineCheck } from "react-icons/ai";
 
 export default function SelectionBtn({ solutionStatus, answerId, writer }) {
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const navigate = useNavigate();
   const [writerId, setWriterId] = useState(1);
   const [isSelected, setIsSelected] = useState(false);
@@ -19,7 +20,7 @@ export default function SelectionBtn({ solutionStatus, answerId, writer }) {
     if(UID !== writer) return alert('작성자만 답변 채택이 가능합니다.');
 
     const accessToken = JSON.parse(localStorage.getItem('accessToken'));
-    axios(`/answers/selection?answerId=${answerId}&memberId=${UID}`, {
+    axios(`${PROXY}/answers/selection?answerId=${answerId}&memberId=${UID}`, {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Authorization': `Bearer ${accessToken}`,

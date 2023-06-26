@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { RecommentInputContainer, Input, SubmitButton } from './RecommentInput.styled'
 
 export default function RecommentInput({ answerId }) {
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const detailInput = useRef();
   const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ export default function RecommentInput({ answerId }) {
       memberId: UID,
     }
 
-    await axios.post("/comments", JSON.stringify(body),
+    await axios.post(`${PROXY}/comments`, JSON.stringify(body),
       {
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',

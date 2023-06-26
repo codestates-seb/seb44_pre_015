@@ -9,7 +9,7 @@ import CommentEditBtn from '../../button/edit/CommentEditBtn';
 import RecommentInput from './RecommentInput';
 
 
-export default function CommentSection({ comment, answerId, memberId, memberInfo, createdAt, solutionStatus, writer, votesCount, answerVoteByMember, selected }) {
+export default function CommentSection({ comment, answerId, memberId, memberInfo, createdAt, solutionStatus, writer, votesCount, answerVoteByMember }) {
   const [editIsOpen, setEditIsOpen]= useState(false);
   const [isOpen, setIsOpen] = useState(false);
 

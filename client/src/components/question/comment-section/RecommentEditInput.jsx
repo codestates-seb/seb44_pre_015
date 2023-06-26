@@ -4,6 +4,7 @@ import axios from 'axios';
 import { RecommentInputContainer, EditInput, EditButton } from './RecommentInput.styled'
 
 export default function RecommentEditInput({ commentId, memberInfo, commentDetail }) {
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const navigate = useNavigate();
   const [memberId, setMemberId] = useState(1);
   const detailInput = useRef();
@@ -25,7 +26,7 @@ export default function RecommentEditInput({ commentId, memberInfo, commentDetai
       commentDetail: detailInput.current.value
     };
 
-    axios.patch(`/comments/${commentId}/${UID}`, JSON.stringify(body), {
+    axios.patch(`${PROXY}/comments/${commentId}/${UID}`, JSON.stringify(body), {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Authorization': `Bearer ${accessToken}`,
