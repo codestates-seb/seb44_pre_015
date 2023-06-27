@@ -24,7 +24,7 @@ export default function Header() {
       const userInfo = JSON.parse(localStorage.getItem('userInfo'));
       setUserInfo(userInfo);
     }
-  }, [isLogIn])
+  }, [])
 
   return (
     <HeaderContainer>

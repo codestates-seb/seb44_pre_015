@@ -37,8 +37,11 @@ export default function Main() {
           Authorization: `Bearer ${accessToken}`,
         }
       })
-      .then(res => localStorage.setItem('userInfo', JSON.stringify(res.data)));
-      return navigate('/');
+      .then(res => localStorage.setItem('userInfo', JSON.stringify(res.data)))
+      .catch(err => navigate('/*'))
+      
+      navigate('/');
+      return window.location.reload();
     }
 
     axios(`${PROXY}/questions/get/recent?page=0&size=6`)
