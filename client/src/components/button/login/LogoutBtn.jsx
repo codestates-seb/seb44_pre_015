@@ -10,7 +10,8 @@ export default function LogoutBtn({ setIsLogin }) {
     localStorage.removeItem('isLogIn');
     localStorage.removeItem('userInfo');
     setIsLogin(false);
-    return navigate('/');
+    navigate('/');
+    return window.location.reload();
   }
 
   return (

@@ -8,9 +8,10 @@ export const GlobalStyle = tw.div`
 `;
 
 export const Loginbox = tw.div`
+    w-[33rem]
+    max-sm:w-[28rem]
     bg-white
     drop-shadow-lg
-    w-3/6
     h-4/6
     flex
     justify-center
@@ -23,9 +24,9 @@ export const Loginbox = tw.div`
 `;
 
 export const GoogleBtnWrap = tw.button`
+    w-[25rem]
+    max-sm:w-[23rem]
     bg-white
-    md:w-72
-    lg:w-96
     h-10
     rounded-lg
     text-center
@@ -33,7 +34,6 @@ export const GoogleBtnWrap = tw.button`
     text-slate-300
     border
     font-semibold
-    
 `;
 
 export const GoogleBtn = tw.img`
@@ -47,9 +47,9 @@ export const NaverBtn = tw.img `
 `;
 
 export const NaverBtnWrap = tw.button `
+    w-[25rem]
+    max-sm:w-[23rem]
     bg-green-500
-    md:w-72
-    lg:w-96
     h-10
     rounded-lg
     text-center
@@ -63,6 +63,7 @@ export const NaverBtnWrap = tw.button `
 export const HeadText = tw.p`
     text-2xl
     font-bold
+    max-sm:text-xl
 `;
 
 export const Logintext = tw.p`

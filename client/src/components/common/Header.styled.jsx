@@ -29,3 +29,17 @@ export const Nav = tw.nav`
   flex
   gap-2
 `;
+
+export const UserButton = tw.button`
+  bg-[#FFFFFF]
+  border-2
+  text-black
+  border-[#DCDCDC]
+  hover:bg-[#DCDCDC]
+  text-sm
+  rounded-full
+  px-6
+  py-2
+  transition duration-300 ease-in-out
+  max-md:text-xs
+`
