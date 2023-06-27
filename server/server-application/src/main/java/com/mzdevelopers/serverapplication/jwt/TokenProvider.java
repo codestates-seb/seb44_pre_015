@@ -36,7 +36,7 @@ public class TokenProvider {
 
     public String create(Member member) {
         Date now = new Date();
-        return "Bearer "+JWT.create()
+        return JWT.create()
                 .withSubject(ACCESS_TOKEN_SUBJECT)
                 .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod))
                 .withClaim(EMAIL_CLAIM, member.getEmail())

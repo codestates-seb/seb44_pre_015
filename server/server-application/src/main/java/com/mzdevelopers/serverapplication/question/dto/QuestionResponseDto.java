@@ -2,6 +2,7 @@ package com.mzdevelopers.serverapplication.question.dto;
 
 import com.mzdevelopers.serverapplication.answer.dto.AnswerDto;
 import com.mzdevelopers.serverapplication.answer.entity.Answer;
+import com.mzdevelopers.serverapplication.member.dto.MemberInfoDto;
 import com.mzdevelopers.serverapplication.question.stub.StubAnswer;
 import com.mzdevelopers.serverapplication.tag.dto.TagDto;
 import com.mzdevelopers.serverapplication.tag.dto.TagNameDto;
@@ -23,7 +24,7 @@ public class QuestionResponseDto {
     private int answerCount;
     private int votesCount;
     private int viewCount;
-    private Long memberId;
+    private MemberInfoDto memberInfoDto;
     private List<TagNameDto> tags;
     private List<AnswerDto.Response> answers;
     private boolean questionVoteByMember;

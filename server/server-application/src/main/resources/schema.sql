@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS member (
 CREATE TABLE question (
     question_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
-    detail VARCHAR(255) NOT NULL,
+    detail VARCHAR(10000) NOT NULL,
     solution_status BOOLEAN NOT NULL,
     answer_count INT NOT NULL,
     votes_count INT NOT NULL,
@@ -52,12 +52,12 @@ CREATE TABLE IF NOT EXISTS tag (
     tag_description VARCHAR(255) NOT NULL
     );
 
--- CREATE TABLE IF NOT EXISTS question_tag (
---                                             question_tag_id SERIAL PRIMARY KEY,
---                                             question_id BIGINT NOT NULL,
---                                             tag_id BIGINT NOT NULL,
---                                             FOREIGN KEY (question_id) REFERENCES question(question_id),
---     FOREIGN KEY (tag_id) REFERENCES tag(tag_id)
---     );
+ CREATE TABLE IF NOT EXISTS question_tag (
+                                             question_tag_id SERIAL PRIMARY KEY,
+                                             question_id BIGINT NOT NULL,
+                                             tag_id BIGINT NOT NULL,
+                                             FOREIGN KEY (question_id) REFERENCES question(question_id),
+     FOREIGN KEY (tag_id) REFERENCES tag(tag_id)
+     );
 
 

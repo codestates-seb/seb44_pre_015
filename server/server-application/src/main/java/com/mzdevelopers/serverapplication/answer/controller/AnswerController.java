@@ -43,22 +43,23 @@ public class AnswerController {
         return new ResponseEntity(mapper.answerToAnswerResponse(createAnswer),HttpStatus.CREATED);
     }
 
-    @PatchMapping("/{answer-id}")
+    @PatchMapping("/{answer-id}/{member-id}")
     public ResponseEntity patchAnswer(@PathVariable("answer-id")@Positive long answerId,
+                                      @PathVariable("member-id")@Positive long memberId,
                                       @Valid@RequestBody AnswerDto.Patch requestBody){
-        requestBody.setAnswerId(answerId);
-        Answer answer = answerService.updateAnswer(mapper.answerPatchToAnswer(requestBody));
+
+        Answer answer = answerService.updateAnswer(requestBody.getDetail(),answerId,memberId);
         return new ResponseEntity<>(mapper.answerToAnswerResponse(answer), HttpStatus.OK);
     }
 
-//    @GetMapping("/{answer-id}")
-//    public ResponseEntity getAnswer(
-//            @PathVariable("answer-id") @Positive long answerId) {
-//        Answer answer = answerService.findAnswer(answerId);
-//        AnswerDto.Response response = mapper.answerToAnswerResponse(answer);
-//
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
+    @GetMapping("/{answer-id}")
+    public ResponseEntity getAnswer(
+            @PathVariable("answer-id") @Positive long answerId) {
+        Answer answer = answerService.findAnswer(answerId);
+        AnswerDto.Response response = mapper.answerToAnswerResponse(answer);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
 //    @GetMapping
 //    public ResponseEntity getAnswers(@Positive @RequestParam int page,
@@ -83,8 +84,15 @@ public class AnswerController {
     @GetMapping("/votes/{answerId}/{memberId}")
     public ResponseEntity<?> votesCount(@PathVariable("answerId") Long answerId,
                                         @PathVariable Long memberId) {
-        AnswerVoteCountDto response = new AnswerVoteCountDto();
-        response.setTotalVoteCount(answerService.votesCount(answerId, memberId));
+        AnswerVoteCountDto response = answerService.votesCount(answerId, memberId);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/selection")
+    public ResponseEntity<?> selectAnswer(@RequestParam Long answerId,
+                                          @RequestParam Long memberId) {
+
+        boolean selectBool = answerService.updateSelection(answerId, memberId);
+        return new ResponseEntity<>(selectBool, HttpStatus.OK);
     }
 }

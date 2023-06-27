@@ -1,8 +1,12 @@
 package com.mzdevelopers.serverapplication.question.service;
 
+import com.mzdevelopers.serverapplication.question.dto.QuestionPatchRequestDto;
 import com.mzdevelopers.serverapplication.question.dto.QuestionResponseDto;
+import com.mzdevelopers.serverapplication.question.dto.QuestionVoteCountDto;
 import com.mzdevelopers.serverapplication.question.entity.Question;
+import com.mzdevelopers.serverapplication.tag.dto.SelectTagDto;
 import com.mzdevelopers.serverapplication.tag.dto.TagNameDto;
+import com.mzdevelopers.serverapplication.tag.entity.QuestionTag;
 import com.mzdevelopers.serverapplication.tag.entity.Tag;
 
 import java.util.List;
@@ -20,19 +24,19 @@ public interface QuestionService {
      */
     public long createQuestion(Question question, List<TagNameDto> tags);
 
-    public QuestionResponseDto getQuestion(long questionId, long memberId);
+    public QuestionResponseDto getQuestion(long questionId, long memberId, String flag);
+
+    public QuestionPatchRequestDto getPatchQuestion(long questionId, long memberId);
 
     // List, Page 형식으로 클라이언트에게 보냄
 
-    public Question updateQuestion(long questionId, String title, String detail, long memberId);
+    public Question updateQuestion(long questionId, String title, String detail,List<TagNameDto> tags, long memberId);
 
     public void deleteQuestion(long questionId, long memberId);
 
-    public int votesCount(long questionId, long memberId);
+    public QuestionVoteCountDto votesCount(long questionId, long memberId);
 
     public List<Question> questionsListByAPI(int page, int size, String api);
-
-//    public
 
 
 

@@ -1,5 +1,7 @@
 package com.mzdevelopers.serverapplication.jwt;
 
+import com.mzdevelopers.serverapplication.exception.BusinessLogicException;
+import com.mzdevelopers.serverapplication.exception.ExceptionCode;
 import com.mzdevelopers.serverapplication.member.dto.MemberDto;
 import com.mzdevelopers.serverapplication.member.entity.Member;
 import com.mzdevelopers.serverapplication.member.repository.MemberRepository;
@@ -53,6 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         } catch (Exception e) {
             log.error("Could not set user authentication in security context", e);
+            throw new BusinessLogicException(ExceptionCode.INVALID_TOKEN_STATUS);
         }
 
         filterChain.doFilter(request, response);

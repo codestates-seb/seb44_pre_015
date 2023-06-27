@@ -1,6 +1,9 @@
 package com.mzdevelopers.serverapplication.member.controller;
 
+import com.mzdevelopers.serverapplication.exception.BusinessLogicException;
+import com.mzdevelopers.serverapplication.exception.ExceptionCode;
 import com.mzdevelopers.serverapplication.member.dto.MemberResponseDto;
+import com.mzdevelopers.serverapplication.member.entity.Member;
 import com.mzdevelopers.serverapplication.member.mapper.MemberMapper;
 import com.mzdevelopers.serverapplication.member.repository.MemberRepository;
 import com.mzdevelopers.serverapplication.member.service.MemberService;
@@ -27,15 +30,24 @@ public class MemberController {
         this.mapper = mapper;
     }
 
-    // 로그인 한 멤버 아이디로 본인이 등록한 질문 가져오기
+    // 로그인 한 멤버 정보 가져오기
     @GetMapping("/{memberId}")
-    public ResponseEntity<MemberResponseDto> getMembersQuestions(@PathVariable("memberId") long memberId){
+    public ResponseEntity<MemberResponseDto> getMembersInformation(@PathVariable("memberId") long memberId){
 
         MemberResponseDto response = new MemberResponseDto();
+        Member findMember = memberRepository.findByMemberId(memberId);
 
-        List<Question> findQuestions = memberService.getQuestions(memberId);
-
+        //회원 Id 가져오기
         response.setMemberId(memberId);
+
+        //회원 이름 가져오기
+        response.setUserName(findMember.getName());
+
+        //회원 프로필 사진 가져오기
+        response.setPicture(findMember.getPicture());
+
+        //질문 가져오기
+        List<Question> findQuestions = memberService.getMembersQuestions(memberId);
         response.setQuestions(mapper.questionToMemberQuestionDto(findQuestions));
 
         return ResponseEntity.ok(response);

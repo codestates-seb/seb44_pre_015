@@ -16,6 +16,9 @@ import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationF
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
@@ -35,11 +38,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf() // csrf 기능
-                .disable() // 안씀
-                .cors().disable()
-                .headers() // 여기서부터
-                .frameOptions().disable() // 여기까지는 h2-console 접근 가능하게 하는 역할
+                .csrf()
+                .disable()
+                .cors()
+                .and()
+                .headers()
+                .frameOptions().disable()
                 .and()
 
                 .formLogin().disable()
@@ -47,13 +51,11 @@ public class SecurityConfiguration {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
 
-                .authorizeHttpRequests() // URL 별로 접근 권한 설정
-                .antMatchers("/", "/h2/**", "/auth/**", "/oauth2/**", "/test").permitAll() // 이 경로들은 아무나 접근 가능
-                .anyRequest().authenticated() // 그 외 경로들은 인증 받은 사람만 접근가능
+                .authorizeHttpRequests()
+                .antMatchers("/", "/h2/**", "/auth/**", "/oauth2/**", "/test","/questions/get/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
-
                 .oauth2Login()
-                .defaultSuccessUrl("/test")
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService)
                 .and()
@@ -62,6 +64,17 @@ public class SecurityConfiguration {
 
 
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
 }

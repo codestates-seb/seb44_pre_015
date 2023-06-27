@@ -6,5 +6,6 @@ import lombok.Data;
 public class QuestionVoteCountDto {
 
     private int totalVoteCount;
+    private boolean questionVoteStatus;
 
 }

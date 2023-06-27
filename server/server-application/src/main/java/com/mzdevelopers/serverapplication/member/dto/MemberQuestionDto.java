@@ -10,4 +10,5 @@ public class MemberQuestionDto {
     private long questionId;
     private String title;
     private String detail;
+    private boolean solutionStatus;
 }

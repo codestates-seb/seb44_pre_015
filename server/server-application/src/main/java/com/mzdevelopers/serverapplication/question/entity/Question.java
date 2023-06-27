@@ -26,7 +26,7 @@ public class Question extends BaseEntity{
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50000)
     private String detail;
 
     @Column(nullable = false)
@@ -52,7 +52,7 @@ public class Question extends BaseEntity{
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<QuestionVote> questionVotes;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answers;
 
     @Builder
@@ -69,6 +69,9 @@ public class Question extends BaseEntity{
     public void update(String title, String detail) {
         this.title = title;
         this.detail = detail;
+    }
+    public void updateSelect(boolean solutionStatus){
+        this.solutionStatus=solutionStatus;
     }
 
     public void updateVoteCount(boolean voted) {

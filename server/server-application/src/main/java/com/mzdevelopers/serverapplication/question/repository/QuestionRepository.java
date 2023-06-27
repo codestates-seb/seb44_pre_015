@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 //    @Query(value = "SELECT * FROM question WHERE solution_status = true ORDER BY created_at DESC LIMIT :limit OFFSET :offset", nativeQuery = true)
@@ -24,7 +25,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     Page<Question> findAllByOrderByVotesCountDesc(Pageable pageable);
 
     @EntityGraph(attributePaths = "answers")
-    Question findByQuestionId(long questionId);
+    Optional<Question> findByQuestionId(long questionId);
 
     List<Question> findByMember(Member member);
 }

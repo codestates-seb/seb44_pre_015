@@ -1,9 +1,11 @@
 package com.mzdevelopers.serverapplication.question.mapper;
 
 import com.mzdevelopers.serverapplication.member.entity.Member;
+import com.mzdevelopers.serverapplication.question.dto.QuestionPatchRequestDto;
 import com.mzdevelopers.serverapplication.question.dto.QuestionRequestDto;
 import com.mzdevelopers.serverapplication.question.dto.QuestionResponseDto;
 import com.mzdevelopers.serverapplication.question.entity.Question;
+import com.mzdevelopers.serverapplication.question.service.QuestionServiceImpl;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -25,7 +27,6 @@ public interface QuestionMapper {
 
     default QuestionResponseDto questionToQuestionResponseDto(Question question){
         QuestionResponseDto questionResponseDto = new QuestionResponseDto();
-
         questionResponseDto.setQuestionId(question.getQuestionId());
         questionResponseDto.setTitle(question.getTitle());
         questionResponseDto.setDetail(question.getDetail());
@@ -33,10 +34,12 @@ public interface QuestionMapper {
         questionResponseDto.setAnswerCount(question.getAnswerCount());
         questionResponseDto.setVotesCount(question.getVotesCount());
         questionResponseDto.setViewCount(question.getViewCount());
-        questionResponseDto.setMemberId(question.getMember().getMemberId());
+
         questionResponseDto.setCreatedAt(String.valueOf(question.getCreatedAt()));
         questionResponseDto.setUpdatedAt(String.valueOf(question.getUpdatedAt()));
 
         return questionResponseDto;
     };
+
+    QuestionPatchRequestDto questionToQuestionPatchRequestDto(Question question);
 }

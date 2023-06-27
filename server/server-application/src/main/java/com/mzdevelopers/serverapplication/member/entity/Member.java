@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor //추가
 @NoArgsConstructor
 @Entity
-@DynamicUpdate //추가
 @Builder //추가
 public class Member {
 
@@ -30,8 +29,8 @@ public class Member {
 
     private String picture;
 
-    @Column(name = "answer_vote_count", nullable = false)
-    private int answer_vote_count = 0;
+    @Column
+    private int answerVoteCount = 0;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Question> questions;

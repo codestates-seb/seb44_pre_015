@@ -1,9 +1,12 @@
 package com.mzdevelopers.serverapplication.answer.service;
 
+import com.mzdevelopers.serverapplication.answer.dto.AnswerVoteCountDto;
 import com.mzdevelopers.serverapplication.answer.entity.Answer;
 import com.mzdevelopers.serverapplication.answer.repository.AnswerRepository;
 import com.mzdevelopers.serverapplication.answervote.entity.AnswerVote;
 import com.mzdevelopers.serverapplication.answervote.repository.AnswerVoteRepository;
+import com.mzdevelopers.serverapplication.exception.BusinessLogicException;
+import com.mzdevelopers.serverapplication.exception.ExceptionCode;
 import com.mzdevelopers.serverapplication.member.entity.Member;
 import com.mzdevelopers.serverapplication.member.repository.MemberRepository;
 import com.mzdevelopers.serverapplication.question.entity.Question;
@@ -31,8 +34,10 @@ public class AnswerService {
 
 
     public Answer createAnswer(Answer answer){
-        Question findQuestion = questionRepository.findByQuestionId(answer.getQuestion().getQuestionId());
-        Member findMember = memberRepository.findById(answer.getMember().getMemberId()).orElseThrow(()->new RuntimeException("멤버를 찾을 수 없습니다."));
+        Question findQuestion = questionRepository.findByQuestionId(answer.getQuestion().getQuestionId())
+                .orElseThrow(()->new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+        Member findMember = memberRepository.findById(answer.getMember().getMemberId())
+                .orElseThrow(()->new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         answer.setMember(findMember);
 
         Answer saveAnswer = answerRepository.save(answer);
@@ -43,27 +48,23 @@ public class AnswerService {
 
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public Answer updateAnswer(Answer answer){
-        Answer findAnswer = findVerifiedAnswer(answer.getAnswerId());
-        Member findMember = memberRepository.findById(answer.getMember().getMemberId()).orElseThrow(()->new RuntimeException("멤버를 찾을 수 없습니다."));
+    public Answer updateAnswer(String detail, long answerId, long memberId){
+        Answer findAnswer = findVerifiedAnswer(answerId);
 
-        if(findAnswer.getMember().getMemberId()!=findMember.getMemberId()){
-            throw new RuntimeException("수정할 권한이 없습니다.");
+        if(findAnswer.getMember().getMemberId()==memberId){
+            findAnswer.update(detail);
+            return answerRepository.saveAndFlush(findAnswer);
         }
+        else{throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_ANSWER);}
 
-        Optional.ofNullable(answer.getDetail())
-                .ifPresent(detail -> findAnswer.setDetail(detail));
-        Optional.ofNullable(answer.isSolutionStatus())
-                .ifPresent(solutionStatus -> findAnswer.setSolutionStatus(solutionStatus));
-
-        return answerRepository.save(findAnswer);
     }
 
 
     @Transactional(readOnly = true)
     public Answer findAnswer(long answerId){
 
-        return answerRepository.findByAnswerId(answerId).orElseGet(null);
+        return answerRepository.findById(answerId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
     }
 
 
@@ -73,10 +74,10 @@ public class AnswerService {
     }
     public void deleteAnswer(long answerId, long memberId) {
         Answer findAnswer = findVerifiedAnswer(answerId);
-        Member findMember = memberRepository.findById(memberId).orElseThrow(()->new RuntimeException("멤버를 찾을 수 없습니다."));
+        Member findMember = memberRepository.findById(memberId).orElseThrow(()->new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         if(findAnswer.getMember().getMemberId()!=findMember.getMemberId()){
-            throw new RuntimeException("삭제할 권한이 없습니다.");
+            throw new BusinessLogicException(ExceptionCode.CANNOT_DELETE_ANSWER);
         }
 
 
@@ -88,26 +89,32 @@ public class AnswerService {
     public Answer findVerifiedAnswer(long answerId){
         Optional<Answer> optionalAnswer =
                 answerRepository.findByAnswerId(answerId);
-        return optionalAnswer.orElseThrow();
+        return optionalAnswer.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
     }
 
 
-    public int votesCount(long answerId, long memberId) {
+    public AnswerVoteCountDto votesCount(long answerId, long memberId) {
         Answer findAnswer = findByAnswerId(answerId);
         Member findMember = findByMemberId(memberId);
         Optional<AnswerVote> optionalAnswerVote = answerVoteRepository.findByAnswerAndMember(findAnswer, findMember);
+        AnswerVote saveAnswerVote;
+
         if (optionalAnswerVote.isEmpty()) {
             AnswerVote answerVote = AnswerVote.builder().answer(findAnswer).member(findMember).build();
             findAnswer.updateVoteCount(true);
-            answerVoteRepository.save(answerVote);
+            saveAnswerVote = answerVoteRepository.saveAndFlush(answerVote);
         } else {
             AnswerVote findAnswerVote = optionalAnswerVote.get();
             findAnswerVote.updateVote();
-            answerVoteRepository.save(findAnswerVote);
-            findAnswer.updateVoteCount(findAnswerVote.isAnswerVoted());
+            saveAnswerVote =answerVoteRepository.saveAndFlush(findAnswerVote);
+            findAnswer.updateVoteCount(findAnswerVote.isAnswerVoted());//
         }
-        Answer updatedAnswer = answerRepository.save(findAnswer);
-        return updatedAnswer.getVotesCount();
+        Answer updatedAnswer = answerRepository.saveAndFlush(findAnswer);
+
+        AnswerVoteCountDto answerVoteCountDto = new AnswerVoteCountDto();
+        answerVoteCountDto.setTotalVoteCount(updatedAnswer.getVotesCount());
+        answerVoteCountDto.setAnswerVoteStatus(saveAnswerVote.isAnswerVoted());
+        return answerVoteCountDto;
     }
 
     public Answer findByAnswerId(Long answerId) {
@@ -118,5 +125,27 @@ public class AnswerService {
     public Member findByMemberId(Long memberId){
         Optional<Member> findMember = memberRepository.findById(memberId);
         return findMember.orElseThrow(() -> new IllegalArgumentException("No Search Member: " + memberId));
+    }
+
+    public Boolean updateSelection(long answerId, long memberId){
+
+        Answer findAnswer = findVerifiedAnswer(answerId);
+
+
+        if(findAnswer.getQuestion().getMember().getMemberId() == memberId){
+            boolean solutionStatus=findAnswer.isSolutionStatus();
+            findAnswer.updateSelect(!solutionStatus);
+
+            Question findQuestion = questionRepository.findById(findAnswer.getQuestion().getQuestionId())
+                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+
+            findQuestion.updateSelect(findAnswer.isSolutionStatus());
+            answerRepository.saveAndFlush(findAnswer);
+            questionRepository.saveAndFlush(findQuestion);
+        }
+        else{
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NO_PERMISSION);
+        }
+        return findAnswer.isSolutionStatus();
     }
 }

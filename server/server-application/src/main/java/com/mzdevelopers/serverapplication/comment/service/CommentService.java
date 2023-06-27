@@ -5,6 +5,8 @@ import com.mzdevelopers.serverapplication.answer.repository.AnswerRepository;
 import com.mzdevelopers.serverapplication.answer.service.AnswerService;
 import com.mzdevelopers.serverapplication.comment.entity.Comment;
 import com.mzdevelopers.serverapplication.comment.repository.CommentRepository;
+import com.mzdevelopers.serverapplication.exception.BusinessLogicException;
+import com.mzdevelopers.serverapplication.exception.ExceptionCode;
 import com.mzdevelopers.serverapplication.member.entity.Member;
 import com.mzdevelopers.serverapplication.member.repository.MemberRepository;
 import org.springframework.data.domain.Page;
@@ -34,8 +36,10 @@ public class CommentService {
 
     public Comment createComment(Comment comment){
         verifyComment(comment);
-        Answer findAnswer = answerRepository.findByAnswerId(comment.getAnswer().getAnswerId()).orElseThrow(()->new RuntimeException("회원을 찾지 못했습니다."));
-        Member findMember = memberRepository.findById(comment.getMember().getMemberId()).orElseThrow(()->new RuntimeException("회원을 찾지 못했습니다."));
+        Answer findAnswer = answerRepository.findByAnswerId(comment.getAnswer().getAnswerId())
+                .orElseThrow(()->new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
+        Member findMember = memberRepository.findById(comment.getMember().getMemberId())
+                .orElseThrow(()->new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         comment.setAnswer(findAnswer);
         comment.setMember(findMember);
@@ -48,10 +52,10 @@ public class CommentService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Comment updateComment(Comment comment, long memberId){
         Comment findComment = findVerifiedComment(comment.getCommentId());
-        Member findMember = memberRepository.findById(memberId).orElseThrow(()->new RuntimeException("회원을 찾지 못했습니다."));
+        Member findMember = memberRepository.findById(memberId).orElseThrow(()->new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         if(findMember.getMemberId()!=findComment.getMember().getMemberId()){
-            throw new RuntimeException("수정할 권한이 없습니다.");
+            throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_COMMENT);
         }
 
         Optional.ofNullable(comment.getCommentDetail())
@@ -73,10 +77,11 @@ public class CommentService {
 
     public void deleteComment(long commentId, long memberId) {
         Comment findComment = findVerifiedComment(commentId);
-        Member findMember = memberRepository.findById(memberId).orElseThrow(()->new RuntimeException("회원을 찾지 못했습니다."));
+        Member findMember = memberRepository.findById(memberId)
+                .orElseThrow(()->new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         if(findMember.getMemberId()!=findComment.getMember().getMemberId()){
-            throw new RuntimeException("삭제할 권한이 없습니다.");
+            throw new BusinessLogicException(ExceptionCode.CANNOT_DELETE_COMMENT);
         }
 
 
@@ -88,7 +93,7 @@ public class CommentService {
         Optional<Comment> optionalComment =
                 commentRepository.findById(commentId);
         Comment findComment =
-                optionalComment.orElseThrow(() -> new RuntimeException("Comment Not Found"));
+                optionalComment.orElseThrow(() -> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
         return findComment;
     }
 

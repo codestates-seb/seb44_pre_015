@@ -11,5 +11,7 @@ import java.util.List;
 public class MemberResponseDto {
 
     private long memberId;
+    private String userName;
+    private String picture;
     private List<MemberQuestionDto> questions;
 }

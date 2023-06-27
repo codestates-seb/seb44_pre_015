@@ -17,7 +17,7 @@ public class AnswerVote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long answerVoteId;
-    @Column
+
     private boolean answerVoted;
 
 

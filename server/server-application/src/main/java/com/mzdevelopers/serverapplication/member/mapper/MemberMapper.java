@@ -20,7 +20,7 @@ public interface MemberMapper {
             memberQuestionDto.setQuestionId(questions.getQuestionId());
             memberQuestionDto.setTitle(questions.getTitle());
             memberQuestionDto.setDetail(questions.getDetail());
-
+            memberQuestionDto.setSolutionStatus(questions.isSolutionStatus());
             memberQuestionDtos.add(memberQuestionDto);
         }
 

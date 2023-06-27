@@ -23,6 +23,9 @@ public interface AnswerMapper {
         return answer;
     };
     Answer answerPatchToAnswer(AnswerDto.Patch requestBody);
+
+
+
     default AnswerDto.Response answerToAnswerResponse(Answer answer){
         AnswerDto.Response answerResponse = AnswerDto.Response.builder()
                 .answerId(answer.getAnswerId())
@@ -30,8 +33,8 @@ public interface AnswerMapper {
                 .votesCount(answer.getVotesCount())
                 .solutionStatus(answer.isSolutionStatus())
                 .questionId(answer.getQuestion().getQuestionId())
-                .memberId(answer.getMember().getMemberId())
-                .comments(answer.getComments())
+                .createdAt(String.valueOf(answer.getCreatedAt()))
+                .updatedAt(String.valueOf(answer.getUpdatedAt()))
                 .build();
 //        AnswerDto.Response answerResponse = new AnswerDto.Response(
 //                answer.getAnswerId(),
@@ -43,6 +46,8 @@ public interface AnswerMapper {
 //                answer.getAnswerVotes().
 //                answer.getComments()
 //        );
+//        answerResponse.setCreatedAt(String.valueOf(answer.getCreatedAt()));
+//        answerResponse.setUpdatedAt(String.valueOf(answer.getUpdatedAt()));
         return answerResponse;
     };
 

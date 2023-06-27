@@ -33,12 +33,15 @@ public interface CommentMapper {
 
 
     default CommentDto.Response commentToCommentResponse(Comment comment){
-        CommentDto.Response commentResponse = new CommentDto.Response(
-                comment.getCommentId(),
-                comment.getCommentDetail(),
-                comment.getAnswer().getAnswerId(),
-                comment.getMember().getMemberId()
-        );
+        CommentDto.Response commentResponse = CommentDto.Response.builder()
+                .commentId(comment.getCommentId())
+                .commentDetail(comment.getCommentDetail())
+                .answerId(comment.getAnswer().getAnswerId())
+//                .memberId(comment.getMember().getMemberId())
+                .createdAt(String.valueOf(comment.getCreatedAt()))
+                .updatedAt(String.valueOf(comment.getUpdatedAt()))
+
+                .build();
         return commentResponse;
     }
     List<CommentDto.Response> commentsToCommentResponses(List<Comment> comments);
