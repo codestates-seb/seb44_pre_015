@@ -82,6 +82,20 @@ https://www.figma.com/file/ZzVeXd7hL301psnaCpMRSx/%5BMZ%EA%B0%9C%EB%B0%9C%EC%9E%
 ![image](https://github.com/hyeongu1/project-test/assets/124682878/449c81b8-2cc2-4a29-904a-d59537366d55)
 
 ### 로그인페이지
+![0-로그인페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/f001c19c-4621-4c80-bc90-b1f0b3dd9143)
+
+### 검색페이지
+![1-검색페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/3fcd4272-3635-4063-aeb7-51d98864b74c)
+
+### 질문작성페이지
+![2-질문작성페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/a7a15f67-faa5-48ba-bd16-e86c38131d0e)
+
+### 질문뷰페이지
+![3-질문뷰페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/6ac862c2-fe06-4519-a8c6-469daabda4a1)
+
+### 마이페이지
+![4-마이페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/01b89241-ff48-4b97-b248-cbb82437afc3)
+
 
 
 <br/>
