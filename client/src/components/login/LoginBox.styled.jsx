@@ -10,8 +10,8 @@ export const GlobalStyle = tw.div`
 export const Loginbox = tw.div`
     bg-white
     drop-shadow-lg
-    w-[32rem]
-    h-[32rem]
+    w-3/6
+    h-4/6
     flex
     justify-center
     items-center
@@ -24,7 +24,8 @@ export const Loginbox = tw.div`
 
 export const GoogleBtnWrap = tw.button`
     bg-white
-    w-96
+    md:w-72
+    lg:w-96
     h-10
     rounded-lg
     text-center
@@ -47,7 +48,8 @@ export const NaverBtn = tw.img `
 
 export const NaverBtnWrap = tw.button `
     bg-green-500
-    w-96
+    md:w-72
+    lg:w-96
     h-10
     rounded-lg
     text-center
