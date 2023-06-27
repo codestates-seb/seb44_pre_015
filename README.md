@@ -80,33 +80,33 @@ https://www.figma.com/file/ZzVeXd7hL301psnaCpMRSx/%5BMZ%EA%B0%9C%EB%B0%9C%EC%9E%
 <br/>
 
 ### 메인페이지
-![메인페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/ef24b7ae-792c-4ec9-90b2-2ddaaef68795)
+![1-메인페이지-로그인 전](https://github.com/codestates-seb/seb44_pre_015/assets/109754988/d8d39315-78f2-4069-99a2-0f7f7ab444e4)
 
 <br>
 
 
 ### 로그인페이지
-![0-로그인페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/f001c19c-4621-4c80-bc90-b1f0b3dd9143)
+![0-로그인페이지](https://github.com/codestates-seb/seb44_pre_015/assets/109754988/d9b53a20-6fa7-4ae4-a8b3-9d7275ba4690)
 
 <br>
 
 ### 검색페이지
-![1-검색페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/3fcd4272-3635-4063-aeb7-51d98864b74c)
+![1-검색페이지](https://github.com/codestates-seb/seb44_pre_015/assets/109754988/882f2706-ff02-466f-87cc-895a8aca66d6)
 
 <br>
 
 ### 질문작성페이지
-![2-질문작성페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/a7a15f67-faa5-48ba-bd16-e86c38131d0e)
+![2-질문작성페이지](https://github.com/codestates-seb/seb44_pre_015/assets/109754988/40a8e6e6-9373-40c0-bdd8-c227689a04c1)
 
 <br>
 
 ### 질문뷰페이지
-![3-질문뷰페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/6ac862c2-fe06-4519-a8c6-469daabda4a1)
+![3-질문뷰페이지](https://github.com/codestates-seb/seb44_pre_015/assets/109754988/1df4778b-6748-4f30-a005-39039e189d3b)
 
 <br>
 
 ### 마이페이지
-![4-마이페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/01b89241-ff48-4b97-b248-cbb82437afc3)
+![4-마이페이지](https://github.com/codestates-seb/seb44_pre_015/assets/109754988/e00977d9-57f2-4ad9-b4f0-27927946373c)
 
 
 
