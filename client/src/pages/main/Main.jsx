@@ -39,7 +39,9 @@ export default function Main() {
       })
       .then(res => localStorage.setItem('userInfo', JSON.stringify(res.data)))
       .catch(err => navigate('/*'))
-      return navigate('/');
+      
+      navigate('/');
+      return window.location.reload();
     }
 
     axios(`${PROXY}/questions/get/recent?page=0&size=6`)
