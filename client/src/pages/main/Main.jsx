@@ -37,7 +37,8 @@ export default function Main() {
           Authorization: `Bearer ${accessToken}`,
         }
       })
-      .then(res => localStorage.setItem('userInfo', JSON.stringify(res.data)));
+      .then(res => localStorage.setItem('userInfo', JSON.stringify(res.data)))
+      .catch(err => navigate('/*'))
       return navigate('/');
     }
 
