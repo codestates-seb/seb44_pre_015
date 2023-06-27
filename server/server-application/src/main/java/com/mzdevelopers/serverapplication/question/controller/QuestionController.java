@@ -1,14 +1,11 @@
 package com.mzdevelopers.serverapplication.question.controller;
 
-import com.mzdevelopers.serverapplication.question.dto.QuestionPatchDto;
-import com.mzdevelopers.serverapplication.question.dto.QuestionRequestDto;
-import com.mzdevelopers.serverapplication.question.dto.QuestionResponseDto;
-import com.mzdevelopers.serverapplication.question.dto.QuestionVoteCountDto;
+import com.mzdevelopers.serverapplication.question.dto.*;
 import com.mzdevelopers.serverapplication.question.entity.Question;
 import com.mzdevelopers.serverapplication.question.mapper.QuestionMapper;
 import com.mzdevelopers.serverapplication.question.service.QuestionServiceImpl;
+import com.mzdevelopers.serverapplication.tag.dto.TagNameDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,36 +17,44 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/questions")
 @RequiredArgsConstructor
 public class QuestionController {
 
     private final QuestionMapper questionMapper;
     private final QuestionServiceImpl questionService;
-    private final static String QUESTION_CREATE_URI = "http://localhost:8080/questions";
+    private final static String QUESTION_CREATE_URI = "ec2-13-125-172-34.ap-northeast-2.compute.amazonaws.com:8080/questions";
 
     // 질문 등록
     @PostMapping("/register")
     public ResponseEntity<?> postQuestion(@Valid @RequestBody QuestionRequestDto questionRequestDto) {
+
+        Question mappingQuestion = questionMapper.questionRequestDtoToQuestion(questionRequestDto);
+
         long questionId = questionService.createQuestion(
-                questionMapper.questionRequestDtoToQuestion(questionRequestDto), questionRequestDto.getTags()
+                mappingQuestion, questionRequestDto.getTags()
         );
+
         URI location = questionService.uriBuilder(questionId, QUESTION_CREATE_URI);
 
         return ResponseEntity.created(location).build();
     }
 
     // 질문 가져오기 + 애플리케이션 사용자이면 view 증가
-    @GetMapping("/{questionId}/{memberId}")
+    @GetMapping("/get/{questionId}/{memberId}")
     public ResponseEntity<QuestionResponseDto> getQuestion(@PathVariable("questionId") long questionId,
                                                            @PathVariable long memberId) {
-        Question findQuestion = questionService.getQuestion(questionId, memberId);
-        QuestionResponseDto responseDto = questionMapper
-                .questionToQuestionResponseDto(findQuestion);
+        QuestionResponseDto findQuestion = questionService.getQuestion(questionId, memberId, "find");
+        return ResponseEntity.ok(findQuestion);
+    }
 
-        responseDto.setAnswers(questionService.stubAnswerList());
-        responseDto.setTags(questionService.findByQuestionTag(findQuestion));
-        return ResponseEntity.ok(responseDto);
+    // 질문 수정 페이지 전용 GET
+    @GetMapping("/get/patch/{questionId}/{memberId}")
+    public ResponseEntity<?> getPatchQuestion(@PathVariable("questionId") long questionId,
+                                              @PathVariable("memberId") long memberId){
+        QuestionPatchRequestDto requestDto = questionService.getPatchQuestion(questionId, memberId);
+        return ResponseEntity.ok(requestDto);
     }
 
     // 질문 수정
@@ -57,11 +62,13 @@ public class QuestionController {
     public ResponseEntity<QuestionResponseDto> patchQuestion(@PathVariable("questionId") long questionId,
                                                              @PathVariable("memberId") long memberId,
                                                              @Valid @RequestBody QuestionPatchDto questionPatchDto) {
-        QuestionResponseDto responseDto = questionMapper.questionToQuestionResponseDto(questionService
-                .updateQuestion(questionId,
+        Question question = questionService.updateQuestion(questionId,
                         questionPatchDto.getTitle(),
                         questionPatchDto.getDetail(),
-                        memberId));
+                        questionPatchDto.getTags(),
+                        memberId);
+        QuestionResponseDto responseDto = questionMapper.questionToQuestionResponseDto(question);
+        responseDto.setTags(questionService.findByQuestionTag(question));
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
@@ -77,26 +84,30 @@ public class QuestionController {
     @GetMapping("/votes/{questionId}/{memberId}")
     public ResponseEntity<?> votesCount(@PathVariable("questionId") Long questionId,
                                         @PathVariable Long memberId) {
-        QuestionVoteCountDto response = new QuestionVoteCountDto();
-        response.setTotalVoteCount(questionService.votesCount(questionId, memberId));
+        QuestionVoteCountDto response = questionService.votesCount(questionId, memberId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     // api 별 질문 리스트 반환
-    @GetMapping("/{api}")
+    @CrossOrigin
+    @GetMapping("/get/{api}")
     public ResponseEntity<?> getQuestionsByAPI(@PathVariable("api") String api,
                                                @RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "10") int size) {
         List<Question> questions = questionService.questionsListByAPI(page, size, api);
         List<QuestionResponseDto> responseDtoList = new ArrayList<>();
         for (Question question : questions) {
-            QuestionResponseDto dto = questionMapper.questionToQuestionResponseDto(question);
-            dto.setAnswers(questionService.stubAnswerList());
-            dto.setTags(questionService.findByQuestionTag(question));
+            QuestionResponseDto dto = questionService.getQuestion(question.getQuestionId(), question.getMember().getMemberId(), "api");
             responseDtoList.add(dto);
-
         }
         return ResponseEntity.ok(responseDtoList);
+    }
+
+    // 태그 가져오기
+    @GetMapping("/tags")
+    public ResponseEntity<?> getTagsName() {
+        List<TagNameDto> tagNameDtoList = questionService.getTags();
+        return ResponseEntity.ok(tagNameDtoList);
     }
 
 
