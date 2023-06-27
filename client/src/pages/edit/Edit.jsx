@@ -85,7 +85,7 @@ export default function Edit() {
       .patch(`${PROXY}/questions/${questionId}/${UID}`, JSON.stringify(requestData), { headers: defaultHeaders })
       .then(() => {
         dispatch(resetInput());
-        navigate(`${PROXY}/post/${questionId}/${UID}`);
+        navigate(`/post/${questionId}/${UID}`);
       })
       .catch(handleErrors);
   };
