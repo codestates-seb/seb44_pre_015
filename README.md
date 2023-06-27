@@ -19,11 +19,12 @@
 
 <br/>
 
+
 ## 💼 Team
 
 |                     손기배<br>(BE, BE lead)      |          김준영<br>(BE)                         |              오민성<br>(BE)                        |                     김다은<br>(FE, FE lead)          |                김현구<br>(FE)                        |             위정연<br>(FE)                          |                           최지은<br>(FE)                      |
 | :--------------------------------------------: | :--------------------------------------------: | :----------------------------------------------: | :------------------------------------------------: | :----------------------------------------------: | :--------------------------------------------------: | :----------------------------------------------------------:|
-|  <img alt="손기배" src="" height="100" width="100"> | <img alt="김준영" src="" height="100" width="100"> | <img alt="오민성" src="" height="100" width="100"> | <img alt="김다은" src="" height="100" width="100"> | <img alt="김현구" src="https://github.com/hyeongu1/codestates-todo/assets/124682878/c67f6d52-b38b-4cc1-b002-61806cdd76ec" height="100" width="100"> | <img alt="위정연" src="" height="100" width="100"> | <img alt="최지은" src="" height="100" width="100"> |
+|  <img alt="손기배" src="https://github.com/codestates-seb/seb44_pre_015/assets/82816029/1f82e593-0961-4223-a99e-2c6816b0a618" height="100" width="100"> | <img alt="김준영" src="https://github.com/codestates-seb/seb44_pre_015/assets/82816029/d9b56b71-c261-487c-8f72-a321cd6cbc43" height="100" width="100"> | <img alt="오민성" src="" height="100" width="100"> | <img alt="김다은" src="" height="100" width="100"> | <img alt="김현구" src="https://github.com/hyeongu1/codestates-todo/assets/124682878/c67f6d52-b38b-4cc1-b002-61806cdd76ec" height="100" width="100"> | <img alt="위정연" src="https://github.com/codestates-seb/seb44_pre_015/assets/82816029/78d0a392-a423-43f9-afd6-66c0f8d52ca9" height="100" width="100"> | <img alt="최지은" src="https://github.com/codestates-seb/seb44_pre_015/assets/82816029/8037f7d1-ca1a-4be3-ad85-fd7290ad3669" height="100" width="100"> |
 |<p align="left">**Pages**<br/>-  Signup page<br/>- Login page <br/>**Components**<br/>-  Buttons <br/>- Header <br/>**Features**<br/>-  Email signup<br/>-  Email login<br/>- Logout <br/> - Manage access token  <br/></p> | <p align="left">**Pages**<br/>-  Main page<br/>- <br/>-  page<br/>-  <br/>**Components**<br/>-  Editor <br/>- Footer <br/>**Features**<br/>-  Question CRUD<br/>- ScrollToTop <br/></p> | <p align="left">**Pages**<br/>-  Question detail page<br/>- Edit Answer page<br/>- Error page<br/>**Components**<br/>-  Side navigation <br/>- Editor, Viewer <br/>- Questions list, Question layout <br/>- Editor, Viewer <br/>**Features**<br/>-  Single Question R <br/>- Answer CRUD + choose <br/>- Comment CRUD  <br/></p> | <p align="left"><br/>- Question CRUD <br/>- AWS deployment <br/>- Exception handling <br/>- Integration test | <p align="left">- CRUD Member<br/>- Login<br/>- Spring Security<br/>(Auth, Autho, JWT)<br/>- Member Controller Test<br/>- AWS deployment<br/> | <p align="left">-Answer CRUD<br/>-Comment CRUD<br/>- Voting <br/>- AWS deployment <br/>- Mockito Test <br/>|<p align="left">-Answer CRUD<br/>-Comment CRUD<br/>- Voting <br/>- AWS deployment <br/>- Mockito Test <br/>
 
 
@@ -81,17 +82,27 @@ https://www.figma.com/file/ZzVeXd7hL301psnaCpMRSx/%5BMZ%EA%B0%9C%EB%B0%9C%EC%9E%
 
 ![image](https://github.com/hyeongu1/project-test/assets/124682878/449c81b8-2cc2-4a29-904a-d59537366d55)
 
+<br>
+
 ### 로그인페이지
 ![0-로그인페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/f001c19c-4621-4c80-bc90-b1f0b3dd9143)
+
+<br>
 
 ### 검색페이지
 ![1-검색페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/3fcd4272-3635-4063-aeb7-51d98864b74c)
 
+<br>
+
 ### 질문작성페이지
 ![2-질문작성페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/a7a15f67-faa5-48ba-bd16-e86c38131d0e)
 
+<br>
+
 ### 질문뷰페이지
 ![3-질문뷰페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/6ac862c2-fe06-4519-a8c6-469daabda4a1)
+
+<br>
 
 ### 마이페이지
 ![4-마이페이지](https://github.com/codestates-seb/seb44_pre_015/assets/82816029/01b89241-ff48-4b97-b248-cbb82437afc3)
